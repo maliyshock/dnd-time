@@ -1,0 +1,82 @@
+.clocks {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    color: white;
+
+    &__player {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        fill: white;
+
+        opacity: 0.2;
+
+        width: 5rem;
+        height: 5rem;
+        background-color: transparent;
+
+        transition: opacity 0.2s;
+
+        &.fade-in {
+            opacity: 0.6;
+        }
+    }
+
+    &__display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 6rem;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    &__item {
+        min-width: 8rem;
+        opacity: 1;
+        transition: opacity 1s;
+
+        &.fade-out {
+            opacity: 0.2;
+        }
+    }
+
+    &__item-changer-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__item-changer {
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        fill: white;
+        width: 3.75rem;
+        height: 3.75rem;
+        background: transparent;
+
+        opacity: 0.2;
+
+        transition: opacity 0.2s;
+
+        &.descender {
+            transform: scale(1,-1);
+        }
+
+        &.fade-in {
+            opacity: 0.6;
+        }
+    }
+}
+
