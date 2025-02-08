@@ -1,0 +1,29 @@
+$fontsPath: "../assets/fonts/dyna-puff";
+
+@font-face {
+	font-family: 'dynaPuff';
+	font-style: normal;
+	font-weight: 400;
+	src: url("#{$fontsPath}_regular.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'dynaPuff';
+	font-style: normal;
+	font-weight: 500;
+	src: url("#{$fontsPath}_medium.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'dynaPuff';
+	font-style: normal;
+	font-weight: 600;
+	src: url("#{$fontsPath}_semi_bold.woff2") format('woff2');
+}
+
+@font-face {
+	font-family: 'dynaPuff';
+	font-style: normal;
+	font-weight: 700;
+	src: url("#{$fontsPath}_bold.woff2") format('woff2');
+}

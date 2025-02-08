@@ -1,0 +1,14 @@
+.layout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+	&__main {
+		position: relative;
+	}
+
+	&__aside {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
