@@ -2,8 +2,8 @@ import { DAY, DAY_ANGLE_PER_SECOND, DAY_TIME_DURATION, EVENING_START, MORNING_ST
 
 export const START_ANGLE = -45; // Starting angle at 06:00
 
-export function calculateSunAngle(totalSeconds: number) {
-  const timeOfDay = totalSeconds % DAY; // Остаток от деления на количество секунд в сутках
+export function calculateSunAngle(time: number) {
+  const timeOfDay = time % DAY; // Остаток от деления на количество секунд в сутках
 
   if (timeOfDay >= ZERO_TIME && timeOfDay < MORNING_START) {
     // night time

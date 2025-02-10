@@ -1,3 +1,5 @@
+@use "../../scss/mixins";
+
 .clocks {
     position: relative;
     z-index: 100;
@@ -14,7 +16,6 @@
         justify-content: center;
         align-items: center;
         color: white;
-        fill: white;
 
         opacity: 0.2;
 
@@ -23,6 +24,8 @@
         background-color: transparent;
 
         transition: opacity 0.2s;
+
+        @include mixins.clickable;
 
         &.fade-in {
             opacity: 0.6;
@@ -65,10 +68,13 @@
         width: 3.75rem;
         height: 3.75rem;
         background: transparent;
-
+        outline: none;
+        border: none;
+        box-shadow: none;
         opacity: 0.2;
-
         transition: opacity 0.2s;
+
+        @include mixins.clickable;
 
         &.descender {
             transform: scale(1,-1);

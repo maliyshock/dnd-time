@@ -14,7 +14,7 @@ import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
 export default function Clocks() {
   const play = useStore(store => store.play);
   const setPlay = useStore(store => store.setPlay);
-  const totalSeconds = useStore(store => store.totalSeconds);
+  const time = useStore(store => store.time);
   const setTotalSeconds = useStore(store => store.setTime);
 
   const memoryBank = useRef<boolean | null>(null);
@@ -23,9 +23,9 @@ export default function Clocks() {
   const upVariation = useRef(getRandomNum(2));
   const downVariation = useRef(getRandomNum(2));
 
-  const hours = getHours(totalSeconds);
-  const minutes = getMinutes(totalSeconds);
-  const seconds = getSeconds(totalSeconds);
+  const hours = getHours(time);
+  const minutes = getMinutes(time);
+  const seconds = getSeconds(time);
 
   const timeHandler = useCallback(() => {
     if (memoryBank.current === false && playRef.current === true) {
@@ -48,10 +48,10 @@ export default function Clocks() {
       }
 
       // throttle
-      setTotalSeconds(updateTime(totalSeconds, step));
+      setTotalSeconds(updateTime(time, step));
       timeChangeRef.current = timeChangeRef.current || setTimeout(timeHandler, 500);
     },
-    [play, setPlay, setTotalSeconds, timeHandler, totalSeconds],
+    [play, setPlay, setTotalSeconds, timeHandler, time],
   );
 
   useTimeUpdater();
