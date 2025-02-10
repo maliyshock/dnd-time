@@ -1,0 +1,15 @@
+@mixin clickable {
+	&:hover, &:focus, &:active {
+		outline: none;
+		border: none;
+		box-shadow: none;
+	}
+
+	&:hover {
+		opacity: 0.4;
+	}
+
+	&:active {
+		opacity: 0.6;
+	}
+}
