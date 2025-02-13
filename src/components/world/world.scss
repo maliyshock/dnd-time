@@ -19,36 +19,6 @@
     transform: scale(2);
 }
 
-/*.world:after {*/
-/*    content: '';*/
-/*    display: block;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    z-index: 100;*/
-/*    background-blend-mode: multiply;*/
-/*    opacity: 0.6;*/
-/*    background-image: radial-gradient(rgba(2,20,105,1) 0%, rgba(2,20,105,0.5) 100%);*/
-/*    transform: scale(5);*/
-/*}*/
-
-/*.world:before {*/
-/*    content: '';*/
-/*    display: block;*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    z-index: 10;*/
-/*    background-blend-mode: screen;*/
-/*    opacity: 0.3;*/
-/*    background-image: radial-gradient(rgba(2,20,105,1) 0%, rgba(2,20,105,1) 30%, rgba(2,20,105,0) 50%, rgba(2,20,105,0) 100%);*/
-/*    transform: scale(2);*/
-/*}*/
-
 .world__block-wrapper:has([class*='cloud-']) {
     animation-name: lift;
     animation-duration: 1s;

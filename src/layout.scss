@@ -1,4 +1,6 @@
 .layout {
+	position: relative;
+	z-index: var(--layout-layer);
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 
