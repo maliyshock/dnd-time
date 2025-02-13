@@ -1,4 +1,8 @@
-import "./world.css";
+import "./world.scss";
+import { Cloud } from "~/components/world/components/cloud.tsx";
+
+const cloudsAmount = 5;
+const clouds = new Array(cloudsAmount).fill(0);
 
 export default function World() {
   return (
@@ -9,24 +13,9 @@ export default function World() {
       <div className="world__block-wrapper">
         <div className="world__block ground" />
       </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-0" />
-      </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-1" />
-      </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-2" />
-      </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-3" />
-      </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-4" />
-      </div>
-      <div className="world__block-wrapper">
-        <div className="world__block cloud-5" />
-      </div>
+      {clouds.map((_, key) => (
+        <Cloud key={key} />
+      ))}
     </div>
   );
 }
