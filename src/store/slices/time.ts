@@ -1,11 +1,11 @@
 import { StateCreator } from "zustand";
 import { HOUR, MINUTE } from "~/constants.ts";
 import { calculateSunAngle } from "~/components/sun/utils/calculateSunAngle.ts";
-import { getMinutes } from "~/utils/getMinutes.ts";
-import { getHours } from "~/utils/getHours.ts";
-import { generateColors } from "~/utils/getColorByTime.ts";
+import { getMinutes } from "~/utils/time/getMinutes.ts";
+import { getHours } from "~/utils/time/getHours.ts";
+import { generateColors } from "~/utils/colors/getColorByTime.ts";
 import { RGBColor } from "~/types.ts";
-import { secondsToMinutes } from "~/utils/secondsToMinutes.ts";
+import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
 
 export type TimeSlice = {
   speed: number;

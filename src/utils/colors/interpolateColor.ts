@@ -1,4 +1,4 @@
-import { hexToRgb } from "~/utils/hexToRgb.ts";
+import { hexToRgb } from "~/utils/colors/hexToRgb.ts";
 
 export function interpolateColor(color1: string, color2: string, factor: number) {
   const rgb1 = hexToRgb(color1);

@@ -14,38 +14,33 @@
 }
 
 .sun {
-    width: 100%;
-    height: 100%;
-    transition: transform 1s;
-
-    &:after, &:before {
-        content: '';
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-
-    &:before {
-        position: relative;
-        z-index: 2;
-        border-radius: 50%;
-        background-color: orange;
-        box-shadow: 0 0 35px 5px yellow, 0 0 25px 10px yellow inset;
-    }
-
-    &:after {
-        position: absolute;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        opacity: 0.6;
-        background-image: radial-gradient(rgba(0,149,255,1) 0%, rgba(0,149,255, 1) 15%, rgba(0,149,255, 0.5) 30%, rgba(0,149,255, 0) 70%);
-        transform: scale(10);
-    }
-}
-
-.sun-wrapper {
     position: relative;
     width: 70px;
     height: 70px;
+
+    &__body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        transition: transform 1s;
+
+        &:before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        &:before {
+            position: relative;
+            z-index: 2;
+            border-radius: 50%;
+            background-color: orange;
+            box-shadow: 0 0 35px 5px yellow, 0 0 25px 10px yellow inset;
+        }
+    }
 }
