@@ -13,3 +13,34 @@
 		opacity: 0.6;
 	}
 }
+
+@mixin spin-animation {
+	@keyframes spin {
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
+	}
+}
+
+@mixin lift-animation {
+	@keyframes lift {
+		0% {
+			transform: translateY(0px);
+		}
+		25% {
+			transform: translateY(-5px);
+		}
+		50% {
+			transform: translateY(0px);
+		}
+		75% {
+			transform: translateY(5px);
+		}
+		100% {
+			transform: translateY(0px);
+		}
+	}
+}

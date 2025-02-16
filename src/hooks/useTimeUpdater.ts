@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { updateTime } from "~/utils/updateTime.ts";
+import { updateTime } from "~/utils/time/updateTime.ts";
 import { SECOND } from "~/constants.ts";
 import useStore from "~/store/useStore.ts";
 

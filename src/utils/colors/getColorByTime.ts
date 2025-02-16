@@ -1,7 +1,7 @@
 import { COLORS, MINUTES_IN_DAY } from "~/constants.ts";
-import { interpolateColor } from "~/utils/interpolateColor.ts";
+import { interpolateColor } from "~/utils/colors/interpolateColor.ts";
 import { RGBColor } from "~/types.ts";
-import { secondsToMinutes } from "~/utils/secondsToMinutes.ts";
+import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
 
 export function generateColors(): Map<number, [RGBColor, RGBColor]> {
   const colors = new Map();

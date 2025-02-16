@@ -4,11 +4,11 @@ import useStore from "~/store/useStore.ts";
 import { MemoizedTimeItem, TimeItem } from "~/components/clocks/components/TimeItem.tsx";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import { Player } from "~/components/clocks/components/Player.tsx";
-import { updateTime } from "~/utils/updateTime.ts";
+import { updateTime } from "~/utils/time/updateTime.ts";
 import { HOUR, MINUTE, SECOND } from "~/constants.ts";
-import { getHours } from "~/utils/getHours.ts";
-import { getMinutes } from "~/utils/getMinutes.ts";
-import { getSeconds } from "~/utils/getSeconds.ts";
+import { getHours } from "~/utils/time/getHours.ts";
+import { getMinutes } from "~/utils/time/getMinutes.ts";
+import { getSeconds } from "~/utils/time/getSeconds.ts";
 import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
 
 export default function Clocks() {

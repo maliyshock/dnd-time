@@ -1,22 +1,10 @@
+@use "../../scss/mixins";
+
 .world {
     position: relative;
     z-index: 10;
     width: 512px;
     height: 512px;
-}
-
-.world:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    opacity: 0.6;
-    background-image: radial-gradient(rgba(0,149,255,1) 0%, rgba(0,149,255, 1) 15%, rgba(0,149,255, 0.5) 30%, rgba(0,149,255, 0) 70%);
-    transform: scale(2);
 }
 
 .world__block-wrapper:has([class*='cloud-']) {
@@ -53,6 +41,13 @@
     width: 100%;
     height: 100%;
     z-index: 1;
+
+    &.spin {
+        animation-duration: 200s;
+        animation-name: spin;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
 }
 
 .world__block {
@@ -67,11 +62,6 @@
     animation-duration: 120s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-}
-
-.atmo {
-    background-image: url("../../assets/small_world/atmo.png");
-    animation-duration: 200s;
 }
 
 .ground {
@@ -109,29 +99,5 @@
     animation-duration: 118s;
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes lift {
-    0% {
-        transform: translateY(0px);
-    }
-    25% {
-        transform: translateY(-5px);
-    }
-    50% {
-        transform: translateY(0px);
-    }
-    75% {
-        transform: translateY(5px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
-}
+@include mixins.spin-animation;
+@include mixins.lift-animation;

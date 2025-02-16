@@ -1,4 +1,4 @@
-import { formatTime } from "~/utils/formatTime.ts";
+import { formatTime } from "~/utils/time/formatTime.ts";
 import "../clocks.scss";
 import { memo, useRef } from "react";
 import { Up } from "~/components/icons/up.tsx";

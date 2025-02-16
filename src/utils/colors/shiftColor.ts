@@ -1,6 +1,6 @@
-import { rgbToHsl } from "~/utils/rgbToHsl.ts";
+import { rgbToHsl } from "~/utils/colors/rgbToHsl.ts";
 import { RGBColor } from "~/types.ts";
-import { hslToRgb } from "~/utils/hslToRgb.ts";
+import { hslToRgb } from "~/utils/colors/hslToRgb.ts";
 
 export function shiftColor(color: RGBColor, degrees: number): RGBColor {
   // Преобразуем RGB в HSL
