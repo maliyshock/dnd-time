@@ -4,6 +4,7 @@ import Sun from "~/components/sun";
 import Clocks from "~/components/clocks";
 import { useKeyListener } from "~/hooks/useKeyListener.ts";
 import { Background } from "~/components/background";
+import { Overlay } from "~/components/overlay";
 
 // space to pause time
 // s - sound
@@ -15,6 +16,7 @@ export default function App() {
 
   return (
     <>
+      <Overlay />
       <Background />
       <div className="layout">
         <aside className="layout__aside">

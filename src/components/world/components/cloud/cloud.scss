@@ -1,0 +1,95 @@
+@use "../../../../scss/mixins";
+
+.cloud {
+	position: relative;
+	opacity: 0;
+	animation-play-state: var(--animation-play-state);
+
+	&.fadeIn {
+		opacity: 1;
+	}
+
+	&__rain {
+		position: absolute;
+		z-index: 1;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	&__img {
+		cursor: pointer;
+		pointer-events: all;
+		background-position: 0 0;
+		background-repeat: no-repeat;
+		background-size: 100%;
+
+
+		transition: transform 0.2s, opacity 0.2s;
+
+		&:active {
+			transform: scale(0.95);
+			opacity: 0.9;
+		}
+	}
+
+	&__rain-img {
+		position: relative;
+		z-index: 2;
+	}
+
+	&__rain-body {
+		position: relative;
+
+		&:after {
+			content: '';
+			display: block;
+			width: 60%;
+			height: 150%;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%);
+			position: absolute;
+			z-index: 1;
+			background-image: url("../../../../assets/rain.png");
+			background-size: 80px;
+			background-repeat: no-repeat;
+
+			animation-name: move-bg;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			animation-duration: 0.9s;
+		}
+	}
+}
+
+@keyframes move-bg {
+	from {
+		background-position: 0 100%;
+	}
+
+	to {
+		background-position: 0 0;
+	}
+}
+
+@keyframes lift {
+	0% {
+		transform: translateY(0);
+	}
+	25% {
+		transform: translateY(-5%);
+	}
+	50% {
+		transform: translateY(0);
+	}
+	75% {
+		transform: translateY(5%);
+	}
+	100% {
+		transform: translateY(0);
+	}
+}
+
+@include mixins.fadeIn-animation;

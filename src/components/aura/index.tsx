@@ -4,6 +4,7 @@ import useStore from "~/store/useStore.ts";
 import { lighter } from "~/utils/colors/lighter.ts";
 import { RGBColor } from "~/types.ts";
 import "./aura.scss";
+import { rgbToHsl } from "~/utils/colors/rgbToHsl.ts";
 
 type AuraProps = {
   scaleUp?: number;
@@ -24,11 +25,14 @@ function makeRadialGradient({ color, transparencyStart, texture }: MakeRadialGra
 
 export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart = 70 }: AuraProps) {
   const currentColors = useStore(store => store.currentColors);
-  const firstColor = lighter(currentColors[0], 30);
+  const hsl0 = rgbToHsl(currentColors[0]); // { l: 50 }
+  const hsl1 = rgbToHsl(currentColors[1]);
+  const lighterColor = hsl0.l >= hsl1.l ? currentColors[0] : currentColors[1];
+  const auraColor = lighter(lighterColor, 30);
   const controls = useAnimation();
 
   useEffect(() => {
-    const newBackground = makeRadialGradient({ color: firstColor, transparencyStart, texture });
+    const newBackground = makeRadialGradient({ color: auraColor, transparencyStart, texture });
 
     controls.start({
       backgroundImage: newBackground,
@@ -40,7 +44,7 @@ export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart
           }
         : {}),
     });
-  }, [controls, firstColor, firstColor.b, firstColor.g, firstColor.r, scaleUp, texture]);
+  }, [controls, auraColor, auraColor.b, auraColor.g, auraColor.r, scaleUp, texture, transparencyStart]);
 
   return (
     <motion.div

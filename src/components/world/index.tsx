@@ -1,22 +1,23 @@
 import "./world.scss";
-import { Cloud } from "~/components/world/components/cloud.tsx";
+import { MemoCloud } from "~/components/world/components/cloud";
 import { Aura } from "~/components/aura";
 import texturePath from "~/assets/small_world/atmo.png";
-
-const cloudsAmount = 5;
-const clouds = new Array(cloudsAmount).fill(0);
+import { Ground } from "~/components/world/components/ground";
+import useStore from "~/store/useStore.ts";
 
 export default function World() {
+  const clouds = useStore(store => store.clouds);
+
   return (
     <div className="world">
       <div className="world__block-wrapper spin">
         <Aura rotation scaleUp={1.5} texture={texturePath} transparencyStart={60} />
       </div>
-      <div className="world__block-wrapper">
-        <div className="world__block ground" />
+      <div className="world__block-wrapper fast-spin">
+        <Ground />
       </div>
-      {clouds.map((_, key) => (
-        <Cloud key={key} />
+      {clouds.map(cloud => (
+        <MemoCloud key={cloud.id} cloud={cloud} />
       ))}
     </div>
   );

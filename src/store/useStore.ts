@@ -1,10 +1,12 @@
 import { create } from "zustand";
-import { TimeSlice, timeSlice } from "~/store/slices/time.ts";
+import { TimeSlice, timeSlice } from "~/store/slices/timeSlice.ts";
 import { CmdSlice, cmdSlice } from "~/store/slices/cmdSlice.ts";
+import { CloudSlice, cloudsSlice } from "~/store/slices/clouds.ts";
 
-const useStore = create<TimeSlice & CmdSlice>()((...a) => ({
+const useStore = create<TimeSlice & CmdSlice & CloudSlice>()((...a) => ({
   ...timeSlice(...a),
   ...cmdSlice(...a),
+  ...cloudsSlice(...a),
 }));
 
 export default useStore;

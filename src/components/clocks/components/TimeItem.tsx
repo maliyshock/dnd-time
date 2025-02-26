@@ -15,8 +15,8 @@ type TimeItemProps = {
 };
 
 export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVariation, descenderVariation }: TimeItemProps) {
-  const upVariation = useRef(raiserVariation || getRandomNum(2));
-  const downVariation = useRef(descenderVariation || getRandomNum(2));
+  const upVariation = useRef(raiserVariation || getRandomNum({ max: 2 }));
+  const downVariation = useRef(descenderVariation || getRandomNum({ max: 2 }));
   const cmdIsPressed = useStore(store => store.cmdIsPressed);
 
   return (
