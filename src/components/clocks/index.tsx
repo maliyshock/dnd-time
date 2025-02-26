@@ -1,64 +1,26 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import "./clocks.scss";
 import useStore from "~/store/useStore.ts";
-import { MemoizedTimeItem, TimeItem } from "~/components/clocks/components/TimeItem.tsx";
-import { getRandomNum } from "~/utils/getRandomNum.ts";
 import { Player } from "~/components/clocks/components/Player.tsx";
-import { updateTime } from "~/utils/time/updateTime.ts";
-import { HOUR, MINUTE, SECOND } from "~/constants.ts";
-import { getHours } from "~/utils/time/getHours.ts";
-import { getMinutes } from "~/utils/time/getMinutes.ts";
-import { getSeconds } from "~/utils/time/getSeconds.ts";
 import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
+import { Hours } from "~/components/clocks/components/Hours.tsx";
+import { Minutes } from "~/components/clocks/components/Minutes.tsx";
+import { Seconds } from "~/components/clocks/components/Seconds.tsx";
 
 export default function Clocks() {
-  const play = useStore(store => store.play);
-  const setPlay = useStore(store => store.setPlay);
-  const time = useStore(store => store.time);
-  const setTotalSeconds = useStore(store => store.setTime);
+  const timer = useRef<NodeJS.Timeout | null>(null);
+  const setTimeIsChanging = useStore(store => store.setTimeIsChanging);
 
-  const memoryBank = useRef<boolean | null>(null);
-  const playRef = useRef(play);
-  const timeChangeRef = useRef<NodeJS.Timeout>(null);
-  const upVariation = useRef(getRandomNum(2));
-  const downVariation = useRef(getRandomNum(2));
-
-  const hours = getHours(time);
-  const minutes = getMinutes(time);
-  const seconds = getSeconds(time);
-
-  const timeHandler = useCallback(() => {
-    if (memoryBank.current === false && playRef.current === true) {
-      return;
+  const handleTimeChange = useCallback(() => {
+    if (timer.current !== null) {
+      clearTimeout(timer.current);
     }
 
-    if (memoryBank.current === true && playRef.current === false) {
-      setPlay(true);
-    }
-
-    timeChangeRef.current = null;
-  }, [setPlay]);
-
-  const handleTimeChange = useCallback(
-    (step: number) => {
-      // remember what was the play value on the moment of the call
-      memoryBank.current = timeChangeRef.current === null ? play : memoryBank.current;
-      if (play) {
-        setPlay(false);
-      }
-
-      // throttle
-      setTotalSeconds(updateTime(time, step));
-      timeChangeRef.current = timeChangeRef.current || setTimeout(timeHandler, 500);
-    },
-    [play, setPlay, setTotalSeconds, timeHandler, time],
-  );
+    timer.current = setTimeout(() => setTimeIsChanging(false), 500);
+    setTimeIsChanging(true);
+  }, [setTimeIsChanging]);
 
   useTimeUpdater();
-
-  useEffect(() => {
-    playRef.current = play;
-  }, [play]);
 
   return (
     <div className="clocks">
@@ -67,18 +29,11 @@ export default function Clocks() {
       </div>
 
       <div className="clocks__display">
-        <MemoizedTimeItem step={HOUR} value={hours} onTimeChange={handleTimeChange} />
+        <Hours onTimeChange={handleTimeChange} />
         :
-        <MemoizedTimeItem step={MINUTE} value={minutes} onTimeChange={handleTimeChange} />
+        <Minutes onTimeChange={handleTimeChange} />
         :
-        <TimeItem
-          descenderVariation={downVariation.current}
-          fadeOut
-          raiserVariation={upVariation.current}
-          step={SECOND}
-          value={seconds}
-          onTimeChange={handleTimeChange}
-        />
+        <Seconds onTimeChange={handleTimeChange} />
       </div>
     </div>
   );

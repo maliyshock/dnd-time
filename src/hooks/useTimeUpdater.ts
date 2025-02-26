@@ -9,22 +9,22 @@ type UseTimeUpdater = {
 
 export const useTimeUpdater = (props?: UseTimeUpdater) => {
   const play = useStore(store => store.play);
+  const timeIsChanging = useStore(store => store.timeIsChanging);
   const setTime = useStore(store => store.setTime);
-  const time = useStore(store => store.time);
 
   useEffect(() => {
     if (props?.initTime !== undefined) {
-      setTime(props.initTime);
+      setTime(() => props.initTime!);
     }
   }, [props?.initTime, setTime]);
 
   useEffect(() => {
-    if (play) {
-      const interval = setInterval(() => {
-        setTime(updateTime(time, SECOND));
-      }, 1000);
+    const interval = setInterval(() => {
+      if (play && !timeIsChanging) {
+        setTime((prevTime: number) => updateTime(prevTime, SECOND));
+      }
+    }, 1000);
 
-      return () => clearInterval(interval);
-    }
-  }, [play, setTime, time]);
+    return () => clearInterval(interval);
+  }, [play, setTime, timeIsChanging]);
 };

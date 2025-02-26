@@ -1,23 +1,25 @@
 import { Stop } from "~/components/icons/stop.tsx";
 import { Play } from "~/components/icons/play.tsx";
 import useStore from "~/store/useStore.ts";
-import { useState } from "react";
+import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
 
 export function Player() {
   const play = useStore(store => store.play);
   const setPlay = useStore(store => store.setPlay);
   const cmdIsPressed = useStore(store => store.cmdIsPressed);
-  const [localState, setLocalState] = useState<boolean>(play);
+  const [, setState] = useAnimationControl();
 
   return (
     <button
       className={`clocks__player ${cmdIsPressed ? "fade-in" : ""}`}
       onClick={() => {
-        setPlay(!play);
-        setLocalState(!play);
+        const nextState = !play;
+
+        setPlay(nextState);
+        setState(nextState ? "running" : "paused");
       }}
     >
-      {localState ? <Stop /> : <Play />}
+      {play ? <Stop /> : <Play />}
     </button>
   );
 }

@@ -76,6 +76,14 @@
 
         @include mixins.clickable;
 
+        &:hover {
+            opacity: 0.4;
+        }
+
+        &:active {
+            opacity: 0.6;
+        }
+
         &.descender {
             transform: scale(1,-1);
         }

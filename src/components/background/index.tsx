@@ -10,10 +10,10 @@ export function Background() {
   const controls = useAnimation();
 
   useEffect(() => {
-    const newBackground = `linear-gradient(135deg, rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b}), rgb(${secondColor.r}, ${secondColor.g}, ${secondColor.b}) 100%`;
+    const newBackground = `linear-gradient(${currentColors[2] || 45}deg, rgb(${firstColor.r}, ${firstColor.g}, ${firstColor.b}), rgb(${secondColor.r}, ${secondColor.g}, ${secondColor.b}) 100%`;
 
     controls.start({ background: newBackground });
-  }, [controls, firstColor.b, firstColor.g, firstColor.r, secondColor.b, secondColor.g, secondColor.r]);
+  }, [controls, currentColors, firstColor.b, firstColor.g, firstColor.r, secondColor.b, secondColor.g, secondColor.r]);
 
   return <motion.div animate={controls} className="background" transition={{ duration: 2 }} />;
 }

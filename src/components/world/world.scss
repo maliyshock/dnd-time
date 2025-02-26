@@ -2,36 +2,49 @@
 
 .world {
     position: relative;
-    z-index: 10;
+    z-index: var(--world-layer);
     width: 512px;
     height: 512px;
+
+    & > * {
+        user-select: none;
+    }
 }
 
-.world__block-wrapper:has([class*='cloud-']) {
-    animation-name: lift;
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    transform-origin: 50% 50%;
+.world-orbit {
+    pointer-events: none;
+    position: absolute;
+    transform-origin: 50% 100%;
+    display: flex;
+    left: 50%;
+    bottom: 50%;
+    height: 58%;
+
+    animation-play-state: var(--animation-play-state);
+
+    &.before {
+        z-index: var(--cloud-layer-before);
+    }
+
+    &.after {
+        z-index: var(--cloud-layer-after);
+    }
 }
 
-.world__block-wrapper:has(.cloud-0) {
-    animation-duration: 7s;
+@for $i from 0 through 36 {
+    .world-orbit--start-#{$i * 10} {
+        --start-angle: #{$i * 10}deg;
+        transform: translateX(-50%) rotate(var(--start-angle));
+        animation-name: world-orbit-spin;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+    }
 }
-.world__block-wrapper:has(.cloud-1) {
-    animation-duration: 10s;
-}
-.world__block-wrapper:has(.cloud-2) {
-    animation-duration: 12s;
-}
-.world__block-wrapper:has(.cloud-3) {
-    animation-duration: 20s;
-}
-.world__block-wrapper:has(.cloud-4) {
-    animation-duration: 16s;
-}
-.world__block-wrapper:has(.cloud-5) {
-    animation-duration: 18s;
+
+@keyframes world-orbit-spin {
+    to {
+        transform: translateX(-50%) rotate(calc(360deg + var(--start-angle)));
+    }
 }
 
 .world__block-wrapper {
@@ -42,15 +55,24 @@
     height: 100%;
     z-index: 1;
 
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
     &.spin {
         animation-duration: 200s;
         animation-name: spin;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
+        animation-play-state: var(--animation-play-state);
+    }
+
+    &.fast-spin {
+        animation-duration: 90s;
+        animation-name: spin;
+        animation-play-state: var(--animation-play-state);
     }
 }
 
 .world__block {
+    display: block;
     width: 100%;
     height: 100%;
 
@@ -64,40 +86,4 @@
     animation-iteration-count: infinite;
 }
 
-.ground {
-    background-image:
-            url("../../assets/small_world/ground.png");
-    animation-duration: 90s;
-}
-
-.cloud-0 {
-    background-image: url("../../assets/small_world/cloud-0.png");
-    animation-duration: 160s;
-}
-
-.cloud-1 {
-    background-image: url("../../assets/small_world/cloud-1.png");
-    animation-duration: 135s;
-}
-
-.cloud-2 {
-    background-image: url("../../assets/small_world/cloud-2.png");
-    animation-duration: 108s;
-}
-
-.cloud-3 {
-    background-image: url("../../assets/small_world/cloud-3.png");
-    animation-duration: 142s;
-}
-
-.cloud-4 {
-    background-image: url("../../assets/small_world/cloud-4.png");
-    animation-duration: 152s;
-}
-.cloud-5 {
-    background-image: url("../../assets/small_world/cloud-5.png");
-    animation-duration: 118s;
-}
-
 @include mixins.spin-animation;
-@include mixins.lift-animation;
