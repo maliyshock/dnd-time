@@ -11,7 +11,7 @@ export function Player() {
 
   return (
     <button
-      className={`clocks__player ${cmdIsPressed ? "fade-in" : ""}`}
+      className={`clocks__player clocks__clickable-item ${cmdIsPressed ? "fade-in" : ""}`}
       onClick={() => {
         const nextState = !play;
 

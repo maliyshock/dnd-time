@@ -22,15 +22,15 @@ export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVar
   return (
     <div className="clocks__item-wrapper">
       <div className="clocks__item-changer-wrapper">
-        <button className={`clocks__item-changer riser ${cmdIsPressed ? "fade-in" : ""}`} onClick={() => onTimeChange(step)}>
+        <button className={`clocks__item-changer clocks__clickable-item riser ${cmdIsPressed ? "fade-in" : ""}`} onClick={() => onTimeChange(step)}>
           <Up variation={upVariation.current} />
         </button>
       </div>
 
-      <div className={`clocks__item ${fadeOut ? "fade-out" : ""}`}>{formatTime(value)}</div>
+      <div className={`clocks__item  ${fadeOut ? "fade-out" : ""}`}>{formatTime(value)}</div>
 
       <div className="clocks__item-changer-wrapper">
-        <button className={`clocks__item-changer descender ${cmdIsPressed ? "fade-in" : ""}`} onClick={() => onTimeChange(-step)}>
+        <button className={`clocks__item-changer clocks__clickable-item descender ${cmdIsPressed ? "fade-in" : ""}`} onClick={() => onTimeChange(-step)}>
           <Up variation={downVariation.current} />
         </button>
       </div>

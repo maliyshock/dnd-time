@@ -11,8 +11,6 @@ type CloudProps = {
   cloud: CloudType;
 };
 
-const transitionTime = 2000;
-
 export function Cloud({ cloud }: CloudProps) {
   // const currentColors = useStore(store => store.currentColors);
   const lifeTimeTimer = useTimer();
@@ -30,6 +28,7 @@ export function Cloud({ cloud }: CloudProps) {
   // const rainPath = `src/assets/clouds/cloud_${cloud.cloudVariation}/rain.png`;
   const [fadeIn, setFadeIn] = useState(false);
   const [isDying, setIsDying] = useState(false);
+  const transitionTime = getRandomNum({ min: 2000, max: 5000 });
 
   // cloud color?
   // cloud rain
@@ -98,9 +97,10 @@ export function Cloud({ cloud }: CloudProps) {
 
   useEffect(() => {
     let mounted = true;
+    let timeoutId: NodeJS.Timeout | undefined;
 
     if (isDying && isPlay) {
-      setTimeout(async () => {
+      timeoutId = setTimeout(async () => {
         if (mounted) {
           await scheduleRecreation(cloud.id);
         }
@@ -109,8 +109,9 @@ export function Cloud({ cloud }: CloudProps) {
 
     return () => {
       mounted = false;
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
     };
-  }, [cloud.id, isDying, isPlay, scheduleRecreation]);
+  }, [cloud.id, isDying, isPlay, scheduleRecreation, transitionTime]);
 
   // useEffect(() => {
   //   if (isRain) {
