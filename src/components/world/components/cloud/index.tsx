@@ -4,7 +4,7 @@ import "./cloud.scss";
 import { Dimensions, getImageDimensions } from "~/components/world/components/cloud/utils/getImageDimensions.ts";
 import { getStartPoint } from "~/components/world/components/cloud/utils/getStartingPoint.ts";
 import useStore from "~/store/useStore.ts";
-import { Cloud as CloudType } from "~/store/slices/clouds";
+import { Cloud as CloudType } from "~/store/slices/cloudsSlice";
 import { useTimer } from "~/hooks/useTimer.ts";
 
 type CloudProps = {
