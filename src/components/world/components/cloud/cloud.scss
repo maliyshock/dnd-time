@@ -1,6 +1,7 @@
 @use "../../../../scss/mixins";
 
 .cloud {
+	text-align: center;
 	position: relative;
 	opacity: 0;
 	animation-play-state: var(--animation-play-state);
