@@ -1,31 +1,36 @@
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import { memo, useEffect, useRef, useState } from "react";
 import "./cloud.scss";
-import { Dimensions, getImageDimensions } from "~/components/world/components/cloud/utils/getImageDimensions.ts";
 import { getStartPoint } from "~/components/world/components/cloud/utils/getStartingPoint.ts";
 import useStore from "~/store/useStore.ts";
 import { Cloud as CloudType } from "~/store/slices/cloudsSlice";
 import { useTimer } from "~/hooks/useTimer.ts";
+import { getImageDimensions } from "~/components/world/components/cloud/utils/getImageDimensions.ts";
 
 type CloudProps = {
   cloud: CloudType;
 };
+
+function getImageUrl(variation: number) {
+  // note that this does not include files in subdirectories
+  return new URL(`/src/assets/clouds/cloud_${variation}/default.png`, import.meta.url).href;
+}
 
 export function Cloud({ cloud }: CloudProps) {
   // const currentColors = useStore(store => store.currentColors);
   const lifeTimeTimer = useTimer();
   const scheduleRecreation = useStore(store => store.scheduleRecreation);
   const isPlay = useStore(store => store.play);
-  const [dimensions, setDimensions] = useState<Dimensions | null>(null);
-  const [width, setWidth] = useState<number | null>(null);
   // const [isRain, setIsRain] = useState<boolean>(false);
   const startAngle = useRef<number>(getStartPoint());
   const isBefore = useRef<boolean>(!!getRandomNum({ max: 1 }));
   const rotationSpeed = useRef<number>(getRandomNum({ min: 90, max: 200 }));
+  const path = getImageUrl(cloud.cloudVariation);
+
   // const conuterThreshold = useRef<number>(getRandomNum({ min: 10, max: 30 }));
   // const [counter, setCounter] = useState<number>(0);
-  const path = `src/assets/clouds/cloud_${cloud.cloudVariation}/default.png`;
   // const rainPath = `src/assets/clouds/cloud_${cloud.cloudVariation}/rain.png`;
+  const [width, setWidth] = useState<number | undefined>(undefined);
   const [fadeIn, setFadeIn] = useState(false);
   const [isDying, setIsDying] = useState(false);
   const transitionTime = getRandomNum({ min: 2000, max: 5000 });
@@ -46,10 +51,10 @@ export function Cloud({ cloud }: CloudProps) {
   // }, [counter]);
 
   useEffect(() => {
+    // we need concrete dimensions in PX since width '%'  intrinsic size messes up with parent size, and we need to stack images
+    // upon each other in the very same way
     const getDimensions = async () => {
       const result = await getImageDimensions(path);
-
-      setDimensions(result);
       const baseWidth = result.width / 2;
       const minWith = Math.round(baseWidth - 0.15 * baseWidth);
       const maxWith = Math.round(baseWidth + 0.15 * baseWidth);
@@ -122,7 +127,7 @@ export function Cloud({ cloud }: CloudProps) {
   //   }
   // }, [isRain]);
 
-  if (dimensions === null || width === null) return null;
+  if (width === undefined) return null;
 
   return (
     <div
@@ -146,8 +151,8 @@ export function Cloud({ cloud }: CloudProps) {
         {/*)}*/}
 
         {/*<div className="cloud__img" style={{ ...(!isRain ? { backgroundImage: `url(${path})` } : {}) }}>*/}
-        <div className="cloud__img" style={{ backgroundImage: `url(${path})` }}>
-          <img alt="cloud 8" className="hidden" draggable="false" src={path} width={width} />
+        <div className="cloud__img">
+          <img alt="cloud 8" draggable="false" src={path} width={width} />
         </div>
       </div>
     </div>

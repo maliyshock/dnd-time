@@ -8,7 +8,7 @@ import { rgbToHsl } from "~/utils/colors/rgbToHsl.ts";
 
 type AuraProps = {
   scaleUp?: number;
-  texture?: string;
+  texture?: URL;
   rotation?: boolean;
   transparencyStart?: number;
 };
@@ -16,7 +16,7 @@ type AuraProps = {
 type MakeRadialGradient = {
   color: RGBColor;
   transparencyStart: number;
-  texture?: string;
+  texture?: URL;
 };
 
 function makeRadialGradient({ color, transparencyStart, texture }: MakeRadialGradient) {
@@ -25,7 +25,7 @@ function makeRadialGradient({ color, transparencyStart, texture }: MakeRadialGra
 
 export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart = 70 }: AuraProps) {
   const currentColors = useStore(store => store.currentColors);
-  const hsl0 = rgbToHsl(currentColors[0]); // { l: 50 }
+  const hsl0 = rgbToHsl(currentColors[0]);
   const hsl1 = rgbToHsl(currentColors[1]);
   const lighterColor = hsl0.l >= hsl1.l ? currentColors[0] : currentColors[1];
   const auraColor = lighter(lighterColor, 30);
@@ -35,11 +35,10 @@ export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart
     const newBackground = makeRadialGradient({ color: auraColor, transparencyStart, texture });
 
     controls.start({
+      transition: { duration: 2 },
       backgroundImage: newBackground,
       ...(texture !== undefined
         ? {
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
             backgroundSize: `100%, ${Math.round((1 / scaleUp) * 100)}%`,
           }
         : {}),
@@ -50,10 +49,13 @@ export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart
     <motion.div
       animate={controls}
       className={`aura ${rotation ? "rotation" : ""}`}
-      style={{
+      initial={{
+        backgroundImage: makeRadialGradient({ color: auraColor, transparencyStart, texture }),
         transform: `scale(${scaleUp})`,
+        backgroundSize: "100%, 0%",
+        backgroundRepeat: "no-repeat, no-repeat",
+        backgroundPosition: "center, center",
       }}
-      transition={{ duration: 2 }}
     />
   );
 }
