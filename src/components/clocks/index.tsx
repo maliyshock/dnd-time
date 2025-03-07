@@ -2,7 +2,6 @@ import { useCallback, useRef } from "react";
 import "./clocks.scss";
 import useStore from "~/store/useStore.ts";
 import { Player } from "~/components/clocks/components/Player.tsx";
-import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
 import { Hours } from "~/components/clocks/components/Hours.tsx";
 import { Minutes } from "~/components/clocks/components/Minutes.tsx";
 import { Seconds } from "~/components/clocks/components/Seconds.tsx";
@@ -19,8 +18,6 @@ export default function Clocks() {
     timer.current = setTimeout(() => setTimeIsChanging(false), 500);
     setTimeIsChanging(true);
   }, [setTimeIsChanging]);
-
-  useTimeUpdater();
 
   return (
     <div className="clocks">
