@@ -32,4 +32,4 @@ export const NIGHT_ANGLE = 90;
 export const DAY_ANGLE_PER_SECOND = DAY_ANGLE / DAY_TIME_DURATION;
 export const NIGHT_ANGLE_PER_SECOND = NIGHT_ANGLE / DAY_TIME_DURATION;
 
-export const SCENE_CLOUDS_AMOUNT = 5;
+export const TICK = 1000;

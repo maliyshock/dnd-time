@@ -4,6 +4,7 @@ import { SECOND } from "~/constants.ts";
 import { useCallback } from "react";
 import { updateTime } from "~/utils/time/updateTime.ts";
 import { getSeconds } from "~/utils/time/getSeconds.ts";
+import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
 
 type SecondsProps = {
   onTimeChange(): void;
@@ -21,6 +22,8 @@ export function Seconds({ onTimeChange }: SecondsProps) {
     },
     [onTimeChange, setTime],
   );
+
+  useTimeUpdater();
 
   return <TimeItem fadeOut step={SECOND} value={seconds} onTimeChange={handleTimeChange} />;
 }
