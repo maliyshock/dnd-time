@@ -1,4 +1,5 @@
-@import "variables";
+@use "variables.scss";
+@use "sass:math";
 
 @mixin clickable {
 	padding: 0;
@@ -34,19 +35,19 @@
 
 // queries
 @mixin for-phone-up {
-	@media (min-width: $phoneUp) { @content; }
+	@media (min-width: variables.$phoneUp) { @content; }
 }
 
 @mixin for-tablet-portrait-up {
-	@media (min-width: $tabletPortraitUp) { @content; }
+	@media (min-width: variables.$desktopUp) { @content; }
 }
 
 @mixin for-tablet-landscape-up {
-	@media (min-width: $tabletLandscapeUp) { @content; }
+	@media (min-width: variables.$desktopUp) { @content; }
 }
 
 @mixin for-desktop-up {
-	@media (min-width: $desktopUp) { @content; }
+	@media (min-width: variables.$desktopUp) { @content; }
 }
 
 // works with rem
@@ -59,20 +60,20 @@
 	// 100vw = it is like 100% = 360px
 	// 1 vw = 3.6
 	// 16 * 3 = (16 / 3.6) * 3 = 4.4 * 3 = 13.3
-	$vw: stripUnit($min-width) / 100; // 1vw
-	$size: (stripUnit($fontSizeBase) / $vw) * $minRemFactor;
+	$vw: math.div(stripUnit($min-width), 100); // 1vw
+	$size:  math.div(stripUnit(variables.$fontSizeBase), $vw) * $minRemFactor;
 
 	#{$property}: clamp(#{$minRemFactor}rem, #{$size}VW, #{$maxRemFactor}rem)
 }
 
 @function stripUnit($value) {
-	@return $value / ($value * 0 + 1);
+	@return math.div($value, ($value * 0 + 1));
 }
 
 @function rem($pxValue) {
-	@return #{stripUnit($pxValue) / stripUnit($fontSizeBase)}rem;
+	@return #{math.div(stripUnit($pxValue), stripUnit(variables.$fontSizeBase))}rem;
 }
 
 @function rem-to-px($rem-value) {
-	@return ($rem-value / 1rem) * $fontSizeBase;
+	@return math.div($rem-value, 1rem) * variables.$fontSizeBase;
 }

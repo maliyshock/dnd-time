@@ -1,5 +1,5 @@
 @use "../../scss/mixins";
-@import "../../scss/variables";
+@use "../../scss/variables.scss";
 
 .clocks {
     position: relative;
@@ -51,14 +51,14 @@
             width,
             3,
             5,
-            $phoneUp,
+            variables.$desktopUp,
         );
 
         @include mixins.dynamic-size(
             height,
             3,
             5,
-            $phoneUp,
+            variables.$phoneUp,
         );
 
         background-color: transparent;
@@ -81,7 +81,7 @@
             font-size,
             3,
             6,
-            $phoneUp,
+            variables.$phoneUp,
         );
 
         gap: 1rem;
@@ -97,7 +97,7 @@
             width,
             4,
             8,
-            $phoneUp,
+            variables.$phoneUp,
         );
 
         opacity: 1;
@@ -131,14 +131,14 @@
             width,
             2,
             3.75,
-            $phoneUp,
+            variables.$phoneUp,
         );
 
         @include mixins.dynamic-size(
             height,
             2,
             3.75,
-            $phoneUp,
+            variables.$phoneUp,
         );
 
         background: transparent;

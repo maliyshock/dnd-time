@@ -1,5 +1,5 @@
-@import "typography.scss";
-@import "variables.scss";
+@use "variables.scss";
+@import url("typography.scss");
 
 :root {
   font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -23,7 +23,7 @@
 html, body {
   overflow: hidden;
   height: 100%;
-  font-size: $fontSizeBase
+  font-size: variables.$fontSizeBase
 }
 
 body {
