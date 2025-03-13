@@ -7,7 +7,6 @@ export type CmdSlice = {
 
 const initialState = {
   cmdIsPressed: false,
-  setCmdIsPressed: () => null,
 };
 
 export const cmdSlice: StateCreator<CmdSlice, [], [], CmdSlice> = set => ({

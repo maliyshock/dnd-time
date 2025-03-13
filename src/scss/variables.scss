@@ -1,12 +1,24 @@
 :root {
 	--background-layer: 1;
 	--sun-layer: 10;
+	--world-aura-layer: 15;
 	--cloud-layer-before: 19;
 	--world-layer: 20;
 	--cloud-layer-after: 21;
-	--world-aura-layer: 15;
 	--layout-layer: 100;
 	--overlay-layer: 1000;
 
 	--animation-play-state: running;
+
+	--layout-aside: 20;
+	--layout-main: 10;
 }
+
+$phoneUp: 320px;
+$tabletPortraitUp: 600px;
+$tabletLandscapeUp: 900px;
+$desktopUp: 1200px;
+
+$fontName: "dyna_puff";
+$fontsPath: "../assets/fonts/dyna-puff";
+$fontSizeBase: 16px;

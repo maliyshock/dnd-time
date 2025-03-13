@@ -1,13 +1,19 @@
 @use "../../scss/mixins";
+@use "../../scss/variables.scss";
 
 .clocks {
     position: relative;
     z-index: 100;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     color: white;
+
+    @include mixins.for-tablet-portrait-up {
+        gap: 1rem;
+    }
 
     &__clickable-item {
         opacity: 0.2;
@@ -21,6 +27,18 @@
         }
     }
 
+    &__player-wrapper {
+        order: 2;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        @include mixins.for-desktop-up {
+            width: auto;
+            order: unset;
+        }
+    }
+
     &__player {
         padding: 0;
         margin: 0;
@@ -29,8 +47,20 @@
         align-items: center;
         color: white;
 
-        width: 5rem;
-        height: 5rem;
+        @include mixins.dynamic-size(
+            width,
+            3,
+            5,
+            variables.$desktopUp,
+        );
+
+        @include mixins.dynamic-size(
+            height,
+            3,
+            5,
+            variables.$phoneUp,
+        );
+
         background-color: transparent;
 
         transition: opacity 0.2s;
@@ -46,15 +76,36 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 6rem;
+
+        @include mixins.dynamic-size(
+            font-size,
+            3,
+            6,
+            variables.$phoneUp,
+        );
+
         gap: 1rem;
         text-align: center;
+
+        @include mixins.for-tablet-landscape-up {
+            font-size: 6rem;
+        }
     }
 
     &__item {
-        min-width: 8rem;
+        @include mixins.dynamic-size(
+            width,
+            4,
+            8,
+            variables.$phoneUp,
+        );
+
         opacity: 1;
         transition: opacity 1s;
+
+        @include mixins.for-tablet-landscape-up {
+            min-width: 8rem;
+        }
 
         &.fade-out {
             opacity: 0.2;
@@ -75,8 +126,21 @@
         align-items: center;
         color: white;
         fill: white;
-        width: 3.75rem;
-        height: 3.75rem;
+
+        @include mixins.dynamic-size(
+            width,
+            2,
+            3.75,
+            variables.$phoneUp,
+        );
+
+        @include mixins.dynamic-size(
+            height,
+            2,
+            3.75,
+            variables.$phoneUp,
+        );
+
         background: transparent;
         outline: none;
         border: none;

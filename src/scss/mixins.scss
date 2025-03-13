@@ -1,3 +1,6 @@
+@use "variables.scss";
+@use "sass:math";
+
 @mixin clickable {
 	padding: 0;
 	border: none;
@@ -28,4 +31,49 @@
 			opacity: 1;
 		}
 	}
+}
+
+// queries
+@mixin for-phone-up {
+	@media (min-width: variables.$phoneUp) { @content; }
+}
+
+@mixin for-tablet-portrait-up {
+	@media (min-width: variables.$desktopUp) { @content; }
+}
+
+@mixin for-tablet-landscape-up {
+	@media (min-width: variables.$desktopUp) { @content; }
+}
+
+@mixin for-desktop-up {
+	@media (min-width: variables.$desktopUp) { @content; }
+}
+
+// works with rem
+@mixin dynamic-size(
+	$property,
+	$minRemFactor,
+	$maxRemFactor,
+	$min-width, // in px
+) {
+	// 100vw = it is like 100% = 360px
+	// 1 vw = 3.6
+	// 16 * 3 = (16 / 3.6) * 3 = 4.4 * 3 = 13.3
+	$vw: math.div(stripUnit($min-width), 100); // 1vw
+	$size:  math.div(stripUnit(variables.$fontSizeBase), $vw) * $minRemFactor;
+
+	#{$property}: clamp(#{$minRemFactor}rem, #{$size}VW, #{$maxRemFactor}rem)
+}
+
+@function stripUnit($value) {
+	@return math.div($value, ($value * 0 + 1));
+}
+
+@function rem($pxValue) {
+	@return #{math.div(stripUnit($pxValue), stripUnit(variables.$fontSizeBase))}rem;
+}
+
+@function rem-to-px($rem-value) {
+	@return math.div($rem-value, 1rem) * variables.$fontSizeBase;
 }
