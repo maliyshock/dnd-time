@@ -1,17 +1,36 @@
+@use "../../scss/mixins";
 
 /*if orientation is album*/
 /*if orientation is portrait*/
 .sun-orbit {
+    height: 100vh;
+
     position: absolute;
     z-index: var(--sun-layer);
-    transform-origin: 50% 0%;
+    transform: translateX(-50%);
     transition: transform 1s;
-    height: calc(45vw - 35px);
     display: flex;
-    align-items: end;
-    left: 0;
-    top: 50%;
+    align-items: center;
+
+    left: 50%;
+    bottom: 0%;
+
     pointer-events: none;
+
+    @include mixins.for-tablet-landscape-up {
+        align-items: end;
+        transform: translateX(-50%) translateY(-30svh);
+    }
+
+    @include mixins.for-desktop-up {
+        height: calc(45vw - 35px);
+
+        transform-origin: 50% 0%;
+
+        left: 0;
+        top: 50%;
+        transform: rotate(var(--sun-angle));
+    }
 }
 
 .sun {
@@ -28,6 +47,12 @@
         width: 100%;
         height: 100%;
         transition: transform 1s;
+
+        transform: translateY(calc(var(--radiants) * 50vh));
+
+        @include mixins.for-desktop-up {
+            transform: translateY(calc(var(--amplitude) * 30VH))
+        }
 
         &:before {
             content: '';

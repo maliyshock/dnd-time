@@ -10,10 +10,10 @@ export default function World() {
 
   return (
     <div className="world">
-      <div className="world__block-wrapper spin">
+      <div className="world__block spin">
         <Aura rotation scaleUp={1.5} texture={auraTexturePath} transparencyStart={60} />
       </div>
-      <div className="world__block-wrapper fast-spin">
+      <div className="world__block fast-spin">
         <Ground />
       </div>
       {clouds.map(cloud => (

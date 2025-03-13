@@ -1,5 +1,5 @@
-@import url("typography.scss");
-@import url("variables.scss");
+@import "typography.scss";
+@import "variables.scss";
 
 :root {
   font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -20,12 +20,16 @@
   height: 100%;
 }
 
+html, body {
+  overflow: hidden;
+  height: 100%;
+  font-size: $fontSizeBase
+}
+
 body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
   justify-content: center;
   /*background-color: #245399;*/
   background: linear-gradient(180deg, #245399 0%, #003582 100%);

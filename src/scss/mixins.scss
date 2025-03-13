@@ -1,3 +1,5 @@
+@import "variables";
+
 @mixin clickable {
 	padding: 0;
 	border: none;
@@ -28,4 +30,49 @@
 			opacity: 1;
 		}
 	}
+}
+
+// queries
+@mixin for-phone-up {
+	@media (min-width: $phoneUp) { @content; }
+}
+
+@mixin for-tablet-portrait-up {
+	@media (min-width: $tabletPortraitUp) { @content; }
+}
+
+@mixin for-tablet-landscape-up {
+	@media (min-width: $tabletLandscapeUp) { @content; }
+}
+
+@mixin for-desktop-up {
+	@media (min-width: $desktopUp) { @content; }
+}
+
+// works with rem
+@mixin dynamic-size(
+	$property,
+	$minRemFactor,
+	$maxRemFactor,
+	$min-width, // in px
+) {
+	// 100vw = it is like 100% = 360px
+	// 1 vw = 3.6
+	// 16 * 3 = (16 / 3.6) * 3 = 4.4 * 3 = 13.3
+	$vw: stripUnit($min-width) / 100; // 1vw
+	$size: (stripUnit($fontSizeBase) / $vw) * $minRemFactor;
+
+	#{$property}: clamp(#{$minRemFactor}rem, #{$size}VW, #{$maxRemFactor}rem)
+}
+
+@function stripUnit($value) {
+	@return $value / ($value * 0 + 1);
+}
+
+@function rem($pxValue) {
+	@return #{stripUnit($pxValue) / stripUnit($fontSizeBase)}rem;
+}
+
+@function rem-to-px($rem-value) {
+	@return ($rem-value / 1rem) * $fontSizeBase;
 }

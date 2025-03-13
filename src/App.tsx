@@ -1,4 +1,4 @@
-import "./layout.scss";
+import "./app.scss";
 import World from "~/components/world";
 import Sun from "~/components/sun";
 import Clocks from "~/components/clocks";
@@ -23,8 +23,10 @@ export default function App() {
           <Clocks />
         </aside>
         <div className="layout__main">
-          <World />
-          <Sun />
+          <div className="world-container">
+            <World />
+            <Sun />
+          </div>
         </div>
       </div>
     </>
