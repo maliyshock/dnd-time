@@ -3,11 +3,16 @@ import useStore from "~/store/useStore.ts";
 
 export function useKeyListener() {
   const setCmdIsPressed = useStore(store => store.setCmdIsPressed);
+  const setTogglePlay = useStore(store => store.setTogglePlay);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.metaKey) {
-        setCmdIsPressed(true);
+      if (e.key === "Meta") {
+        setCmdIsPressed(true); // TODO: just show tips, we do not need cmd is pressed
+      }
+
+      if (e.code === "Space") {
+        setTogglePlay();
       }
     };
 
@@ -25,7 +30,7 @@ export function useKeyListener() {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [setCmdIsPressed]);
+  }, [setCmdIsPressed, setTogglePlay]);
 
   return;
 }
