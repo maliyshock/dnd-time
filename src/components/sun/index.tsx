@@ -9,7 +9,8 @@ export default function Sun() {
   const sunAngle = useStore(store => store.sunAngle);
   const orientation = useScreenOrientation();
   const amplitude = orientation === "landscape-primary" ? Math.cos(toRadians(sunAngle)) : Math.sin(toRadians(sunAngle));
-  const radiants = Math.cos(toRadians(sunAngle));
+  const cosRad = Math.cos(toRadians(sunAngle));
+  const sinRad = Math.sin(toRadians(sunAngle));
 
   const sunOrbitStyle = {
     "--sun-angle": `${sunAngle}deg`,
@@ -17,13 +18,13 @@ export default function Sun() {
   } as CSSProperties;
 
   const sunBodyStyle = {
-    "--radiants": radiants,
+    "--radiants": cosRad,
     "--amplitude": amplitude,
   } as CSSProperties;
 
   return (
     <div className="sun-orbit" style={sunOrbitStyle}>
-      <div className="sun">
+      <div className="sun" style={{ transform: `translateX(${sinRad * 100}%)` }}>
         <div className="sun__body" style={sunBodyStyle}>
           <Aura scaleUp={10} />
         </div>

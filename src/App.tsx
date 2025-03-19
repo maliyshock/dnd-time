@@ -19,15 +19,15 @@ export default function App() {
       <Overlay />
       <Background />
       <div className="layout">
-        <aside className="layout__aside">
+        <section className="layout__clocks-container">
           <Clocks />
-        </aside>
-        <div className="layout__main">
-          <div className="world-container">
+        </section>
+        <section className="layout__world-container">
+          <div className="world-wrapper">
             <World />
             <Sun />
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
