@@ -5,6 +5,7 @@
     z-index: var(--world-layer);
     width: 512px;
     height: 512px;
+    flex-shrink: 0;
 
     & > * {
         user-select: none;
@@ -17,6 +18,7 @@
         width: 100%;
         height: 100%;
         z-index: 1;
+        transform-origin: center;
 
         display: block;
 
@@ -94,13 +96,6 @@
     }
 
     @include mixins.for-tablet-portrait-up {
-        & > .world {
-            transform: translateY(-50%);
-        }
-    }
-
-
-    @include mixins.for-tablet-landscape-up {
         position: relative;
         width: auto;
         height: auto;

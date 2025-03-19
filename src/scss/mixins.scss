@@ -39,11 +39,11 @@
 }
 
 @mixin for-tablet-portrait-up {
-	@media (min-width: variables.$desktopUp) { @content; }
+	@media (min-width: variables.$tabletPortraitUp) { @content; }
 }
 
 @mixin for-tablet-landscape-up {
-	@media (min-width: variables.$desktopUp) { @content; }
+	@media (min-width: variables.$tabletLandscapeUp) { @content; }
 }
 
 @mixin for-desktop-up {

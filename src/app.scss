@@ -10,7 +10,7 @@
 	flex-direction: column;
 	height: 100%;
 
-	@include mixins.for-tablet-landscape-up{
+	@include mixins.for-tablet-portrait-up{
 		flex-direction: row;
 	}
 
@@ -21,6 +21,7 @@
 	&__world-container {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		flex-shrink: 0;
 		position: relative;
 		z-index: var(--layout-main);
@@ -28,21 +29,9 @@
 
 		margin-top: auto;
 
-		@include mixins.for-tablet-portrait-up{
-			width: 50%;
-		}
-
 		@include mixins.for-tablet-landscape-up{
 			margin-top: unset;
-		}
-
-		& > .world {
-			position: absolute;
-			transform: translate(25%, -15%);
-			@include mixins.for-tablet-landscape-up {
-				position: relative;
-				transform: unset;
-			}
+			width: 50%;
 		}
 	}
 
