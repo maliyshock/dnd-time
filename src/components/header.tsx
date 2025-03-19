@@ -6,7 +6,7 @@ import { useSoundControl } from "~/hooks/useSoundControl.ts";
 export function Header({ className }: { className?: string }) {
   const setSoundToggle = useStore(store => store.setSoundToggle);
   const soundOn = useStore(store => store.soundOn);
-  const { audioContextRef, isReady } = useSoundControl();
+  const { isReady } = useSoundControl();
 
   // TODO: would jump on mobiles if static
   if (!isReady) return;
