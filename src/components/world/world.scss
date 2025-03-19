@@ -5,9 +5,43 @@
     z-index: var(--world-layer);
     width: 512px;
     height: 512px;
+    flex-shrink: 0;
 
     & > * {
         user-select: none;
+    }
+
+    &__block {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        transform-origin: center;
+
+        display: block;
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center 0;
+
+        animation-name: spin;
+        animation-duration: 120s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+
+        &.spin {
+            animation-duration: 200s;
+            animation-name: spin;
+            animation-play-state: var(--animation-play-state);
+        }
+
+        &.fast-spin {
+            animation-duration: 90s;
+            animation-name: spin;
+            animation-play-state: var(--animation-play-state);
+        }
     }
 }
 
@@ -18,7 +52,7 @@
     display: flex;
     left: 50%;
     bottom: 50%;
-    height: 58%;
+    height: 55%;
 
     animation-play-state: var(--animation-play-state);
 
@@ -47,43 +81,30 @@
     }
 }
 
-.world__block {
+.world-wrapper {
     position: absolute;
-    top: 0;
     left: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
-    z-index: 1;
+    height: 1px;
 
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    display: flex;
+    justify-content: flex-end;
 
-    &.spin {
-        animation-duration: 200s;
-        animation-name: spin;
-        animation-play-state: var(--animation-play-state);
+    & > .world {
+        transform: translateY(-50%) translateX(50%);
     }
 
-    &.fast-spin {
-        animation-duration: 90s;
-        animation-name: spin;
-        animation-play-state: var(--animation-play-state);
+    @include mixins.for-tablet-portrait-up {
+        position: relative;
+        width: auto;
+        height: auto;
+        left: 0;
+
+        & > .world {
+            transform: translateX(0%);
+        }
     }
-}
-
-.world__block {
-    display: block;
-    width: 100%;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center 0;
-
-    animation-name: spin;
-    animation-duration: 120s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
 }
 
 @include mixins.spin-animation;

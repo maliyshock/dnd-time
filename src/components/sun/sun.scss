@@ -7,7 +7,7 @@
 
     position: absolute;
     z-index: var(--sun-layer);
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(30%);
     transition: transform 1s;
     display: flex;
     align-items: center;
@@ -38,6 +38,8 @@
     width: 70px;
     height: 70px;
 
+    transition: transform 1s;
+
     &__body {
         display: flex;
         justify-content: center;
@@ -48,7 +50,7 @@
         height: 100%;
         transition: transform 1s;
 
-        transform: translateY(calc(var(--radiants) * 50vh));
+        transform: translateY(calc(var(--radiants) * 30vh));
 
         @include mixins.for-desktop-up {
             transform: translateY(calc(var(--amplitude) * 30VH))

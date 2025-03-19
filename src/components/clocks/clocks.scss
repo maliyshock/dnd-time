@@ -51,7 +51,7 @@
             width,
             3,
             5,
-            variables.$desktopUp,
+            variables.$phoneUp,
         );
 
         @include mixins.dynamic-size(
