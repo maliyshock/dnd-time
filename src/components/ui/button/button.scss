@@ -2,16 +2,22 @@
 //@use "../../scss/variables.scss";
 
 .button {
-	width: 3rem;
-	height: 3rem;
+	$this: &;
+	transition: opacity 200ms ease-in-out;
+	cursor: pointer;
+	box-shadow: none;
+	border: none;
 
-	&--color-transparent {
-		transition: opacity 200ms ease-in-out;
+	&--size-medium {
+		width: 3rem;
+		height: 3rem;
+	}
+
+	&--transparent {
 		background-color: transparent;
 
 		@include mixins.clickable;
 		opacity: 0.2;
-		cursor: pointer;
 
 		&:hover {
 			opacity: 0.4;
@@ -19,6 +25,14 @@
 
 		&:active, &.active {
 			opacity: 0.6;
+		}
+	}
+
+	&--variation-hollow {
+		background-color: transparent;
+
+		&#{$this}--color-white {
+			color: white;
 		}
 	}
 }

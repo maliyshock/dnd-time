@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
 
+// TODO: rename it - there should not be cmd
 export type CmdSlice = {
   cmdIsPressed: boolean;
   setCmdIsPressed: (isPressed: boolean) => void;

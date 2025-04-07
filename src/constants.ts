@@ -1,3 +1,10 @@
+import { AudioFile } from "~/types.ts";
+import music from "~/assets/sound/music.mp3";
+import bip from "~/assets/sound/bip.wav";
+import wetClick from "~/assets/sound/wet-click.wav";
+import wetClickHigh from "~/assets/sound/wet-click-high.wav";
+import drop from "~/assets/sound/drop.mp3";
+
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
@@ -32,4 +39,20 @@ export const NIGHT_ANGLE = 90;
 export const DAY_ANGLE_PER_SECOND = DAY_ANGLE / DAY_TIME_DURATION;
 export const NIGHT_ANGLE_PER_SECOND = NIGHT_ANGLE / DAY_TIME_DURATION;
 
+// time speed
 export const TICK = 1000;
+
+// sound
+export const MAX_VOLUME = 0.7;
+export const FADE_DURATION = 0.5;
+export const HIGHPASS_FREQ = 200;
+export const NORMAL_PLAYBACK_RATE = 1.0;
+export const SLOW_PLAYBACK_RATE = 0.5;
+
+export const AUDIO_FILES: AudioFile[] = [
+  { name: "musicTheme", filePath: music },
+  { name: "bip", filePath: bip },
+  { name: "wetClick", filePath: wetClick },
+  { name: "wetClickHigh", filePath: wetClickHigh },
+  { name: "drop", filePath: drop },
+];

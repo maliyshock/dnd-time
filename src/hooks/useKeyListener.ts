@@ -18,6 +18,7 @@ export function useKeyListener() {
 
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Meta") {
+        // TODO: set show controls
         setCmdIsPressed(false);
       }
     };
