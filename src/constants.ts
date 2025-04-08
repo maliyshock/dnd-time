@@ -4,6 +4,7 @@ import bip from "~/assets/sound/bip.wav";
 import wetClick from "~/assets/sound/wet-click.wav";
 import wetClickHigh from "~/assets/sound/wet-click-high.wav";
 import drop from "~/assets/sound/drop.mp3";
+import tap from "~/assets/sound/tap.mp3";
 
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
@@ -55,7 +56,8 @@ export const AUDIO_FILES: AudioFile[] = [
   { name: "wetClick", filePath: wetClick },
   { name: "wetClickHigh", filePath: wetClickHigh },
   { name: "drop", filePath: drop },
+  { name: "tap", filePath: tap },
 ];
 
 export const STAR_MIN_SIZE = 1;
-export const STAR_MAX_SIZE = 6;
+export const STAR_MAX_SIZE = 8;

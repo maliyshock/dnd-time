@@ -15,7 +15,7 @@
 		url("../../../../assets/small_world/ground.png");
 	animation-duration: 90s;
 
-	transition: transform 0.2s;
+	transition: transform 0.1s;
 
 	&:active {
 		transform: scale(0.95);

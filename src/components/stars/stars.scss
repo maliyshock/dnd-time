@@ -1,3 +1,5 @@
+@use "../../scss/mixins";
+
 .stars {
 	width: 100%;
 	height: 100%;
@@ -6,4 +8,15 @@
 	top: 0;
 	z-index: var(--stars-layer);
 	transition: opacity 0.2s ease;
+	animation: spinReverse 1500s infinite linear;
+	animation-play-state: var(--animation-play-state);
+}
+
+@keyframes spinReverse {
+	from {
+		transform: rotate(360deg);
+	}
+	to {
+		transform: rotate(0deg);
+	}
 }

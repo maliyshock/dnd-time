@@ -133,7 +133,7 @@ export function Cloud({ cloud }: CloudProps) {
 
   return (
     <div
-      onClick={() => playSample()}
+      onMouseDown={() => playSample()}
       className={`world-orbit world-orbit--start-${startAngle.current} ${isBefore.current ? "before" : "after"}`}
       style={{ animationDuration: `${rotationSpeed.current}s` }}
     >

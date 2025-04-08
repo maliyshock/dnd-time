@@ -1,6 +1,20 @@
-.star {
+@use "sass:list";
+
+.star-wrapper {
 	position: absolute;
 	z-index: 100;
+}
+
+$variations: (
+	"broken": (#ff588e, 4px),
+	"blue":   (#58d8ff, 1px),
+	"green":  (#95ff58, 1px),
+	"yellow": (#ffc900, 1px),
+	"orange": (#ff8a58, 1px)
+);
+
+.star {
+	$this: &;
 	background-color: white;
 	border-radius: 100%;
 	cursor: pointer;
@@ -10,29 +24,41 @@
 	animation-name: pulse-animation;
 	animation-play-state: var(--animation-play-state);
 
-	&--variation-broken {
-		background-color: #ff588e;
-		box-shadow: 0 0 20px 4px #ff588e;
+	&__line-h, &__line-v {
+		position: absolute;
+		background-color: white;
+		top: 50%;
+		left: 50%;
 	}
 
-	&--variation-blue {
-		background-color: #58d8ff;
-		box-shadow: 0 0 20px 1px #58D8FFFF;
+	&__line-h {
+		height: 1px;
+		width: 200%;
+
+		transform: translate(-50%, -50%);
 	}
 
-	&--variation-green {
-		background-color: #95ff58;
-		box-shadow: 0 0 20px 1px #95FF58FF;
+	&__line-v {
+		height: 200%;
+		width: 1px;
+		background-color: white;
+
+		transform: translate(-50%, -50%);
 	}
 
-	&--variation-yellow {
-		background-color: #ffc900;
-		box-shadow: 0 0 20px 1px #FFC900FF;
-	}
+	@each $name, $params in $variations {
+		$color: list.nth($params, 1);
+		$shadow-size: list.nth($params, 2);
 
-	&--variation-orange {
-		background-color: #ff8a58;
-		box-shadow: 0 0 20px 1px #FF8A58FF;
+		&--variation-#{$name} {
+			background-color: $color;
+			box-shadow: 0 0 20px $shadow-size $color;
+
+			#{$this}__line-h,
+			#{$this}__line-v {
+				background-color: $color;
+			}
+		}
 	}
 }
 

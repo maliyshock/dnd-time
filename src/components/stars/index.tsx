@@ -47,15 +47,16 @@ export type Star = {
   id: string;
 };
 
-const reduceFactor = 80;
+// TODO: bug on mobile version
+const reduceFactor = 70;
 const starsAmount = Math.round((window.innerWidth / reduceFactor) * (window.innerHeight / reduceFactor));
 
 function createStar(): Star {
   return {
     variation: STARS_PROBABILITY_POOL[getRandomNum({ min: 0, max: STARS_PROBABILITY_POOL.length - 1 })],
     size: getRandomNum({ min: STAR_MIN_SIZE, max: STAR_MAX_SIZE }),
-    positionX: getRandomNum({ min: 0, max: 100 }),
-    positionY: getRandomNum({ min: 0, max: 100 }),
+    positionX: getRandomNum({ min: -30, max: 130 }),
+    positionY: getRandomNum({ min: -30, max: 130 }),
     id: uuidv4(),
   };
 }
