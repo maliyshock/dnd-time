@@ -3,6 +3,22 @@
 .star-wrapper {
 	position: absolute;
 	z-index: 100;
+	transition: filter 0.2s;
+	display: flex;
+	justify-content: center;
+
+	&:hover {
+		animation: spinReverse 5s infinite linear;
+	}
+}
+
+@keyframes spinReverse {
+	from {
+		transform: rotate(360deg);
+	}
+	to {
+		transform: rotate(0deg);
+	}
 }
 
 $variations: (
@@ -10,12 +26,32 @@ $variations: (
 	"blue":   (#58d8ff, 1px),
 	"green":  (#95ff58, 1px),
 	"yellow": (#ffc900, 1px),
-	"orange": (#ff8a58, 1px)
+	"orange": (#ff8a58, 1px),
+	"default": (#fff, 1px)
 );
+
+.star-shadow {
+	position: absolute;
+	z-index: 1;
+	left: 50%;
+	top: 50%;
+	width: 25%;
+	height: 25%;
+	transform: translate(-50%, -50%);
+
+	@each $name, $params in $variations {
+		&--variation-#{$name} {
+			$color: list.nth($params, 1);
+			$shadow-size: list.nth($params, 2);
+			background-color: $color;
+			box-shadow: 0 0 20px $shadow-size $color;
+			border-radius: 100%;
+		}
+	}
+}
 
 .star {
 	$this: &;
-	background-color: white;
 	border-radius: 100%;
 	cursor: pointer;
 	pointer-events: all;
@@ -23,27 +59,13 @@ $variations: (
 	animation-iteration-count: infinite;
 	animation-name: pulse-animation;
 	animation-play-state: var(--animation-play-state);
+	transition: transform 0.2s, opacity 0.2s;
 
-	&__line-h, &__line-v {
-		position: absolute;
-		background-color: white;
-		top: 50%;
-		left: 50%;
-	}
-
-	&__line-h {
-		height: 1px;
-		width: 200%;
-
-		transform: translate(-50%, -50%);
-	}
-
-	&__line-v {
-		height: 200%;
-		width: 1px;
-		background-color: white;
-
-		transform: translate(-50%, -50%);
+	&:hover {
+		animation: none;
+		transform: scale(2);
+		opacity: 1;
+		animation-play-state: paused;
 	}
 
 	@each $name, $params in $variations {
@@ -53,6 +75,27 @@ $variations: (
 		&--variation-#{$name} {
 			background-color: $color;
 			box-shadow: 0 0 20px $shadow-size $color;
+
+			&#{$this}--shape-spike {
+				z-index: 1;
+				background-color: $color;
+
+				clip-path: polygon(
+						50% 0%,
+						60% 40%,
+						100% 50%,
+						60% 60%,
+						50% 100%,
+						40% 60%,
+						0% 50%,
+						40% 40%
+				);
+			}
+
+			//&:hover {
+			//	$hoverShadowSize: $shadow-size * 2;
+			//	box-shadow: 0 0 20px 25px $color;
+			//}
 
 			#{$this}__line-h,
 			#{$this}__line-v {
