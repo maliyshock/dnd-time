@@ -56,3 +56,6 @@ export const AUDIO_FILES: AudioFile[] = [
   { name: "wetClickHigh", filePath: wetClickHigh },
   { name: "drop", filePath: drop },
 ];
+
+export const STAR_MIN_SIZE = 1;
+export const STAR_MAX_SIZE = 6;

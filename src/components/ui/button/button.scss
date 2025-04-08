@@ -7,6 +7,7 @@
 	cursor: pointer;
 	box-shadow: none;
 	border: none;
+	pointer-events: all;
 
 	&--size-medium {
 		width: 3rem;

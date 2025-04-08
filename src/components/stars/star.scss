@@ -1,0 +1,51 @@
+.star {
+	position: absolute;
+	z-index: 100;
+	background-color: white;
+	border-radius: 100%;
+	cursor: pointer;
+	pointer-events: all;
+	box-shadow: 0 0 20px 1px white;
+	animation-iteration-count: infinite;
+	animation-name: pulse-animation;
+
+	&--variation-broken {
+		background-color: #ff588e;
+		box-shadow: 0 0 20px 4px #ff588e;
+	}
+
+	&--variation-blue {
+		background-color: #58d8ff;
+		box-shadow: 0 0 20px 1px #58D8FFFF;
+	}
+
+	&--variation-green {
+		background-color: #95ff58;
+		box-shadow: 0 0 20px 1px #95FF58FF;
+	}
+
+	&--variation-yellow {
+		background-color: #ffc900;
+		box-shadow: 0 0 20px 1px #FFC900FF;
+	}
+
+	&--variation-orange {
+		background-color: #ff8a58;
+		box-shadow: 0 0 20px 1px #FF8A58FF;
+	}
+}
+
+@keyframes pulse-animation {
+	0% {
+		opacity: 1;
+		transform: scale(1)
+	}
+	50% {
+		opacity: 0.3;
+		transform: scale(0.7)
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1)
+	}
+}
