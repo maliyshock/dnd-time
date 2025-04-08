@@ -8,6 +8,7 @@
 	box-shadow: 0 0 20px 1px white;
 	animation-iteration-count: infinite;
 	animation-name: pulse-animation;
+	animation-play-state: var(--animation-play-state);
 
 	&--variation-broken {
 		background-color: #ff588e;

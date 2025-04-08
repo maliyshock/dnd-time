@@ -14,10 +14,10 @@ type StarDictionaryItem = { name: StarVariation; chance: number };
 // set chances in percents
 export const STARS_DICTIONARY: StarDictionaryItem[] = [
   { name: "broken", chance: 3 },
-  { name: "blue", chance: 3 },
+  { name: "blue", chance: 10 },
   { name: "orange", chance: 5 },
   { name: "yellow", chance: 5 },
-  { name: "green", chance: 5 },
+  { name: "green", chance: 8 },
 ];
 
 function buildProbabilityPool(items: StarDictionaryItem[], scale: number = 100) {
