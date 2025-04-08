@@ -6,6 +6,7 @@ import useStore from "~/store/useStore.ts";
 import { Cloud as CloudType } from "~/store/slices/cloudsSlice";
 import { useTimer } from "~/hooks/useTimer.ts";
 import { getImageDimensions } from "~/components/world/components/cloud/utils/getImageDimensions.ts";
+import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 
 type CloudProps = {
   cloud: CloudType;
@@ -26,6 +27,7 @@ export function Cloud({ cloud }: CloudProps) {
   const isBefore = useRef<boolean>(!!getRandomNum({ max: 1 }));
   const rotationSpeed = useRef<number>(getRandomNum({ min: 90, max: 200 }));
   const path = getImageUrl(cloud.cloudVariation);
+  const playSample = useGetPlaySample({ name: "wetClick", shift: true });
 
   // const conuterThreshold = useRef<number>(getRandomNum({ min: 10, max: 30 }));
   // const [counter, setCounter] = useState<number>(0);
@@ -131,6 +133,7 @@ export function Cloud({ cloud }: CloudProps) {
 
   return (
     <div
+      onClick={() => playSample()}
       className={`world-orbit world-orbit--start-${startAngle.current} ${isBefore.current ? "before" : "after"}`}
       style={{ animationDuration: `${rotationSpeed.current}s` }}
     >

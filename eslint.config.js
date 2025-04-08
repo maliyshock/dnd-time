@@ -82,24 +82,6 @@ export default tseslint.config(
           extensions: [".tsx"],
         },
       ],
-      "react/jsx-sort-props": [
-        1,
-        {
-          callbacksLast: true,
-          shorthandFirst: false,
-          shorthandLast: false,
-          ignoreCase: true,
-          noSortAlphabetically: false,
-          reservedFirst: ["key", "ref"],
-        },
-      ],
-      "sort-imports": [
-        "warn",
-        {
-          ignoreDeclarationSort: true,
-          ignoreMemberSort: false,
-        },
-      ],
     },
   },
 );

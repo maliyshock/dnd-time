@@ -43,7 +43,7 @@ export function Aura({ texture, scaleUp = 1, rotation = false, transparencyStart
           }
         : {}),
     });
-  }, [controls, auraColor, auraColor.b, auraColor.g, auraColor.r, scaleUp, texture, transparencyStart]);
+  }, [auraColor, controls, scaleUp, texture, transparencyStart]);
 
   return (
     <motion.div

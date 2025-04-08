@@ -1,25 +1,24 @@
-import { Stop } from "~/components/icons/stop.tsx";
-import { Play } from "~/components/icons/play.tsx";
+import { Stop } from "~/components/ui/icons/stop.tsx";
+import { Play } from "~/components/ui/icons/play.tsx";
 import useStore from "~/store/useStore.ts";
-import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
+import { Button } from "~/components/ui/button";
+import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 
 export function Player() {
   const play = useStore(store => store.play);
-  const setPlay = useStore(store => store.setPlay);
+  const setTogglePlay = useStore(store => store.setTogglePlay);
   const cmdIsPressed = useStore(store => store.cmdIsPressed);
-  const [, setState] = useAnimationControl();
+  const dropSample = useGetPlaySample({ name: "drop" });
 
   return (
-    <button
+    <Button
       className={`clocks__player clocks__clickable-item ${cmdIsPressed ? "fade-in" : ""}`}
       onClick={() => {
-        const nextState = !play;
-
-        setPlay(nextState);
-        setState(nextState ? "running" : "paused");
+        setTogglePlay();
+        dropSample();
       }}
     >
       {play ? <Stop /> : <Play />}
-    </button>
+    </Button>
   );
 }

@@ -20,6 +20,7 @@ export type TimeSlice = {
   currentColors: [RGBColor, RGBColor, number?];
   colors: Map<number, [RGBColor, RGBColor, number?]>;
   setPlay: (payload: boolean) => void;
+  setTogglePlay: () => void;
   setTimeIsChanging: (payload: boolean) => void;
   setTime: (fn: (prev: number) => number) => void;
 };
@@ -49,10 +50,11 @@ const initialState = {
 export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
   ...initialState,
   setPlay: (payload: boolean) => set({ play: payload }),
+  setTogglePlay: () => set(store => ({ play: !store.play })),
   // flag to pause the time for a bit, without changing the play state
   setTimeIsChanging: (payload: boolean) => set({ timeIsChanging: payload }),
 
-  setTime: (fn: (prev: number) => number) =>
+  setTime: fn =>
     set(store => {
       const time = fn(store.time);
       const minutes = getMinutes(time);
