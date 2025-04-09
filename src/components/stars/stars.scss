@@ -10,6 +10,8 @@
 	transition: opacity 0.2s ease;
 	animation: spinReverse 1500s infinite linear;
 	animation-play-state: var(--animation-play-state);
+
+	transform-origin: 50% 50%;
 }
 
 @keyframes spinReverse {
