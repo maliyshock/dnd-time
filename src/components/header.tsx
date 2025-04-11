@@ -35,7 +35,7 @@ export function Header({ className }: { className?: string }) {
 
   return (
     <header className={className}>
-      <Button active={soundOn} color="white" isTransparent={!soundOn} variation="hollow" size="medium" onClick={handleOnClick}>
+      <Button active={soundOn} color="white" isTransparent={!soundOn} variation="hollow" size="medium" onMouseDown={handleOnClick}>
         <Sound />
       </Button>
     </header>

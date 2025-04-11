@@ -89,10 +89,10 @@
     height: 1px;
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 
     & > .world {
-        transform: translateY(-50%) translateX(50%);
+        transform: translateY(-50%);
     }
 
     @include mixins.for-tablet-portrait-up {
