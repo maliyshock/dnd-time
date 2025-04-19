@@ -12,6 +12,8 @@ import star4 from "~/assets/sound/star_4.mp3";
 import star5 from "~/assets/sound/star_5.mp3";
 import brokenStar1 from "~/assets/sound/broken_star_1.mp3";
 import brokenStar2 from "~/assets/sound/broken_star_2.mp3";
+import fire from "~/assets/sound/fire.mp3";
+import scream from "~/assets/sound/scream.mp3";
 
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
@@ -88,6 +90,8 @@ export const AUDIO_FILES: AudioFile[] = [
   { name: "wetClickHigh", filePath: wetClickHigh },
   { name: "drop", filePath: drop },
   { name: "tap", filePath: tap },
+  { name: "fire", filePath: fire },
+  { name: "scream", filePath: scream },
   ...STAR_SOUNDS,
   ...BROKEN_STAR_SOUNDS,
 ];

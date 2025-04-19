@@ -1,4 +1,5 @@
 @use "sass:list";
+@use "../../scss/mixins";
 
 .star-wrapper {
 	position: absolute;
@@ -9,15 +10,6 @@
 
 	&:hover {
 		animation: spinReverse 5s infinite linear;
-	}
-}
-
-@keyframes spinReverse {
-	from {
-		transform: rotate(360deg);
-	}
-	to {
-		transform: rotate(0deg);
 	}
 }
 
@@ -79,17 +71,4 @@ $variations: (
 	}
 }
 
-@keyframes pulse-animation {
-	0% {
-		opacity: 1;
-		transform: scale(1)
-	}
-	50% {
-		opacity: 0.3;
-		transform: scale(0.7)
-	}
-	100% {
-		opacity: 1;
-		transform: scale(1)
-	}
-}
+@include mixins.pulse-animation;

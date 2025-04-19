@@ -34,41 +34,122 @@
 }
 
 .sun {
-    position: relative;
-    width: 70px;
-    height: 70px;
+    $this: &;
+    &__container {
+        position: relative;
+        width: 70px;
+        height: 70px;
 
-    transition: transform 1s;
+        transition: transform 1s;
+    }
 
-    &__body {
+    &__elevator, &__crown, &__crown-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        position: relative;
-        z-index: 10;
-        width: 100%;
-        height: 100%;
-        transition: transform 1s;
+    }
 
+    &__elevator {
+        transition: transform 1s;
         transform: translateY(calc(var(--radiants) * 30vh));
+
 
         @include mixins.for-desktop-up {
             transform: translateY(calc(var(--amplitude) * 30VH))
         }
+    }
 
-        &:before {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
+    &__body, &__yolk, &__elevator, &__crown, &__crown-container {
+        width: 100%;
+        height: 100%;
+    }
 
-        &:before {
-            position: relative;
-            z-index: 2;
-            border-radius: 50%;
-            background-color: orange;
-            box-shadow: 0 0 35px 5px yellow, 0 0 25px 10px yellow inset;
+    &__body {
+        position: relative;
+        z-index: var(--world-aura-layer);
+        transition: transform 0.1s;
+
+        &:active {
+            transform: scale(0.95);
         }
     }
+
+    &__yolk {
+        position: relative;
+        z-index: 10;
+        cursor: pointer;
+        pointer-events: all;
+
+        border-radius: 50%;
+        background-color: orange;
+        background-image: url("../../assets/face.png");
+        background-size: 80%;
+        background-repeat: no-repeat;
+        background-position: 300px center;
+        box-shadow: 0 0 35px 5px yellow, 0 0 25px 10px yellow inset;
+
+        transition: background-position 2s, transform 1s;
+
+        transform: rotate(calc(-1 * var(--sun-angle)));
+
+        &.face {
+            background-position: center center;
+        }
+    }
+
+    &__crown {
+        position: absolute;
+        z-index: 1;
+        transform-origin: 50% 50%;
+        transform: scale(2.5);
+        opacity: 0.3;
+
+        & > * {
+            position: absolute;
+        }
+    }
+
+    &__crown-container {
+        animation: spin-reverse-animation infinite 100s linear;
+        animation-play-state: var(--animation-play-state);
+
+        & > * {
+            position: absolute;
+        }
+    }
+
+    &__crown-spikes {
+        color: #ffc900;
+        animation: pulse-animation infinite 5s ease;
+        animation-play-state: var(--animation-play-state);
+    }
+
+    &__star-crown {
+        color: orange;
+        animation: pulse-animation-2 infinite 7s ease;
+        animation-play-state: var(--animation-play-state);
+    }
+
+    &__crown-container:nth-child(1) {
+        animation: spin-reverse-animation infinite 120s linear;
+        animation-play-state: var(--animation-play-state);
+
+        & #{$this}__star-crown {
+            color: #ffe07b;
+            animation: pulse-animation-3 infinite 4s ease;
+        }
+
+        & #{$this}__crown-spikes {
+            color: #ff8a58;
+            animation: pulse-animation-4 infinite 5s ease;
+        }
+    }
+
 }
+
+@include mixins.pulse-animation;
+@include mixins.pulse-animation(pulse-animation-2, 0.8,  0.9, 0.6);
+@include mixins.pulse-animation(pulse-animation-3, 0.6,  0.9, 0.6);
+@include mixins.pulse-animation(pulse-animation-4, 0.4,  1, 0.6);
+@include mixins.spin-reverse-animation;
+@include mixins.spin-animation;

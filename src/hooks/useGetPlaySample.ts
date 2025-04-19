@@ -4,8 +4,72 @@ import { frequencyFilter } from "~/utils/sound/frequencyFilter.ts";
 import { HIGHPASS_FREQ, NORMAL_PLAYBACK_RATE, SLOW_PLAYBACK_RATE } from "~/constants.ts";
 import { changePlaybackRate } from "~/utils/sound/changePlaybackRate.ts";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
+import { fade } from "~/utils/sound/fade.ts";
 
-export function useGetPlaySample({ name, loop, shift }: { name: string; loop?: boolean; shift?: boolean }) {
+const QUICK_FADE = 0.05;
+
+type UseGetPlaySample = {
+  name: string;
+  loop?: boolean;
+  shift?: boolean;
+};
+
+type StopActiveSource = {
+  audioSource: AudioBufferSourceNode | null;
+  audioContext: AudioContext;
+  filterNode: BiquadFilterNode;
+};
+
+type SetupAudioSource = {
+  audioBuffer: AudioBuffer;
+  audioContext: AudioContext;
+  filterNode: BiquadFilterNode;
+  playbackRate: number;
+  shift?: boolean;
+  loop?: boolean;
+};
+
+function stopActiveSource({ audioSource, audioContext, filterNode }: StopActiveSource) {
+  if (!audioSource) return;
+
+  const gainNode = audioContext.createGain();
+
+  audioSource.disconnect();
+  audioSource.connect(gainNode);
+  gainNode.connect(filterNode);
+
+  fade({ from: 1, to: 0, audioContext, gainNode, fadeDuration: QUICK_FADE });
+
+  audioSource.stop(audioContext.currentTime + QUICK_FADE);
+  audioSource.onended = () => gainNode.disconnect();
+}
+
+function setupAudioSource({ audioBuffer, audioContext, filterNode, playbackRate, shift, loop }: SetupAudioSource): AudioBufferSourceNode {
+  const newSource = audioContext.createBufferSource();
+
+  newSource.buffer = audioBuffer;
+  newSource.playbackRate.value = playbackRate;
+
+  // pitch shift
+  if (shift) {
+    const shiftValue = getRandomNum({ min: 0, max: 2 }) - 1;
+    const shiftRate = Math.pow(2, shiftValue / 12);
+
+    newSource.playbackRate.value *= shiftRate;
+  }
+
+  newSource.connect(filterNode);
+
+  newSource.onended = () => {
+    newSource.disconnect();
+  };
+
+  newSource.loop = !!loop;
+
+  return newSource;
+}
+
+export function useGetPlaySample({ name, loop, shift }: UseGetPlaySample) {
   const play = useStore(store => store.play);
   const audioBuffers = useStore(store => store.audioBuffers);
   const audioContext = useStore(store => store.audioContext);
@@ -28,35 +92,29 @@ export function useGetPlaySample({ name, loop, shift }: { name: string; loop?: b
   return useCallback(() => {
     if (!audioIsReady || !audioBuffers.has(name)) return;
     const audioBuffer = audioBuffers.get(name);
-    const newSource = audioContext.createBufferSource();
 
-    if (activeSource.current) {
-      activeSource.current.stop();
-      activeSource.current.disconnect();
-    }
+    if (!audioBuffer) return;
 
-    if (audioBuffer) {
-      newSource.buffer = audioBuffer;
-      newSource.connect(filterNode);
-      activeSource.current = newSource;
-      activeSource.current.playbackRate.value = play ? NORMAL_PLAYBACK_RATE : SLOW_PLAYBACK_RATE;
+    // if we already have current sound currently playing
+    stopActiveSource({
+      audioSource: activeSource.current,
+      audioContext,
+      filterNode,
+    });
 
-      if (shift) {
-        const shift = getRandomNum({ min: 0, max: 2 }) - 1;
-        const shiftRate = Math.pow(2, shift / 12);
+    const currentPlaybackRate = play ? NORMAL_PLAYBACK_RATE : SLOW_PLAYBACK_RATE;
 
-        activeSource.current.playbackRate.value = activeSource.current.playbackRate.value * shiftRate;
-      }
+    const newSource = setupAudioSource({
+      audioBuffer,
+      audioContext,
+      filterNode,
+      playbackRate: currentPlaybackRate,
+      shift,
+      loop,
+    });
 
-      if (loop) {
-        newSource.loop = loop;
-      }
-
-      newSource?.start(0);
-    }
-
-    newSource.onended = () => {
-      newSource.disconnect();
-    };
+    // save reference and trigger play
+    activeSource.current = newSource;
+    newSource.start(0);
   }, [audioBuffers, audioContext, audioIsReady, filterNode, loop, name, play, shift]);
 }
