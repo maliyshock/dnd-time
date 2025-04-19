@@ -111,7 +111,6 @@
 
     &__crown-container {
         animation: spin-reverse-animation infinite 100s linear;
-        animation-play-state: var(--animation-play-state);
 
         & > * {
             position: absolute;
@@ -121,18 +120,15 @@
     &__crown-spikes {
         color: #ffc900;
         animation: pulse-animation infinite 5s ease;
-        animation-play-state: var(--animation-play-state);
     }
 
     &__star-crown {
         color: orange;
         animation: pulse-animation-2 infinite 7s ease;
-        animation-play-state: var(--animation-play-state);
     }
 
     &__crown-container:nth-child(1) {
         animation: spin-reverse-animation infinite 120s linear;
-        animation-play-state: var(--animation-play-state);
 
         & #{$this}__star-crown {
             color: #ffe07b;
@@ -145,6 +141,14 @@
         }
     }
 
+    &__crown-container,
+    &__crown-spikes,
+    &__star-crown,
+    &__crown-container:nth-child(1),
+    &__crown-container:nth-child(1) &__star-crown,
+    &__crown-container:nth-child(1) &__crown-spikes {
+        animation-play-state: var(--animation-play-state);
+    }
 }
 
 @include mixins.pulse-animation;
