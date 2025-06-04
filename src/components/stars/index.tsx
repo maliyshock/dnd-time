@@ -1,28 +1,12 @@
 import { useMemo, useRef } from "react";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import { v4 as uuidv4 } from "uuid";
-import { STAR_MAX_SIZE, STAR_MIN_SIZE, STAR_SOUNDS_MAP, StarDictionaryItem, StarKind, StarVariation } from "~/constants.ts";
+import { STAR_MAX_SIZE, STAR_MIN_SIZE, STAR_SOUNDS_MAP, StarKind, STARS_PROBABILITY, StarVariation } from "~/constants.ts";
 import { MemoizedStar } from "~/components/stars/Star.tsx";
 import useStore from "~/store/useStore.ts";
 import { toRadians } from "~/utils/toRadians.ts";
 import "~/components/stars/stars.scss";
-
-function buildProbabilityPool(items: StarDictionaryItem[], scale: number = 100): StarVariation[] {
-  const newItems = [...items];
-  const itemsWeight = newItems.reduce((sum, item) => sum + item.chance, 0);
-  let totalWeight: number = itemsWeight;
-
-  if (itemsWeight < 100) {
-    totalWeight = 100;
-    newItems.push({ name: "default", chance: 100 - itemsWeight });
-  }
-
-  return newItems.flatMap(({ name, chance }) => {
-    const count = Math.round((chance / totalWeight) * scale);
-
-    return Array(count).fill(name);
-  });
-}
+import { buildProbabilityPool } from "~/components/stars/utils/buildProbabilityPool.ts";
 
 const STARS_PROBABILITY_POOL = buildProbabilityPool(STARS_PROBABILITY);
 
