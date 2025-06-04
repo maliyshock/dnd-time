@@ -1,5 +1,5 @@
-import { Stop } from "~/components/ui/icons/stop.tsx";
-import { Play } from "~/components/ui/icons/play.tsx";
+import { Stop } from "~/components/ui/icons/Stop.tsx";
+import { Play } from "~/components/ui/icons/Play.tsx";
 import useStore from "~/store/useStore.ts";
 import { Button } from "~/components/ui/button";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";

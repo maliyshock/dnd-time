@@ -5,6 +5,7 @@
 	height: 100%;
 	position: relative;
 	z-index: var(--layout-layer);
+	pointer-events: none;
 
 	@include mixins.for-desktop-up {
 		gap: 0;

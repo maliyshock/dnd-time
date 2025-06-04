@@ -2,6 +2,7 @@ import { Star as StarType } from "~/components/stars/index.tsx";
 import "~/components/stars/star.scss";
 import { memo } from "react";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
+import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 
 type StarProps = Omit<StarType, "id">;
 
@@ -9,9 +10,13 @@ type StarProps = Omit<StarType, "id">;
 const SIZE_TRESHOLD = 6; // after it we apply spike form
 const BLUR_TRESHOLD = 12; // after it we apply blur
 
-function Star({ size, variation, positionX, positionY }: StarProps) {
+function Star({ size, variation, soundName, positionX, positionY }: StarProps) {
+  const playSample = useGetPlaySample({ name: soundName || "" });
+
+  // TODO: redo this to webgl
   return (
     <div
+      onClick={playSample}
       className={`star-wrapper`}
       style={{
         top: `${positionY}%`,

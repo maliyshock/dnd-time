@@ -17,6 +17,7 @@ function getImageUrl(variation: number) {
   return new URL(`/src/assets/clouds/cloud_${variation}/default.png`, import.meta.url).href;
 }
 
+// TODO: looks like overingeneering
 export function Cloud({ cloud }: CloudProps) {
   // const currentColors = useStore(store => store.currentColors);
   const lifeTimeTimer = useTimer();

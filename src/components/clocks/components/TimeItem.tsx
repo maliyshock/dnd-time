@@ -1,7 +1,7 @@
 import { formatTime } from "~/utils/time/formatTime.ts";
 import "../clocks.scss";
 import { memo, useRef } from "react";
-import { Up } from "~/components/ui/icons/up.tsx";
+import { Up } from "~/components/ui/icons/Up.tsx";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import useStore from "~/store/useStore.ts";
 import { Button } from "~/components/ui/button";
