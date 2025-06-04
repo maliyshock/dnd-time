@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { Sound } from "~/components/ui/icons/sound.tsx";
+import { Sound } from "~/components/ui/icons/Sound.tsx";
 import useStore from "~/store/useStore.ts";
 import { usePrepareAudio } from "~/hooks/usePrepareAudio.ts";
 import { AUDIO_FILES } from "~/constants.ts";

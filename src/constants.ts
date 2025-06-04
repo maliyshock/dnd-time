@@ -5,6 +5,15 @@ import wetClick from "~/assets/sound/wet-click.wav";
 import wetClickHigh from "~/assets/sound/wet-click-high.wav";
 import drop from "~/assets/sound/drop.mp3";
 import tap from "~/assets/sound/tap.mp3";
+import star1 from "~/assets/sound/star_1.mp3";
+import star2 from "~/assets/sound/star_2.mp3";
+import star3 from "~/assets/sound/star_3.mp3";
+import star4 from "~/assets/sound/star_4.mp3";
+import star5 from "~/assets/sound/star_5.mp3";
+import brokenStar1 from "~/assets/sound/broken_star_1.mp3";
+import brokenStar2 from "~/assets/sound/broken_star_2.mp3";
+import fire from "~/assets/sound/fire.mp3";
+import scream from "~/assets/sound/scream.mp3";
 
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
@@ -50,6 +59,30 @@ export const HIGHPASS_FREQ = 200;
 export const NORMAL_PLAYBACK_RATE = 1.0;
 export const SLOW_PLAYBACK_RATE = 0.5;
 
+export const BROKEN_STAR_SOUNDS: AudioFile[] = [
+  { name: "brokenStar1", filePath: brokenStar1 },
+  { name: "brokenStar2", filePath: brokenStar2 },
+];
+export type BrokenStarKind = (typeof BROKEN_STAR_SOUNDS)[number];
+
+export const STAR_SOUNDS: AudioFile[] = [
+  { name: "star1", filePath: star1 },
+  { name: "star2", filePath: star2 },
+  { name: "star3", filePath: star3 },
+  { name: "star4", filePath: star4 },
+  { name: "star5", filePath: star5 },
+];
+export type StarKind = (typeof STAR_SOUNDS)[number];
+
+export const STAR_SOUNDS_MAP: Record<StarVariation, Array<StarKind["name"] | BrokenStarKind["name"]>> = {
+  broken: BROKEN_STAR_SOUNDS.map(item => item.name),
+  default: ["star1"],
+  blue: ["star2"],
+  orange: ["star3"],
+  yellow: ["star4"],
+  green: ["star5"],
+};
+
 export const AUDIO_FILES: AudioFile[] = [
   { name: "musicTheme", filePath: music },
   { name: "bip", filePath: bip },
@@ -57,7 +90,27 @@ export const AUDIO_FILES: AudioFile[] = [
   { name: "wetClickHigh", filePath: wetClickHigh },
   { name: "drop", filePath: drop },
   { name: "tap", filePath: tap },
+  { name: "fire", filePath: fire },
+  { name: "scream", filePath: scream },
+  ...STAR_SOUNDS,
+  ...BROKEN_STAR_SOUNDS,
 ];
 
-export const STAR_MIN_SIZE = 1;
+export const STAR_MIN_SIZE = 2;
 export const STAR_MAX_SIZE = 20;
+
+export type StarVariation = "default" | "broken" | "blue" | "green" | "yellow" | "orange";
+
+export type StarDictionaryItem = {
+  name: StarVariation;
+  chance: number;
+};
+
+// set chances in percents
+export const STARS_PROBABILITY: StarDictionaryItem[] = [
+  { name: "broken", chance: 5 },
+  { name: "blue", chance: 15 },
+  { name: "orange", chance: 10 },
+  { name: "yellow", chance: 10 },
+  { name: "green", chance: 15 },
+];
