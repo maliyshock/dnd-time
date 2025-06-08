@@ -1,3 +1,12 @@
+$phoneUp: 320px;
+$tabletPortraitUp: 600px;
+$tabletLandscapeUp: 900px;
+$desktopUp: 1200px;
+
+$fontName: "dyna_puff";
+$fontsPath: "../assets/fonts/dyna-puff";
+
+
 :root {
 	--background-layer: 1;
 	--stars-layer: 2;
@@ -13,13 +22,5 @@
 
 	--layout-header: 200;
 	--layout-main: 10;
+	--fontSizeBase: 16px;
 }
-
-$phoneUp: 320px;
-$tabletPortraitUp: 600px;
-$tabletLandscapeUp: 900px;
-$desktopUp: 1200px;
-
-$fontName: "dyna_puff";
-$fontsPath: "../assets/fonts/dyna-puff";
-$fontSizeBase: 16px;

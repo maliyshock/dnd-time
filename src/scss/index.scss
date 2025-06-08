@@ -23,7 +23,7 @@
 }
 
 html, body {
-  font-size: variables.$fontSizeBase
+  font-size: var(--fontSizeBase)
 }
 
 body {

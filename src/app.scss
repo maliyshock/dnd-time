@@ -22,6 +22,7 @@
 
 		@include mixins.for-tablet-portrait-up{
 			flex-direction: row;
+			align-content: center;
 		}
 	}
 
@@ -53,7 +54,7 @@
 		margin-top: auto;
 		margin-bottom: auto;
 
-		@include mixins.for-tablet-portrait-up{
+		@include mixins.for-tablet-landscape-up{
 			width: 50%;
 			justify-content: flex-end;
 		}
@@ -61,15 +62,9 @@
 
 	&__header {
 		width: 100%;
-		padding: 1rem 2rem;
-		display: flex;
-		justify-content: flex-end;
-		z-index: var(--layout-header);
 
 		@include mixins.for-tablet-portrait-up{
-			padding: 1.5rem 3rem;
 			position: absolute;
-			width: 100%;
 			right: 0;
 			top: 0;
 		}

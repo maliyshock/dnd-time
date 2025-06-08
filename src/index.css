@@ -39,6 +39,10 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /*these should be same as SCSS variables here src/scss/variables.scss =( */
+  --breakpoint-sm: 320px;
+  --breakpoint-md: 600px;
+  --breakpoint-lg: 900px;
 }
 
 :root {

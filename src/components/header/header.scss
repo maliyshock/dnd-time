@@ -1,0 +1,13 @@
+@use "../../scss/mixins";
+
+.header {
+	display: flex;
+	justify-content: flex-end;
+	z-index: var(--layout-header);
+
+	padding: 1rem 2rem;
+
+	@include mixins.for-tablet-portrait-up{
+		padding: 1.5rem 3rem;
+	}
+}

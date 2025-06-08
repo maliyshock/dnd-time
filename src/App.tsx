@@ -5,7 +5,7 @@ import Clocks from "~/components/clocks";
 import { useKeyListener } from "~/hooks/useKeyListener.ts";
 import { Background } from "~/components/background";
 import { Overlay } from "~/components/overlay";
-import { Header } from "~/components/header.tsx";
+import { Header } from "~/components/header";
 import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
 import { Stars } from "~/components/stars";
 

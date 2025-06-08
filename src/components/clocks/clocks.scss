@@ -47,19 +47,8 @@
         align-items: center;
         color: white;
 
-        @include mixins.dynamic-size(
-            width,
-            3,
-            5,
-            variables.$phoneUp,
-        );
-
-        @include mixins.dynamic-size(
-            height,
-            3,
-            5,
-            variables.$phoneUp,
-        );
+        width: clamp(3rem, 10vw, 5rem);
+        height: clamp(3rem, 10vw, 5rem);
 
         background-color: transparent;
 
@@ -77,35 +66,17 @@
         justify-content: center;
         align-items: center;
 
-        @include mixins.dynamic-size(
-            font-size,
-            3,
-            6,
-            variables.$phoneUp,
-        );
+        font-size: clamp(3rem, 10vw, 6rem);
 
         gap: 1rem;
         text-align: center;
-
-        @include mixins.for-tablet-landscape-up {
-            font-size: 6rem;
-        }
     }
 
     &__item {
-        @include mixins.dynamic-size(
-            width,
-            4,
-            8,
-            variables.$phoneUp,
-        );
+        width: clamp(4rem, 15vw, 8rem);
 
         opacity: 1;
         transition: opacity 1s;
-
-        @include mixins.for-tablet-landscape-up {
-            min-width: 8rem;
-        }
 
         &.fade-out {
             opacity: 0.2;
@@ -127,19 +98,8 @@
         color: white;
         fill: white;
 
-        @include mixins.dynamic-size(
-            width,
-            2,
-            3.75,
-            variables.$phoneUp,
-        );
-
-        @include mixins.dynamic-size(
-            height,
-            2,
-            3.75,
-            variables.$phoneUp,
-        );
+        width: clamp(2rem, 8vw, 3.75rem);
+        height: clamp(2rem, 8vw, 3.75rem);
 
         background: transparent;
         outline: none;
