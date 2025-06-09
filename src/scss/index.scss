@@ -2,7 +2,6 @@
 @import url("typography.scss");
 
 :root {
-  font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -13,6 +12,14 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+*, h1, h2, h3, h4, h5, h6 {
+  font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+p, ul, li {
+  font-family: Arial, system-ui, Avenir, Helvetica, sans-serif;
 }
 
 #root, html, body {
@@ -39,7 +46,11 @@ body {
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
-  pointer-events: none; // disable all pointer events
+  //pointer-events: none; // disable all pointer events
+}
+
+button {
+  cursor: pointer;
 }
 
 .svg-icon {
