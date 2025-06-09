@@ -12,7 +12,7 @@ export function Player() {
 
   return (
     <Button
-      className={`clocks__player clocks__clickable-item ${cmdIsPressed ? "fade-in" : ""}`}
+      className={`clocks__player pointer-events-auto clocks__clickable-item ${cmdIsPressed ? "fade-in" : ""}`}
       onMouseDown={() => {
         setTogglePlay();
         dropSample();

@@ -26,7 +26,7 @@ export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVar
     <div className="clocks__item-wrapper">
       <div className="clocks__item-changer-wrapper">
         <Button
-          className={`clocks__item-changer clocks__clickable-item riser ${cmdIsPressed ? "fade-in" : ""}`}
+          className={`clocks__item-changer pointer-events-auto clocks__clickable-item riser ${cmdIsPressed ? "fade-in" : ""}`}
           onMouseDown={() => {
             onTimeChange(step);
             playSample();
@@ -40,7 +40,7 @@ export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVar
 
       <div className="clocks__item-changer-wrapper">
         <Button
-          className={`clocks__item-changer clocks__clickable-item descender ${cmdIsPressed ? "fade-in" : ""}`}
+          className={`clocks__item-changer pointer-events-auto clocks__clickable-item descender ${cmdIsPressed ? "fade-in" : ""}`}
           onClick={() => {
             onTimeChange(-step);
             playSample();

@@ -43,7 +43,7 @@ export function AboutProject() {
           <h3 className="mt-6 text-xl leading-none font-semibold">Additional Features:</h3>
           <ul className="my-2 ml-6 list-disc [&>li]:mt-2">
             <li>Music and sound effects for each interaction.</li>
-            <li>Many visual effects, interactions and easter eggs even. 🙂</li>
+            <li>Visual effects: smooth gradient transition, stars animation, interactions and easter eggs even. 🙂</li>
             <li>Dynamic clouds: clouds appear and move randomly.</li>
             <li>
               Rain <span className="text-xs text-muted-foreground">(Work in progress).</span>

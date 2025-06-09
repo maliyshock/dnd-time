@@ -63,7 +63,7 @@
 	&__header {
 		width: 100%;
 
-		@include mixins.for-tablet-portrait-up{
+		@include mixins.for-tablet-landscape-up{
 			position: absolute;
 			right: 0;
 			top: 0;

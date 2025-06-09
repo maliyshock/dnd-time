@@ -45,7 +45,7 @@ function DialogContent({
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay
         className={cn(
-          "fixed inset- bg-black/30 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0  z-150 p6",
+          "fixed inset- bg-black/30 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 flex justify-center p-4 data-[state=open]:fade-in-0  z-150 p6",
         )}
       >
         <DialogPrimitive.Content
