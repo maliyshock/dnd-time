@@ -5,10 +5,15 @@ import { Player } from "~/components/clocks/components/Player.tsx";
 import { Hours } from "~/components/clocks/components/Hours.tsx";
 import { Minutes } from "~/components/clocks/components/Minutes.tsx";
 import { Seconds } from "~/components/clocks/components/Seconds.tsx";
+import { useTimeUpdater } from "~/hooks/useTimeUpdater.ts";
+import { useTimeKeeper } from "~/hooks/useTimeKeeper.ts";
 
 export default function Clocks() {
   const timer = useRef<NodeJS.Timeout | null>(null);
   const setTimeIsChanging = useStore(store => store.setTimeIsChanging);
+
+  useTimeUpdater();
+  useTimeKeeper();
 
   const handleTimeChange = useCallback(() => {
     if (timer.current !== null) {

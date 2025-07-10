@@ -1,38 +1,34 @@
-import { getStorageTime } from "~/utils/time/getStorageTime.ts";
 import { getHours } from "~/utils/time/getHours.ts";
 import { getMinutes } from "~/utils/time/getMinutes.ts";
 import { getSeconds } from "~/utils/time/getSeconds.ts";
+import { HOUR, MINUTE } from "~/constants.ts";
 
-type Now = {
+export type Time = {
+  totalSeconds: number;
   hours: number;
   minutes: number;
   seconds: number;
 };
 
-export function getNow(seconds?: number): Now {
-  if (seconds !== undefined) {
+export function getNow(totalSeconds?: number): Time {
+  if (totalSeconds !== undefined) {
     return {
-      hours: getHours(seconds),
-      minutes: getMinutes(seconds),
-      seconds: getSeconds(seconds),
-    };
-  }
-
-  const savedAppTime = getStorageTime("lastActiveAppTime");
-
-  if (savedAppTime) {
-    return {
-      hours: getHours(savedAppTime),
-      minutes: getMinutes(savedAppTime),
-      seconds: getSeconds(savedAppTime),
+      totalSeconds: totalSeconds,
+      hours: getHours(totalSeconds),
+      minutes: getMinutes(totalSeconds),
+      seconds: getSeconds(totalSeconds),
     };
   }
 
   const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
 
   return {
-    hours: now.getHours(),
-    minutes: now.getMinutes(),
-    seconds: now.getSeconds(),
+    totalSeconds: hours * HOUR + minutes * MINUTE + seconds,
+    hours,
+    minutes,
+    seconds,
   };
 }
