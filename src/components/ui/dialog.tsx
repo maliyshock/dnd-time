@@ -2,7 +2,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
 
-import { cn } from "~/utils/cn.ts";
+import { cn } from "~/utils/cn";
 
 function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
@@ -45,13 +45,13 @@ function DialogContent({
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay
         className={cn(
-          "fixed inset- bg-black/30 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 flex justify-center p-4 data-[state=open]:fade-in-0  z-150 p6",
+          "fixed inset- bg-black/30 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 flex justify-center items-center p-4 data-[state=open]:fade-in-0  z-150 p6",
         )}
       >
         <DialogPrimitive.Content
           data-slot="dialog-content"
           className={cn(
-            "z-50 relative grid w-full max-w-lg gap-4 bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg md:w-full max-h-screen overflow-y-auto",
+            "z-50 relative grid w-full max-w-lg gap-4 bg-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg md:w-full max-h-full overflow-y-auto",
             className,
           )}
           {...props}

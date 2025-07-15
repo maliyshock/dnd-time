@@ -2,29 +2,32 @@ import { useCallback, useEffect, useRef } from "react";
 import { updateTime } from "~/utils/time/updateTime.ts";
 import { SECOND, TICK } from "~/constants.ts";
 import useStore from "~/store/useStore.ts";
-import { getNow } from "~/utils/time/getNow.ts";
-import { formatTime } from "~/utils/time/formatTime.ts";
 import { calculateTimeDiff } from "~/utils/time/calculateTimeDiff.ts";
+import { getStorageItem } from "~/utils/time/getStorageItem.ts";
 
 export const useTimeUpdater = () => {
   const play = useStore(store => store.play);
   const timeIsChanging = useStore(store => store.timeIsChanging);
   const setTime = useStore(store => store.setTime);
-  const time = useStore(store => store.time);
-
   const timeIntervalRef = useRef<undefined | NodeJS.Timeout>(undefined);
 
-  const handleAppTime = useCallback(() => {
+  const handleTimeStorage = useCallback(() => {
     if (!play) return;
+
     if (document.hidden) {
-      localStorage.setItem("lastActive", JSON.stringify(Date.now()));
+      setTimeout(() => {
+        // if it has been triggered then it is tab switch, not reload
+        localStorage.setItem("lastAbsoluteTime", JSON.stringify(Date.now()));
+      }, 300);
     } else {
-      // calculate delta in time since we left off
-      const expectedTime = calculateTimeDiff();
+      // calculate delta in time since we left off. Uses lastActive
+      const lastActive = getStorageItem("lastAbsoluteTime");
+      const lastActiveWorldTime = getStorageItem("lastActiveWorldTime");
+      const expectedTime = calculateTimeDiff(lastActive, lastActiveWorldTime);
 
       if (expectedTime) {
-        setTime(() => expectedTime);
-        localStorage.removeItem("lastActive");
+        setTime(expectedTime);
+        localStorage.removeItem("lastAbsoluteTime");
       }
     }
   }, [play, setTime]);
@@ -43,16 +46,8 @@ export const useTimeUpdater = () => {
       startTimeInterval();
     }
 
-    handleAppTime();
-  }, [handleAppTime, startTimeInterval]);
-
-  useEffect(() => {
-    // remember the time every time its changes
-    localStorage.setItem("lastActiveAppTime", JSON.stringify(time));
-    const { hours, minutes } = getNow(time);
-
-    document.title = `DND Timer – ${formatTime(hours)} : ${formatTime(minutes)}`;
-  }, [time]);
+    handleTimeStorage();
+  }, [handleTimeStorage, startTimeInterval]);
 
   // initial interval start
   useEffect(() => {
@@ -61,6 +56,7 @@ export const useTimeUpdater = () => {
     return () => clearInterval(timeIntervalRef.current);
   }, [startTimeInterval]);
 
+  // it triggers on page reload!
   useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
 

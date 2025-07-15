@@ -14,12 +14,16 @@ import brokenStar1 from "~/assets/sound/broken_star_1.mp3";
 import brokenStar2 from "~/assets/sound/broken_star_2.mp3";
 import fire from "~/assets/sound/fire.mp3";
 import scream from "~/assets/sound/scream.mp3";
+import { formatTime } from "~/utils/time/formatTime.ts";
 
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
 export const DAY = 24 * HOUR;
 export const MINUTES_IN_DAY = DAY / MINUTE;
+
+export const HOURS_OPTIONS = Array.from({ length: 24 }, (_, i) => String(formatTime(i)));
+export const MINUTES_OPTIONS = Array.from({ length: 12 }, (_, i) => String(formatTime(i * 5)));
 
 // in seconds
 export const MORNING_START = 6.75 * HOUR; // 15 minutes before day

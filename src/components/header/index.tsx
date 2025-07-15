@@ -1,6 +1,5 @@
 import { Button } from "~/components/ui/button/index.tsx";
 import { Sound } from "~/components/ui/icons/Sound.tsx";
-import { Swap } from "~/components/ui/icons/Swap.tsx";
 import useStore from "~/store/useStore.ts";
 import { usePrepareAudio } from "~/hooks/usePrepareAudio.ts";
 import { AUDIO_FILES } from "~/constants.ts";
@@ -9,6 +8,7 @@ import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 import "./header.scss";
 import { cn } from "~/utils/cn.ts";
 import { AboutProject } from "~/components/header/AboutProject.tsx";
+import { SwapWorld } from "~/components/header/worlds/SwapWorld.tsx";
 
 export function Header({ className }: { className?: string }) {
   const setSoundToggle = useStore(store => store.setSoundToggle);
@@ -34,8 +34,6 @@ export function Header({ className }: { className?: string }) {
     setSoundToggle();
   };
 
-  const handleSwap = () => {};
-
   // TODO: would jump on mobiles if static
   if (!audioIsReady) return;
 
@@ -44,9 +42,7 @@ export function Header({ className }: { className?: string }) {
       <div role="toolbar" aria-label="Main actions" className={cn("flex gap-6 justify-between md:justify-normal w-full md:w-auto")}>
         <AboutProject />
 
-        <Button aria-label="Swap world" color="white" isTransparent={!soundOn} variation="hollow" size="medium" onMouseDown={handleSwap}>
-          <Swap />
-        </Button>
+        <SwapWorld />
 
         <Button
           aria-label={`turn sound ${soundOn ? "off" : "on"}`}
