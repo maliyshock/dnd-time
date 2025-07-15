@@ -34,7 +34,6 @@ export type TimeSlice = {
 
 // get last active world name and time based on the info from the local storage
 const currentWorldName = localStorage.getItem("lastActiveWorld");
-// const lastActiveWorldTime = getStorageItem("lastActiveWorldTime");
 const defaultWorld = { name: "Untitled World", initialTime: getNow(), order: 0 };
 const worlds = getWorlds() ?? { [defaultWorld.name]: defaultWorld };
 

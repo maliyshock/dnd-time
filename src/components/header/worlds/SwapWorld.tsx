@@ -7,6 +7,7 @@ import useStore from "~/store/useStore.ts";
 
 export function SwapWorld() {
   const setPlay = useStore(store => store.setPlay);
+  // TODO: add sounds later
   const handleSound = () => {};
 
   const handleSwap = () => {

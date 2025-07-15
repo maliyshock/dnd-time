@@ -15,7 +15,6 @@ export const useTimeUpdater = () => {
     if (!play) return;
 
     if (document.hidden) {
-      // localStorage.setItem("lastActiveWorld", currentWorldName);
       setTimeout(() => {
         // if it has been triggered then it is tab switch, not reload
         localStorage.setItem("lastAbsoluteTime", JSON.stringify(Date.now()));
