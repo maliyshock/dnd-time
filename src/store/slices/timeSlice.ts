@@ -8,9 +8,11 @@ import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
 import { getNow } from "~/utils/time/getNow.ts";
 import { getWorlds } from "~/utils/localStorage/getWorlds.ts";
 import { sortByOrder } from "~/utils/worlds/sortByOrder.ts";
+import { v4 as uuidv4 } from "uuid";
+import { toast } from "sonner";
 
 export type TimeSlice = {
-  activeWorldName: string;
+  activeWorldId: string;
   worlds: WorldStorage;
   speed: number;
   time: number;
@@ -22,10 +24,10 @@ export type TimeSlice = {
   sunAngle: number;
   currentColors: [RGBColor, RGBColor, number?];
   colors: Map<number, [RGBColor, RGBColor, number?]>;
-  setWorlds: (payload: WorldStorage | ((prev: WorldStorage) => WorldStorage)) => void;
+  addWorld: (world: World) => void;
   selectWorld: (payload: string) => void;
   deleteWorld: (payload: string) => void;
-  setActiveWorldName: (payload: string) => void;
+  setActiveWorldId: (payload: string) => void;
   setPlay: (payload: boolean) => void;
   setTogglePlay: () => void;
   setTimeIsChanging: (payload: boolean) => void;
@@ -33,17 +35,18 @@ export type TimeSlice = {
 };
 
 // get last active world name and time based on the info from the local storage
-const currentWorldName = localStorage.getItem("lastActiveWorld");
-const defaultWorld = { name: "Untitled World", initialTime: getNow(), order: 0 };
-const worlds = getWorlds() ?? { [defaultWorld.name]: defaultWorld };
+const currentWorldId = localStorage.getItem("lastActiveWorldId");
+const defaultId = uuidv4();
+const defaultWorld = { id: defaultId, name: "Untitled World", initialTime: getNow(), order: 0 };
+const worlds = getWorlds() ?? { [defaultId]: defaultWorld };
 
-const currentWorld: World = currentWorldName ? worlds[currentWorldName] || defaultWorld : defaultWorld;
+const currentWorld: World = currentWorldId ? worlds[currentWorldId] || defaultWorld : defaultWorld;
 const { totalSeconds, minutes, hours } = currentWorld.initialTime;
 const totalMinutes = secondsToMinutes(totalSeconds);
 const colors = generateColors();
 
 const initialState = {
-  activeWorldName: currentWorld.name,
+  activeWorldId: currentWorld.id,
   worlds, // TODO: probably should be extracted to separate slice
   speed: 1,
   play: true,
@@ -67,38 +70,66 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
   // flag to pause the time for a bit, without changing the play state
   setTimeIsChanging: (payload: boolean) => set({ timeIsChanging: payload }),
 
-  setWorlds: (valueOrFn: WorldStorage | ((prev: WorldStorage) => WorldStorage)) =>
-    set(store => {
-      const result = typeof valueOrFn === "function" ? valueOrFn(store.worlds) : valueOrFn;
-
-      return { worlds: result };
-    }),
-
-  deleteWorld: (payload: string) => {
+  deleteWorld: (id: string) => {
     set(store => {
       const newWorlds = { ...store.worlds };
 
-      delete newWorlds[payload];
+      delete newWorlds[id];
 
-      if (store.activeWorldName === payload) {
+      if (store.activeWorldId === id) {
         const sortedNewWorlds = sortByOrder(newWorlds);
         const newActiveWorld = sortedNewWorlds[0];
 
-        return { worlds: newWorlds, activeWorldName: newActiveWorld[0] };
+        return { worlds: newWorlds, activeWorldId: newActiveWorld[0] };
       }
 
       return { worlds: newWorlds };
     });
   },
 
-  selectWorld: (payload: string) => {
+  addWorld: (world: World) =>
     set(store => {
-      const newActiveWorld = store.worlds[payload];
+      // validation rules
+      const worldNames = Object.entries(store.worlds).map(([, world]) => world.name);
+
+      if (worldNames.includes(world.name) && !(world.id in store.worlds)) {
+        // TODO: validation case name exist already -> show error
+        toast("World with this name exist already", {
+          // description: "Sunday, December 03, 2023 at 9:00 AM",
+          // action: {
+          //   label: "Undo",
+          //   onClick: () => console.log("Undo"),
+          // },
+        });
+
+        return store;
+      }
+
+      if (world.name === "") {
+        // TODO: validation case empty name -> show error
+        toast("World name could not be empty", {
+          // description: "Sunday, December 03, 2023 at 9:00 AM",
+          // action: {
+          //   label: "Undo",
+          //   onClick: () => console.log("Undo"),
+          // },
+        });
+
+        return store;
+      }
+
+      return { worlds: { ...store.worlds, [world.id]: world } };
+    }),
+
+  selectWorld: (id: string) => {
+    set(store => {
+      const newActiveWorld = store.worlds[id];
+
       const { totalSeconds, minutes, hours } = newActiveWorld.initialTime;
       const totalMinutes = secondsToMinutes(totalSeconds);
 
       return {
-        activeWorldName: payload,
+        activeWorldId: id,
         time: totalSeconds,
         minutes,
         hours: hours,
@@ -112,7 +143,7 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
     });
   },
 
-  setActiveWorldName: (payload: string) => set({ activeWorldName: payload }),
+  setActiveWorldId: (id: string) => set({ activeWorldId: id }),
 
   setTime: (valueOrFn: number | ((prev: number) => number)) =>
     set(store => {

@@ -11,6 +11,7 @@ import { AboutProject } from "~/components/header/AboutProject.tsx";
 import { SwapWorld } from "~/components/header/worlds/SwapWorld.tsx";
 
 export function Header({ className }: { className?: string }) {
+  const activeWorldName = useStore(store => store.worlds[store.activeWorldId].name);
   const setSoundToggle = useStore(store => store.setSoundToggle);
   const soundOn = useStore(store => store.soundOn);
   const audioIsReady = useStore(store => store.audioIsReady);
@@ -38,8 +39,13 @@ export function Header({ className }: { className?: string }) {
   if (!audioIsReady) return;
 
   return (
-    <header className={`header ${className}`}>
-      <div role="toolbar" aria-label="Main actions" className={cn("flex gap-6 justify-between md:justify-normal w-full md:w-auto")}>
+    <header className={`header flex flex-wrap gap-4 items-center ${className}`}>
+      <h2 className="worldName shrink-0">{activeWorldName}</h2>
+      <div
+        role="toolbar"
+        aria-label="Main actions"
+        className={cn("flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] p-6 gap-6 justify-between md:justify-normal w-full md:w-auto")}
+      >
         <AboutProject />
 
         <SwapWorld />

@@ -8,6 +8,7 @@ import { Overlay } from "~/components/overlay";
 import { Header } from "~/components/header";
 import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
 import { Stars } from "~/components/stars";
+import { Toaster } from "sonner";
 
 // space to pause time
 // s - sound
@@ -23,6 +24,7 @@ export default function App() {
       <Overlay />
       <Background />
       <Stars />
+      <Toaster />
       <main className="layout">
         <Header className="layout__header" />
         <main className="layout__body">

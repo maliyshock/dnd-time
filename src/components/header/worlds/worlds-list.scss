@@ -1,0 +1,106 @@
+.worlds-list {
+	$c: &;
+	position: relative;
+
+	&:before {
+		z-index: 0;
+		position: absolute;
+		content: '';
+		display: block;
+		width: 1px;
+		left: calc(calc(6rem * 0.25) + 0.3rem - 1.3px);
+		top: calc(var(--spacing) * (-4));
+		bottom: calc(var(--spacing) * (-4));
+		background-color: var(--border);
+	}
+
+	&__item {
+		position: relative;
+
+		&.active {
+			//color:
+		}
+
+		&:hover {
+			#{$c}__item-actions {
+				display: flex;
+			}
+		}
+	}
+
+	&__item-actions {
+		display: none;
+	}
+}
+
+.marker {
+	width: 1.5rem;
+	height: 0.5rem;
+
+	&:not(.active) {
+		width: 0.5rem;
+		border: 2px solid var(--muted-foreground);
+		border-radius: 2px;
+		background-color: var(--background);
+		transform: rotate(45deg);
+	}
+
+	&__wrapper {
+		position: relative;
+	}
+
+	&__base-square {
+		position: relative;
+		left: -1px;
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 1px;
+		width: 0.6rem;
+		height: 0.6rem;
+		border: 2px solid var(--foreground);
+		background-color: var(--foreground);
+		transform: rotate(225deg);
+	}
+
+	&__circle {
+		width: 0.4rem;
+		height: 0.4rem;
+		border-radius: 100%;
+		background-color: var(--background);
+	}
+
+	&__arrow-square {
+		top: 0.05rem;
+		left: 0.4rem;
+		position: absolute;
+		z-index: 0;
+		width: 0.5rem;
+		height: 0.5rem;
+		border: 2px solid var(--foreground);
+		border-radius: 1px;
+		transform: rotate(-45deg);
+	}
+
+	&__arrow-line {
+		position: absolute;
+		top: 100%;
+		left: calc(100% + 3px);
+		height: 0.5rem;
+		width: 1px;
+		background-color: var(--foreground);
+		transform: rotate(-45deg);
+		transform-origin: 0;
+	}
+
+	&__arrow-circle {
+		position: absolute;
+		width: 0.4rem;
+		height: 0.4rem;
+		background-color: var(--foreground);
+		border-radius: 100%;
+		left: calc(50% - 0.2rem);
+		top: 80%;
+	}
+}

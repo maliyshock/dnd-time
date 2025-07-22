@@ -1,57 +1,41 @@
 import { useCallback, useState } from "react";
 import { SHDButton } from "~/components/ui/shd-button";
-import { XIcon } from "lucide-react";
-import { EditWorld, OnSubmitArgs } from "~/components/header/worlds/EditWorld.tsx";
+import { WorldForm, OnSubmitArgs } from "~/components/header/worlds/WorldForm.tsx";
 import useStore from "~/store/useStore.ts";
-import { WorldStorage } from "~/types.ts";
 import { getTotalSeconds } from "~/utils/time/getTotalSeconds.ts";
+import { v4 as uuidv4 } from "uuid";
+import { cn } from "~/utils/cn.ts";
 
 export function AddNewWorld() {
   const [showAddNew, setShowAddNew] = useState(false);
-  const setWorlds = useStore(store => store.setWorlds);
+  const addWorld = useStore(store => store.addWorld);
 
   //TODO: perhaps should exist as a store method
   const handleAdd = useCallback(
     ({ name, hours, minutes }: OnSubmitArgs) => {
-      const worldStorageString = localStorage.getItem("worldStorage");
-      let worldStorage: WorldStorage = {};
+      const newWorld = {
+        id: uuidv4(),
+        name,
+        order: Math.floor(Date.now() / 1000),
+        initialTime: {
+          hours,
+          minutes,
+          seconds: 0,
+          totalSeconds: getTotalSeconds({ hours, minutes }),
+        },
+      };
 
-      if (worldStorageString) {
-        //TODO: add order
-
-        worldStorage = JSON.parse(worldStorageString);
-
-        worldStorage = {
-          ...worldStorage,
-          [name]: {
-            name,
-            order: Math.floor(Date.now() / 1000),
-            initialTime: {
-              hours,
-              minutes,
-              seconds: 0,
-              totalSeconds: getTotalSeconds({ hours, minutes }),
-            },
-          },
-        };
-
-        setWorlds(worldStorage);
-      }
+      addWorld(newWorld);
     },
-    [setWorlds],
+    [addWorld],
   );
 
   return (
     <>
       {showAddNew ? (
-        <section className="flex w-full items-center gap-4">
-          <EditWorld onSubmit={handleAdd} />
-          <SHDButton variant="secondary" className="" onClick={() => setShowAddNew(false)}>
-            <XIcon />
-          </SHDButton>
-        </section>
+        <WorldForm className={cn("bg-background")} onSubmit={handleAdd} onCancel={() => setShowAddNew(false)} />
       ) : (
-        <SHDButton type="button" variant="default" className="w-full text-xl" size="lg" onClick={() => setShowAddNew(true)}>
+        <SHDButton type="button" variant="default" className="w-full text-2xl rounded-t-none" size="xl" onClick={() => setShowAddNew(true)}>
           Add +
         </SHDButton>
       )}

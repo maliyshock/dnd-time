@@ -1,0 +1,7 @@
+.swap-world {
+	&__footer {
+		& > * {
+			height: 100%;
+		}
+	}
+}
