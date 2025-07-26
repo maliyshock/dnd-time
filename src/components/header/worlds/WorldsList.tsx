@@ -1,18 +1,21 @@
 import useStore from "~/store/useStore.ts";
 import { useMemo } from "react";
-import { MemoizedWorldItem } from "~/components/header/worlds/WorldItem.tsx";
+import { MemoizedWorldItem } from "~/components/header/worlds/world-item/WorldItem.tsx";
 import { sortByOrder } from "~/utils/worlds/sortByOrder.ts";
+import "./worlds-list.scss";
+import { useConfirm } from "~/components/header/worlds/hooks/useConfirm.ts";
 
 export function WorldsList() {
   const actualHours = useStore(store => store.hours);
   const actualMinutes = useStore(store => store.minutes);
-  const activeWorldName = useStore(store => store.activeWorldName);
+  const activeWorldId = useStore(store => store.worlds[store.activeWorldId].id);
   const worlds = useStore(store => store.worlds);
   const sortedWorlds = useMemo(() => sortByOrder(worlds), [worlds]);
+  const { showConfirmId } = useConfirm();
 
   const memoWorlds = useMemo(() => {
     return sortedWorlds.map(([, worldItem], index) => {
-      const isActive = activeWorldName === worldItem.name;
+      const isActive = activeWorldId === worldItem.id;
 
       return (
         <MemoizedWorldItem
@@ -22,10 +25,13 @@ export function WorldsList() {
           hours={isActive ? actualHours : worldItem.initialTime.hours}
           minutes={isActive ? actualMinutes : worldItem.initialTime.minutes}
           name={worldItem.name}
+          id={worldItem.id}
+          order={worldItem.order}
+          showConfirm={worldItem.id === showConfirmId}
         />
       );
     });
-  }, [activeWorldName, actualHours, actualMinutes, sortedWorlds]);
+  }, [activeWorldId, actualHours, actualMinutes, showConfirmId, sortedWorlds]);
 
-  return <ul className="my-2 ml-6 list-disc [&>li]:mt-2">{memoWorlds}</ul>;
+  return <ul className="worlds-list">{memoWorlds}</ul>;
 }

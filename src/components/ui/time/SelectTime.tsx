@@ -2,15 +2,16 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 
 type SelectTimeProps = {
   value: string;
+  name: string;
   placeholder?: string;
   defaultValue?: string;
   options: string[];
   onChange?: (value: string) => void;
 };
 
-export function SelectTime({ value, options, onChange, defaultValue }: SelectTimeProps) {
+export function SelectTime({ value, options, onChange, name, ...props }: SelectTimeProps) {
   return (
-    <Select value={value} onValueChange={onChange} defaultValue={defaultValue || options[0]}>
+    <Select {...props} name={name} value={value} onValueChange={onChange}>
       <SelectTrigger className="w-18">
         <SelectValue />
       </SelectTrigger>
