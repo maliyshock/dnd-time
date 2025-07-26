@@ -1,11 +1,11 @@
 import { SelectTime } from "~/components/ui/time/SelectTime.tsx";
-import { Input } from "~/components/ui/input.tsx";
-import { SHDButton } from "~/components/ui/shd-button.tsx";
+import { Input } from "~/components/ui/shadcn/input.tsx";
+import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { Check, Ban, RefreshCcw } from "lucide-react";
 import { useState } from "react";
 import { HOURS_OPTIONS, MINUTES_OPTIONS } from "~/constants.ts";
 import { generateWorldName } from "~/utils/worlds/generateWorldName.ts";
-import { Separator } from "~/components/ui/separator.tsx";
+import { Separator } from "~/components/ui/shadcn/separator.tsx";
 import { cn } from "~/utils/cn.ts";
 import { formatTime } from "~/utils/time/formatTime.ts";
 

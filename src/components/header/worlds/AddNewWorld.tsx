@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { SHDButton } from "~/components/ui/shd-button";
+import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { WorldForm, OnSubmitArgs } from "~/components/header/worlds/WorldForm.tsx";
 import useStore from "~/store/useStore.ts";
 import { getTotalSeconds } from "~/utils/time/getTotalSeconds.ts";

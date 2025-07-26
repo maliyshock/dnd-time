@@ -1,6 +1,6 @@
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog.tsx";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/shadcn/dialog.tsx";
 import { Button } from "~/components/ui/button";
-import { SHDButton } from "~/components/ui/shd-button.tsx";
+import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { Question } from "~/components/ui/icons/Question.tsx";
 
 export function AboutProject() {

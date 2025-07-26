@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/select.tsx";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "~/components/ui/shadcn/select.tsx";
 
 type SelectTimeProps = {
   value: string;

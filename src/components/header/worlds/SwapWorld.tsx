@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/dialog.tsx";
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "~/components/ui/shadcn/dialog.tsx";
 import { Button } from "~/components/ui/button";
 import { Swap } from "~/components/ui/icons/Swap.tsx";
 import { AddNewWorld } from "~/components/header/worlds/AddNewWorld.tsx";

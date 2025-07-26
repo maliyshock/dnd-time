@@ -1,4 +1,4 @@
-import { SHDButton } from "~/components/ui/shd-button.tsx";
+import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { Pencil, Trash2 } from "lucide-react";
 
 type ItemActionsProps = {

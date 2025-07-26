@@ -1,6 +1,6 @@
-import { SHDButton } from "~/components/ui/shd-button.tsx";
+import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { Check, XIcon } from "lucide-react";
-import { Separator } from "~/components/ui/separator.tsx";
+import { Separator } from "~/components/ui/shadcn/separator.tsx";
 import { ConfirmMode } from "~/components/header/worlds/world-item/WorldItem.tsx";
 
 type ConfirmActionsProps = {
