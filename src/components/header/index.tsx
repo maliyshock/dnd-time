@@ -7,8 +7,8 @@ import { useRef } from "react";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 import "./header.scss";
 import { cn } from "~/utils/cn.ts";
-import { AboutProject } from "~/components/header/AboutProject.tsx";
 import { SwapWorld } from "~/components/header/worlds/SwapWorld.tsx";
+import { AboutProject } from "~/components/header/AboutProject.tsx";
 
 export function Header({ className }: { className?: string }) {
   const activeWorldName = useStore(store => store.worlds[store.activeWorldId].name);
