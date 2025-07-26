@@ -44,7 +44,9 @@ export function Header({ className }: { className?: string }) {
       <div
         role="toolbar"
         aria-label="Main actions"
-        className={cn("flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] p-6 gap-6 justify-between md:justify-normal w-full md:w-auto")}
+        className={cn(
+          "flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] px-6 py-3 md:p-6 gap-3 md:gap-6 justify-between md:justify-normal w-full md:w-auto",
+        )}
       >
         <AboutProject />
 

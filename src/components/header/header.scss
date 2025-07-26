@@ -2,13 +2,14 @@
 
 .header {
 	display: flex;
-	justify-content: flex-end;
+
 	z-index: var(--layout-header);
 
-	padding: 1rem 2rem;
+	padding: 1rem;
 
 	@include mixins.for-tablet-portrait-up{
 		padding: 1.5rem 3rem;
+		justify-content: flex-end;
 	}
 }
 

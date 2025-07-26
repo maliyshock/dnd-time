@@ -1,6 +1,7 @@
 @use "../../../scss/mixins";
 //@use "../../scss/variables.scss";
 
+// TODO: make sense to use tailwind button instead
 .button {
 	$this: &;
 	transition: opacity 200ms ease-in-out;
@@ -9,9 +10,14 @@
 	border: none;
 	pointer-events: all;
 
+	//
 	&--size-medium {
-		width: 3rem;
-		height: 3rem;
+		width: 2rem;
+		height: 2rem;
+		@include mixins.for-tablet-portrait-up{
+			width: 3rem;
+			height: 3rem;
+		}
 	}
 
 	&--transparent {

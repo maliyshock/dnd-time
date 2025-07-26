@@ -6,6 +6,7 @@
     width: 512px;
     height: 512px;
     flex-shrink: 0;
+    align-items: center;
 
     & > * {
         user-select: none;
