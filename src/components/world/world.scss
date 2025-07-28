@@ -1,12 +1,14 @@
 @use "../../scss/mixins";
 
 .world {
+    display: flex;
     position: relative;
     z-index: var(--world-layer);
-    width: 512px;
-    height: 512px;
+    width: 32rem;
+    height: 32rem;
     flex-shrink: 0;
     align-items: center;
+    justify-content: center;
 
     & > * {
         user-select: none;
@@ -20,28 +22,13 @@
         height: 100%;
         z-index: 1;
         transform-origin: center;
+    }
 
-        display: block;
+    &__button {
+        transition: transform 0.1s;
 
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center 0;
-
-        animation-name: spin;
-        animation-duration: 120s;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-
-        &.spin {
-            animation-duration: 200s;
-            animation-name: spin;
-            animation-play-state: var(--animation-play-state);
-        }
-
-        &.fast-spin {
-            animation-duration: 90s;
-            animation-name: spin;
-            animation-play-state: var(--animation-play-state);
+        &:active {
+            transform: scale(0.95);
         }
     }
 }
@@ -107,5 +94,17 @@
         }
     }
 }
+
+.spin, .world__block {
+    animation-play-state: var(--animation-play-state);
+}
+
+.spin {
+    animation-duration: 200s;
+    animation-name: spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
 
 @include mixins.spin-animation;

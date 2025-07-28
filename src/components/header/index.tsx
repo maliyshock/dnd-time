@@ -40,12 +40,12 @@ export function Header({ className }: { className?: string }) {
 
   return (
     <header className={`header flex flex-wrap gap-4 items-center ${className}`}>
-      <h2 className="worldName shrink-0">{activeWorldName}</h2>
+      <h2 className="md:order-1 order-2 worldName shrink-0">{activeWorldName}</h2>
       <div
         role="toolbar"
         aria-label="Main actions"
         className={cn(
-          "flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] px-6 py-3 md:p-6 gap-3 md:gap-6 justify-between md:justify-normal w-full md:w-auto",
+          "md:order-2 order-1 flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] px-6 py-3 md:p-6 gap-3 md:gap-6 justify-between md:justify-normal w-full md:w-auto",
         )}
       >
         <AboutProject />

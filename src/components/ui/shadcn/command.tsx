@@ -3,7 +3,7 @@ import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon } from "lucide-react";
 
 import { cn } from "~/utils/cn.ts";
-import { ShdDialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/shadcn/shd-dialog.tsx";
+import { SHDDialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/shadcn/shd-dialog.tsx";
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
@@ -22,14 +22,14 @@ function CommandDialog({
   className,
   showCloseButton = true,
   ...props
-}: React.ComponentProps<typeof ShdDialog> & {
+}: React.ComponentProps<typeof SHDDialog> & {
   title?: string;
   description?: string;
   className?: string;
   showCloseButton?: boolean;
 }) {
   return (
-    <ShdDialog {...props}>
+    <SHDDialog {...props}>
       <DialogHeader className="sr-only">
         <DialogTitle>{title}</DialogTitle>
         <DialogDescription>{description}</DialogDescription>
@@ -39,7 +39,7 @@ function CommandDialog({
           {children}
         </Command>
       </DialogContent>
-    </ShdDialog>
+    </SHDDialog>
   );
 }
 

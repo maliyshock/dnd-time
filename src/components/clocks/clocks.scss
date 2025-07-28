@@ -32,34 +32,16 @@
     &__player-wrapper {
         order: 2;
         width: 100%;
-        display: flex;
+        display: none;
         justify-content: center;
+
+        @include mixins.for-tablet-portrait-up {
+            display: flex;
+        }
 
         @include mixins.for-desktop-up {
             width: auto;
             order: unset;
-        }
-    }
-
-    &__player {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-
-        width: clamp(3rem, 10vw, 5rem);
-        height: clamp(3rem, 10vw, 5rem);
-
-        background-color: transparent;
-
-        transition: opacity 0.2s;
-
-        @include mixins.clickable;
-
-        &.fade-in {
-            opacity: 0.6;
         }
     }
 
@@ -107,7 +89,7 @@
         outline: none;
         border: none;
         box-shadow: none;
-        opacity: 0.2;
+        opacity: 0.1;
         transition: opacity 0.2s;
 
         @include mixins.clickable;

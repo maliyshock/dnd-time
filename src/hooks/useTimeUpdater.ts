@@ -4,12 +4,14 @@ import { SECOND, TICK } from "~/constants.ts";
 import useStore from "~/store/useStore.ts";
 import { calculateTimeDiff } from "~/utils/time/calculateTimeDiff.ts";
 import { getStorageItem } from "~/utils/time/getStorageItem.ts";
+import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 
 export const useTimeUpdater = () => {
   const play = useStore(store => store.play);
   const timeIsChanging = useStore(store => store.timeIsChanging);
   const setTime = useStore(store => store.setTime);
   const timeIntervalRef = useRef<undefined | NodeJS.Timeout>(undefined);
+  const dropSample = useGetPlaySample({ name: "drop" });
 
   const handleTimeStorage = useCallback(() => {
     if (!play) return;
@@ -55,6 +57,10 @@ export const useTimeUpdater = () => {
 
     return () => clearInterval(timeIntervalRef.current);
   }, [startTimeInterval]);
+
+  useEffect(() => {
+    dropSample();
+  }, [dropSample, play]);
 
   // it triggers on page reload!
   useEffect(() => {
