@@ -15,12 +15,17 @@ import brokenStar2 from "~/assets/sound/broken_star_2.mp3";
 import fire from "~/assets/sound/fire.mp3";
 import scream from "~/assets/sound/scream.mp3";
 import { formatTime } from "~/utils/time/formatTime.ts";
+import { generateSteps } from "~/utils/generateSteps.ts";
 
 export const SECOND = 1;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
 export const DAY = 24 * HOUR;
 export const MINUTES_IN_DAY = DAY / MINUTE;
+
+export const SECOND_STEPS = generateSteps({ steps: [1, 6, 30], multiplier: SECOND });
+export const MINUTE_STEPS = generateSteps({ steps: [1, 15, 30], multiplier: MINUTE });
+export const HOUR_STEPS = generateSteps({ steps: [1, 4, 8], multiplier: HOUR });
 
 export const HOURS_OPTIONS = Array.from({ length: 24 }, (_, i) => String(formatTime(i)));
 export const MINUTES_OPTIONS = Array.from({ length: 12 }, (_, i) => String(formatTime(i * 5)));

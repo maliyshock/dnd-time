@@ -1,6 +1,6 @@
 import { TimeItem } from "~/components/clocks/components/TimeItem.tsx";
 import useStore from "~/store/useStore.ts";
-import { SECOND } from "~/constants.ts";
+import { SECOND_STEPS } from "~/constants.ts";
 import { useCallback } from "react";
 import { updateTime } from "~/utils/time/updateTime.ts";
 import { getSeconds } from "~/utils/time/getSeconds.ts";
@@ -22,5 +22,5 @@ export function Seconds({ onTimeChange }: SecondsProps) {
     [onTimeChange, setTime],
   );
 
-  return <TimeItem fadeOut step={SECOND} value={seconds} onTimeChange={handleTimeChange} />;
+  return <TimeItem fadeOut steps={SECOND_STEPS} value={seconds} onTimeChange={handleTimeChange} />;
 }

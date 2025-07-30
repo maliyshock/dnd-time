@@ -1,6 +1,6 @@
 import { MemoizedTimeItem } from "~/components/clocks/components/TimeItem.tsx";
 import useStore from "~/store/useStore.ts";
-import { HOUR } from "~/constants.ts";
+import { HOUR_STEPS } from "~/constants.ts";
 import { useCallback } from "react";
 import { updateTime } from "~/utils/time/updateTime.ts";
 
@@ -20,5 +20,5 @@ export function Hours({ onTimeChange }: HoursProps) {
     [onTimeChange, setTime],
   );
 
-  return <MemoizedTimeItem step={HOUR} value={hours} onTimeChange={handleTimeChange} />;
+  return <MemoizedTimeItem steps={HOUR_STEPS} value={hours} onTimeChange={handleTimeChange} />;
 }
