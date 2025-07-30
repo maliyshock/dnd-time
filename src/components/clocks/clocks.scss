@@ -2,6 +2,7 @@
 @use "../../scss/variables.scss";
 
 .clocks {
+    $c: &;
     position: relative;
     z-index: 100;
     display: flex;
@@ -10,39 +11,12 @@
     align-items: center;
     gap: 2rem;
     color: white;
+    pointer-events: all;
 
     font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     @include mixins.for-tablet-portrait-up {
         gap: 1rem;
-    }
-
-    &__clickable-item {
-        opacity: 0.2;
-        cursor: pointer;
-        &:hover {
-            opacity: 0.4;
-        }
-
-        &:active {
-            opacity: 0.6;
-        }
-    }
-
-    &__player-wrapper {
-        order: 2;
-        width: 100%;
-        display: none;
-        justify-content: center;
-
-        @include mixins.for-tablet-portrait-up {
-            display: flex;
-        }
-
-        @include mixins.for-desktop-up {
-            width: auto;
-            order: unset;
-        }
     }
 
     &__display {
@@ -56,11 +30,61 @@
         text-align: center;
     }
 
+    &__item-wrapper {
+        position: relative;
+        pointer-events: all;
+
+        & > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        &:before {
+            display: block;
+            opacity: 0;
+            content: '';
+            width: 100%;
+            position: absolute;
+            z-index: 0;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            ransition-behavior: allow-discrete;
+            transition: transform 0.2s, transform-origin 0.2s, opacity 0.4s;
+            background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--color-white), transparent 80%) 50%, transparent 100%);
+        }
+        
+        &:hover {
+            &:before{
+                opacity: 1;
+            }
+
+            &:has(.time-changer:not(.descender):hover) {
+                &:before {
+                    transform-origin: bottom center;
+                    transform: scale(1, 1.2);
+                }
+            }
+
+            &:has(.time-changer.descender:hover) {
+                &:before {
+                    transform-origin: top center;
+                    transform: scale(1, 1.2);
+                }
+            }
+        }
+
+        &:hover {
+            .fade-out {
+                opacity: 1;
+            }
+        }
+    }
+
     &__item {
         width: clamp(4rem, 15vw, 8rem);
-
         opacity: 1;
-        transition: opacity 1s;
+        transition: opacity 0.4s;
 
         &.fade-out {
             opacity: 0.2;
@@ -68,39 +92,8 @@
     }
 
     &__item-changer-wrapper {
-        width: 100%;
         display: flex;
         justify-content: center;
-    }
-
-    &__item-changer {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        fill: white;
-
-        width: clamp(2rem, 8vw, 3.75rem);
-        height: clamp(2rem, 8vw, 3.75rem);
-
-        background: transparent;
-        outline: none;
-        border: none;
-        box-shadow: none;
-        opacity: 0.1;
-        transition: opacity 0.2s;
-
-        @include mixins.clickable;
-
-        &.descender {
-            transform: scale(1,-1);
-        }
-
-        &.fade-in {
-            opacity: 0.6;
-        }
     }
 }
 

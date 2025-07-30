@@ -23,7 +23,7 @@
 	&--transparent {
 		background-color: transparent;
 
-		@include mixins.clickable;
+		@include mixins.reset-button;
 		opacity: 0.2;
 
 		&:hover {

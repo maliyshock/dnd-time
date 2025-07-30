@@ -1,54 +1,42 @@
 import { formatTime } from "~/utils/time/formatTime.ts";
 import "../clocks.scss";
-import { memo, useRef } from "react";
-import { Up } from "~/components/ui/icons/Up";
-import { getRandomNum } from "~/utils/getRandomNum.ts";
-import useStore from "~/store/useStore.ts";
-import { Button } from "~/components/ui/button";
+import { memo } from "react";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
+import { Step } from "~/utils/generateSteps.ts";
+import { TimeChanger } from "~/components/clocks/components/TimeChanger.tsx";
 
 type TimeItemProps = {
   value: number;
   fadeOut?: boolean;
-  step: number;
+  steps: Step[];
   raiserVariation?: number;
   descenderVariation?: number;
   onTimeChange: (step: number) => void;
 };
 
-export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVariation, descenderVariation }: TimeItemProps) {
-  const upVariation = useRef(raiserVariation || getRandomNum({ max: 2 }));
-  const downVariation = useRef(descenderVariation || getRandomNum({ max: 2 }));
-  const cmdIsPressed = useStore(store => store.cmdIsPressed);
+export function TimeItem({ value, fadeOut = false, steps, onTimeChange }: TimeItemProps) {
   const playSample = useGetPlaySample({ name: "bip", shift: true });
 
   return (
     <div className="clocks__item-wrapper">
-      <div className="clocks__item-changer-wrapper">
-        <Button
-          className={`clocks__item-changer pointer-events-auto clocks__clickable-item riser ${cmdIsPressed ? "fade-in" : ""}`}
-          onMouseDown={() => {
-            onTimeChange(step);
-            playSample();
-          }}
-        >
-          <Up variation={upVariation.current} />
-        </Button>
-      </div>
+      <TimeChanger
+        steps={steps}
+        onChange={stepValue => {
+          playSample();
+          onTimeChange(stepValue);
+        }}
+      />
 
       <div className={`clocks__item  ${fadeOut ? "fade-out" : ""}`}>{formatTime(value)}</div>
 
-      <div className="clocks__item-changer-wrapper">
-        <Button
-          className={`clocks__item-changer pointer-events-auto clocks__clickable-item descender ${cmdIsPressed ? "fade-in" : ""}`}
-          onClick={() => {
-            onTimeChange(-step);
-            playSample();
-          }}
-        >
-          <Up variation={downVariation.current} />
-        </Button>
-      </div>
+      <TimeChanger
+        steps={steps}
+        descender
+        onChange={stepValue => {
+          playSample();
+          onTimeChange(stepValue);
+        }}
+      />
     </div>
   );
 }

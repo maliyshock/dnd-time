@@ -25,10 +25,33 @@
     }
 
     &__button {
-        transition: transform 0.1s;
+        overflow: hidden;
+        border-radius: 100%;
+        transition: transform 0.2s;
+
+        &:hover {
+            transform: scale(1.02);
+
+            .world__button-icon {
+                opacity: 0.5;
+            }
+        }
 
         &:active {
             transform: scale(0.95);
+        }
+    }
+
+    &__button-icon {
+        opacity: 0.2;
+        transition: opacity 0.2s;
+
+        &.opacity-50 {
+            opacity: 0.5;
+        }
+
+        @include mixins.for-tablet-portrait-up {
+            opacity: 0.3;
         }
     }
 }
