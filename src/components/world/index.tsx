@@ -5,7 +5,6 @@ import useStore from "~/store/useStore.ts";
 import groundPath from "~/assets/small_world/ground.png";
 import { Stop } from "~/components/ui/icons/Stop.tsx";
 import { Play } from "~/components/ui/icons/Play.tsx";
-import { Button } from "~/components/ui/button";
 
 export default function World() {
   const clouds = useStore(store => store.clouds);
@@ -17,7 +16,7 @@ export default function World() {
   return (
     <div className="world">
       <div className="world__block spin">{<Aura rotation scaleUp={1.5} texture={auraTexturePath} transparencyStart={60} />}</div>
-      <Button
+      <button
         className="world__block world__button pointer-events-auto flex justify-center items-center text-white"
         onMouseDown={() => {
           setTogglePlay();
@@ -25,8 +24,8 @@ export default function World() {
       >
         <img alt="ground" draggable="false" className="world__ground spin absolute" src={groundPath} />
 
-        <span className={`opacity-30 md:opacity-20 ${cmdIsPressed ? "fade-in" : ""} `}>{play ? <Stop /> : <Play />}</span>
-      </Button>
+        <span className={`world__button-icon ${cmdIsPressed ? "opacity-50" : ""} `}>{play ? <Stop /> : <Play />}</span>
+      </button>
       {clouds.map(cloud => (
         <MemoCloud key={cloud.id} cloud={cloud} />
       ))}

@@ -46,6 +46,7 @@
 }
 
 :root {
+  --muted-white: color-mix(in srgb, var(--color-white), transparent 30%);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.4453 0.1256 258.47);
