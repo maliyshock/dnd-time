@@ -31,7 +31,7 @@ export function AboutProject() {
       <section className="p-6">
         <p>This is an interactive clocks. They can be used for to track / change / save time inside of your Dungeons and Dragons world.</p>
 
-        <Accordion type="multiple" collapsible className="w-full">
+        <Accordion type="multiple" className="w-full">
           <AccordionItem value="features">
             <AccordionTrigger>
               <span className={titleClassName}>Core Features</span>
