@@ -2,24 +2,62 @@
 
 $steps-count: 3;
 
-.clocks:hover, .clocks__item-wrapper .time-changer.highlighted {
-	.time-changer__value {
-		display: block;
-		opacity: 1;
+// common styles
+@mixin button-hover-state {
+	stroke: var(--muted-white);
+	stroke-width: 2px;
+}
+
+@mixin step-visible-state {
+	display: inline-flex;
+	transform: scale(1);
+	opacity: 1;
+}
+
+@mixin step-button-visible-state {
+	background-color: transparent;
+	transform: scale(1);
+}
+
+@mixin value-visible-state {
+	opacity: 1;
+	display: block;
+
+	@starting-style {
+		opacity: 0;
 	}
 }
 
-.time-changer.highlighted  * {
-	transition: unset!important;
+@mixin step-item-visible-state {
+	opacity: 1;
+	transform: translateY(0);
 }
 
-.clocks__item-wrapper:hover, .clocks__item-wrapper .time-changer.highlighted {
+@mixin generate-transition-delays($is-descender: false) {
+	@for $i from 0 through $steps-count {
+		.time-changer__step-item:nth-child(#{$i}) {
+			transition-delay: if($is-descender, calc(var(--transitionTime) * ($i - 1)), calc(var(--transitionTime) * ($steps-count - $i)));
+		}
+	}
+}
+
+.clocks:hover, .time-changer.highlighted, .clocks__item-wrapper:focus {
+	.time-changer__value {
+		@include value-visible-state;
+	}
+}
+
+.time-changer.highlighted * {
+	transition: unset !important;
+}
+
+.clocks__item-wrapper:hover, .time-changer.highlighted, .clocks__item-wrapper:focus {
 	.time-changer__button {
 		color: color-mix(in srgb, var(--color-white), transparent 85%);
 	}
 }
 
-.time-changer.highlighted {
+.time-changer.highlighted, .clocks__item-wrapper:focus {
 	.time-changer__steps {
 		opacity: 1;
 		border-color: var(--muted-white);
@@ -29,36 +67,48 @@ $steps-count: 3;
 		}
 	}
 
-	&__step-item {
-		opacity: 1;
-		transform: translateY(0);
+	.time-changer__step-item {
+		@include step-item-visible-state;
 	}
 
-	&:where(.descender) {
-		@for $i from 1 through $steps-count {
-			.time-changer__step-item:nth-child(#{$i}) {
-				transition-delay: calc(var(--transitionTime) * ($i));
-			}
+	.time-changer:where(.descender) {
+		@include generate-transition-delays(true);
+	}
+
+	.time-changer:where(:not(.descender)) {
+		@include generate-transition-delays(false);
+	}
+}
+
+.clocks__item-wrapper:focus {
+	.time-changer {
+		&__button {
+			@include button-hover-state;
 		}
-	}
 
-	&:where(:not(.descender)) {
-		@for $i from 1 through $steps-count {
-			.time-changer__step-item:nth-child(#{$i}) {
-				transition-delay: calc(var(--transitionTime) * ($steps-count - $i));
+		&__step-value {
+			@include step-visible-state;
+		}
+
+		&__step-button {
+			@include step-button-visible-state;
+		}
+
+		&__steps-wrapper {
+			display: flex;
+			opacity: 1;
+			@starting-style {
+				opacity: 0;
 			}
 		}
 	}
 }
 
-
 .time-changer {
 	--transitionTime: 0.2s;
-	--transitionTimeXL: 0.6s;
 	--transitionTime2XL: 1s;
 
 	$c: &;
-
 	position: relative;
 
 	&:where(.descender) {
@@ -68,10 +118,10 @@ $steps-count: 3;
 
 		#{$c}__value {
 			margin-top: auto;
-			margin-bottom: calc(var(--spacing) * (2));
+			margin-bottom: calc(var(--spacing) * 2);
 
 			@include mixins.for-tablet-portrait-up {
-				margin-bottom: calc(var(--spacing) * (3));
+				margin-bottom: calc(var(--spacing) * 3);
 			}
 		}
 
@@ -91,7 +141,6 @@ $steps-count: 3;
 		}
 	}
 
-
 	&:where(:not(.descender)) {
 		#{$c}__step-item {
 			transform: translateY(100%);
@@ -99,29 +148,24 @@ $steps-count: 3;
 
 		@for $i from 1 through $steps-count {
 			#{$c}__step-item:nth-child(#{$i}) {
-				transition-delay: calc(var(--transitionTime) * ($i));
+				transition-delay: calc(var(--transitionTime) * $i);
 			}
 		}
 	}
 
-	&.highlighted, &:hover {
-		 #{$c}__value {
-			opacity: 1;
-			display: block;
-
-			@starting-style {
-				opacity: 0;
-			}
-		}
-
+	&.highlighted {
 		#{$c}__button {
-			stroke: var(--muted-white);
-			stroke-width: 2px;
+			@include button-hover-state;
+		}
+	}
+
+	&.highlighted, &:hover {
+		#{$c}__value {
+			@include value-visible-state;
 		}
 
 		#{$c}__step-item {
-			opacity: 1;
-			transform: translateY(0);
+			@include step-item-visible-state;
 		}
 	}
 
@@ -132,36 +176,41 @@ $steps-count: 3;
 	}
 
 	&__button {
-		margin: 0;
 		@include mixins.reset-button;
+
+		margin: 0;
 		cursor: pointer;
 		pointer-events: all;
-
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		color: color-mix(in srgb, var(--color-white), transparent 95%);
 
 		width: clamp(2.4rem, 8vw, 3.75rem);
 		height: clamp(2.4rem, 8vw, 3.75rem);
-
+		color: color-mix(in srgb, var(--color-white), transparent 95%);
 		background: transparent;
+
 		outline: none;
 		border: none;
 		box-shadow: none;
 
 		transition: stroke var(--transitionTime), color var(--transitionTime);
-
 		stroke: color-mix(in srgb, var(--color-white), transparent 100%);
 
 		&:active {
 			transform: scale(0.95);
+		}
+
+		&:hover {
+			@include button-hover-state;
 		}
 	}
 
 	&__value {
 		opacity: 0;
 		display: none;
+		margin-top: calc(var(--spacing) * 2);
+		color: var(--color-white);
 
 		transition: display var(--transitionTime), opacity var(--transitionTime);
 		transition-behavior: allow-discrete;
@@ -169,53 +218,71 @@ $steps-count: 3;
 		@starting-style {
 			opacity: 0;
 		}
+
+		@include mixins.for-tablet-portrait-up {
+			margin-top: calc(var(--spacing) * 3);
+		}
 	}
 
 	&__step-value {
+		display: none;
 		opacity: 0;
-		display: inline-flex;
 		transform: scale(0);
-		transition: opacity var(--transitionTime), transform var(--transitionTime);
 		color: var(--muted-white);
 
+		transition: opacity var(--transitionTime), transform var(--transitionTime);
+
 		&:hover {
-			color: color-mix(in srgb, var(--color-white), transparent 0%);
+			color: var(--color-white);
 		}
 	}
 
 	&__steps-wrapper {
-		display: flex;
-		z-index: 0;
+		display: none;
 		position: absolute;
+		z-index: 0;
 		width: 100%;
 		bottom: calc(100% + var(--spacing) * 4);
+
 		flex-wrap: wrap;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		transition: transform var(--transitionTime2XL);
+
+		background-color: var(--primary);
+
+		transition-behavior: allow-discrete;
+		transition: opacity var(--transitionTime);
+
+		@starting-style {
+			opacity: 0;
+		}
+
+
+		@include mixins.for-tablet-portrait-up {
+			display: flex;
+			opacity: 1;
+			background-color: transparent;
+		}
 	}
 
 	&__steps {
 		overflow: hidden;
 		border: 1px solid transparent;
+		transition: border-color var(--transitionTime);
 
 		&:hover {
 			border-color: var(--muted-white);
 		}
-
-		transition: border-color var(--transitionTime);
 	}
 
 	&__steps:hover, &.highlighted {
-		#{$c}__step-value {
-			transform: scale(1);
-			opacity: 1;
+		.time-changer__step-value {
+			@include step-visible-state;
 		}
 
-		#{$c}__step-button {
-			background-color: transparent;
-			transform: scale(1);
+		.time-changer__step-button {
+			@include step-button-visible-state;
 		}
 	}
 
@@ -227,8 +294,11 @@ $steps-count: 3;
 		width: calc(var(--spacing) * 12);
 		height: calc(var(--spacing) * 12);
 
-		transition-behavior: allow-discrete;
 		transition: transform var(--transitionTime), opacity var(--transitionTime);
+
+		&:hover {
+			background-color: var(--primary);
+		}
 	}
 
 	&__step-button {
@@ -239,18 +309,8 @@ $steps-count: 3;
 		width: var(--spacing);
 		height: var(--spacing);
 		border-radius: 100%;
-
 		transform: scale(0.6);
-		transition: transform  var(--transitionTime);
-	}
 
-	&__value {
-		color: var(--color-white);
-
-		margin-top: calc(var(--spacing) * (2));
-
-		@include mixins.for-tablet-portrait-up {
-			margin-top: calc(var(--spacing) * (3));
-		}
+		transition: transform var(--transitionTime);
 	}
 }
