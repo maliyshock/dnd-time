@@ -43,7 +43,7 @@
     }
 
     &__button-icon {
-        opacity: 0.2;
+        opacity: 0.1;
         transition: opacity 0.2s;
 
         &.opacity-50 {
@@ -51,7 +51,7 @@
         }
 
         @include mixins.for-tablet-portrait-up {
-            opacity: 0.3;
+            opacity: 0.2;
         }
     }
 }

@@ -13,7 +13,7 @@
     color: white;
     pointer-events: all;
 
-    font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: "dyna-puff", system-ui, Avenir, Helvetica, Arial, sans-serif;
 
     @include mixins.for-tablet-portrait-up {
         gap: 1rem;
@@ -54,7 +54,7 @@
             background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--color-white), transparent 80%) 50%, transparent 100%);
         }
         
-        &:hover {
+        &:hover, &:focus {
             &:before{
                 opacity: 1;
             }
@@ -74,10 +74,14 @@
             }
         }
 
-        &:hover {
+        &:hover, &:focus {
             .fade-out {
                 opacity: 1;
             }
+        }
+
+        &:focus {
+            box-shadow: 0 0 3px var(--color-white);
         }
     }
 

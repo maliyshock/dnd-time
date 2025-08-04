@@ -150,7 +150,7 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "dyna-puff", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 #root, html, body {
@@ -192,4 +192,3 @@ button {
 .fade-in {
   opacity: 0.5;
 }
-

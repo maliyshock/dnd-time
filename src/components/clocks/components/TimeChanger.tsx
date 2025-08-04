@@ -1,5 +1,5 @@
 import { Step } from "~/utils/generateSteps.ts";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import useStore from "~/store/useStore.ts";
 import { Button } from "~/components/ui/button";
@@ -15,7 +15,7 @@ type TimeChangerProps = {
 export function TimeChanger({ steps, descender = false, onChange }: TimeChangerProps) {
   const arrowVariation = useRef(getRandomNum({ max: 2 }));
   const highlight = useStore(store => store.cmdIsPressed);
-  const [step, setStep] = useState<Step>(steps[0]);
+  const [step] = useState<Step>(steps[0]);
   const filteredSteps = useMemo(() => {
     const result = steps.filter(item => item.id !== step.id);
 
@@ -26,10 +26,12 @@ export function TimeChanger({ steps, descender = false, onChange }: TimeChangerP
     return result;
   }, [descender, step.id, steps]);
 
+  const handleTimeChange = useCallback((step: Step) => onChange(descender ? -step.value : step.value), [descender, onChange]);
+
   return (
     <div className={`clocks__item-changer-wrapper time-changer ${descender ? "descender" : ""} ${highlight ? "highlighted" : ""}`}>
       <div className="time-changer__button-wrapper flex justify-center items-center">
-        <Button className="time-changer__button pointer-events-auto" onMouseDown={() => onChange(descender ? -step.value : step.value)}>
+        <Button className="time-changer__button pointer-events-auto" onMouseDown={() => handleTimeChange(step)}>
           <span className={`time-changer__value absolute ${String(step.label).length > 1 ? "text-xs md:text-xl" : "text-lg md:text-2xl"}`}>{step.label}</span>
           <Up className="time-changer__icon" variation={arrowVariation.current} />
         </Button>
@@ -38,8 +40,12 @@ export function TimeChanger({ steps, descender = false, onChange }: TimeChangerP
       <div className="time-changer__steps-wrapper">
         <ul className="time-changer__steps rounded-4xl">
           {filteredSteps.map((item, i) => (
-            <li className={`time-changer__step-item ${String(item.label).length > 1 ? "text-xl" : "text-2xl"}`} key={i}>
-              <button className="time-changer__step-button" onClick={() => setStep(item)}>
+            <li
+              className={`time-changer__step-item cursor-pointer ${String(item.label).length > 1 ? "text-xl" : "text-2xl"}`}
+              key={i}
+              onClick={() => handleTimeChange(item)}
+            >
+              <button className="time-changer__step-button">
                 <span className="time-changer__step-value">{item.label}</span>
               </button>
             </li>

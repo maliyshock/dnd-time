@@ -24,8 +24,8 @@ export const DAY = 24 * HOUR;
 export const MINUTES_IN_DAY = DAY / MINUTE;
 
 export const SECOND_STEPS = generateSteps({ steps: [1, 6, 30], multiplier: SECOND });
-export const MINUTE_STEPS = generateSteps({ steps: [1, 15, 30], multiplier: MINUTE });
-export const HOUR_STEPS = generateSteps({ steps: [1, 4, 8], multiplier: HOUR });
+export const MINUTE_STEPS = generateSteps({ steps: [1, 5, 15, 30], multiplier: MINUTE });
+export const HOUR_STEPS = generateSteps({ steps: [1, 4, 8, 12], multiplier: HOUR });
 
 export const HOURS_OPTIONS = Array.from({ length: 24 }, (_, i) => String(formatTime(i)));
 export const MINUTES_OPTIONS = Array.from({ length: 12 }, (_, i) => String(formatTime(i * 5)));
