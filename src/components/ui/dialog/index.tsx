@@ -17,7 +17,7 @@ export function Dialog({ triggerElement, footer, title, children, onOpenChange }
       <DialogContent className="sm:max-w-xl ">
         <DialogHeader className="p-6 sticky top-0 bg-white border-b-1">
           <DialogTitle>
-            <h2 className="mt-4 text-3xl leading-none font-semibold">{title}</h2>
+            <div className="mt-4 text-3xl leading-none font-semibold">{title}</div>
           </DialogTitle>
           <DialogPrimitive.Close
             data-slot="dialog-close"

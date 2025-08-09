@@ -70,40 +70,41 @@ function setupAudioSource({ audioBuffer, audioContext, filterNode, playbackRate,
 }
 
 export function useGetPlaySample({ name, loop, shift }: UseGetPlaySample) {
-  const play = useStore(store => store.play);
-  const audioBuffers = useStore(store => store.audioBuffers);
-  const audioContext = useStore(store => store.audioContext);
-  const filterNode = useStore(store => store.filterNode);
-  const audioIsReady = useStore(store => store.audioIsReady);
   const activeSource = useRef<AudioBufferSourceNode | null>(null);
 
-  //TODO: this will work only for continuing play, we might need a separation
   useEffect(() => {
-    if (!activeSource.current) return;
-    frequencyFilter({ from: HIGHPASS_FREQ, to: 20000, audioContext, filterNode });
-    changePlaybackRate({
-      from: play ? SLOW_PLAYBACK_RATE : NORMAL_PLAYBACK_RATE,
-      to: play ? NORMAL_PLAYBACK_RATE : SLOW_PLAYBACK_RATE,
-      sourceNode: activeSource.current,
-      audioContext,
-    });
-  }, [audioContext, filterNode, play]);
+    // since we have a lot of elements having subscription for the sounds, using zustand store state here triggers re-renders in many places
+    // this allows to subscribe for play without having multiple re-renders
+    return useStore.subscribe(
+      s => s.play,
+      play => {
+        const { audioContext, filterNode } = useStore.getState();
+
+        if (!activeSource.current) return;
+
+        frequencyFilter({ from: HIGHPASS_FREQ, to: 20000, audioContext, filterNode });
+
+        changePlaybackRate({
+          from: play ? SLOW_PLAYBACK_RATE : NORMAL_PLAYBACK_RATE,
+          to: play ? NORMAL_PLAYBACK_RATE : SLOW_PLAYBACK_RATE,
+          sourceNode: activeSource.current,
+          audioContext,
+        });
+      },
+    );
+  }, []);
 
   return useCallback(() => {
+    const { audioIsReady, audioBuffers, audioContext, filterNode, play } = useStore.getState();
+
     if (!audioIsReady || !audioBuffers.has(name)) return;
     const audioBuffer = audioBuffers.get(name);
 
     if (!audioBuffer) return;
 
-    // if we already have current sound currently playing
-    stopActiveSource({
-      audioSource: activeSource.current,
-      audioContext,
-      filterNode,
-    });
+    stopActiveSource({ audioSource: activeSource.current, audioContext, filterNode });
 
     const currentPlaybackRate = play ? NORMAL_PLAYBACK_RATE : SLOW_PLAYBACK_RATE;
-
     const newSource = setupAudioSource({
       audioBuffer,
       audioContext,
@@ -113,8 +114,7 @@ export function useGetPlaySample({ name, loop, shift }: UseGetPlaySample) {
       loop,
     });
 
-    // save reference and trigger play
     activeSource.current = newSource;
     newSource.start(0);
-  }, [audioBuffers, audioContext, audioIsReady, filterNode, loop, name, play, shift]);
+  }, [name, loop, shift]);
 }

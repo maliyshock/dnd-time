@@ -23,6 +23,6 @@ export function useTimeKeeper() {
     storeWorlds(newWorlds);
     localStorage.setItem("lastActiveWorldId", activeWorldId);
 
-    document.title = `DND Timer – ${formatTime(hours)} : ${formatTime(minutes)}`;
+    document.title = `D&D Time – ${formatTime(hours)}:${formatTime(minutes)}`;
   }, [activeWorldId, time, worlds]);
 }

@@ -1,5 +1,33 @@
+# Search engines
 User-agent: Googlebot
 Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
 
+# Social networks
+User-agent: facebookexternalhit
+Allow: /
+User-agent: Facebot
+Allow: /
+User-agent: Twitterbot
+Allow: /
+User-agent: LinkedInBot
+Allow: /
+User-agent: Slackbot
+Allow: /
+User-agent: Discordbot
+Allow: /
+User-agent: Discord-Imagebot
+Allow: /
+User-agent: TelegramBot
+Allow: /
+
+# Disallow for others
 User-agent: *
 Disallow: /
+
+Sitemap: https://dnd-time.com/sitemap.xml

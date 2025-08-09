@@ -7,7 +7,7 @@ import { useRef } from "react";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 import "./header.scss";
 import { cn } from "~/utils/cn.ts";
-import { SwapWorld } from "~/components/header/worlds/SwapWorld.tsx";
+import { SwapWorld } from "~/components/header/SwapWorld.tsx";
 import { AboutProject } from "~/components/header/AboutProject.tsx";
 
 export function Header({ className }: { className?: string }) {
@@ -48,8 +48,8 @@ export function Header({ className }: { className?: string }) {
           "md:order-2 order-1 flex shrink-0 border rounded-4xl border-[var(--toolbar-border)] px-6 py-3 md:p-6 gap-3 md:gap-6 justify-between md:justify-normal w-full md:w-auto",
         )}
       >
+        {/*TODO: react dev tools shows unnecessary re-renders on clock when dialog changes its state*/}
         <AboutProject />
-
         <SwapWorld />
 
         <Button

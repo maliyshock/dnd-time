@@ -4,14 +4,19 @@ import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { Question } from "~/components/ui/icons/Question.tsx";
 import { Dialog } from "~/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/shadcn/accordion.tsx";
+import useStore from "~/store/useStore.ts";
 
 export function AboutProject() {
   // const handleSound = () => {};
+  const setPlay = useStore(store => store.setPlay);
   const titleClassName = "text-xl leading-none font-semibold";
   const listClassName = "ml-6 list-disc [&>li]:mt-2";
 
   return (
     <Dialog
+      onOpenChange={isVisible => {
+        setPlay(!isVisible);
+      }}
       triggerElement={
         <Button title="What is this?" aria-label="What is this?" color="white" isTransparent={true} variation="hollow" size="medium" onMouseDown={() => {}}>
           <Question />
