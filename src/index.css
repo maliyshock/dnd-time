@@ -46,6 +46,7 @@
 }
 
 :root {
+  --muted-white: color-mix(in srgb, var(--color-white), transparent 30%);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.4453 0.1256 258.47);
@@ -149,7 +150,7 @@
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "dynaPuff", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "dyna-puff", system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
 #root, html, body {
@@ -191,4 +192,3 @@ button {
 .fade-in {
   opacity: 0.5;
 }
-

@@ -1,28 +1,28 @@
 @use "variables.scss";
 
 @font-face {
-	font-family: 'dynaPuff';
+	font-family: 'dyna-puff';
 	font-style: normal;
 	font-weight: 400;
 	src: url("#{variables.$fontsPath}/#{variables.$fontName}_regular.woff2") format('woff2');
 }
 
 @font-face {
-	font-family: 'dynaPuff';
+	font-family: 'dyna-puff';
 	font-style: normal;
 	font-weight: 500;
 	src: url("#{variables.$fontsPath}/#{variables.$fontName}_medium.woff2") format('woff2');
 }
 
 @font-face {
-	font-family: 'dynaPuff';
+	font-family: 'dyna-puff';
 	font-style: normal;
 	font-weight: 600;
 	src: url("#{variables.$fontsPath}/#{variables.$fontName}_semi_bold.woff2") format('woff2');
 }
 
 @font-face {
-	font-family: 'dynaPuff';
+	font-family: 'dyna-puff';
 	font-style: normal;
 	font-weight: 700;
 	src: url("#{variables.$fontsPath}/#{variables.$fontName}_bold.woff2") format('woff2');

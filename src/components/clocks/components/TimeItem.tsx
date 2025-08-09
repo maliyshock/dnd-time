@@ -1,54 +1,60 @@
 import { formatTime } from "~/utils/time/formatTime.ts";
 import "../clocks.scss";
-import { memo, useRef } from "react";
-import { Up } from "~/components/ui/icons/Up";
-import { getRandomNum } from "~/utils/getRandomNum.ts";
-import useStore from "~/store/useStore.ts";
-import { Button } from "~/components/ui/button";
+import { HTMLAttributes, memo } from "react";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
+import { TimeChanger } from "~/components/clocks/components/TimeChanger.tsx";
+import useStore from "~/store/useStore.ts";
+import { HOUR_STEPS, MINUTE_STEPS, SECOND_STEPS } from "~/constants.ts";
+import { getSeconds } from "~/utils/time/getSeconds.ts";
+
+type TimeType = "hours" | "minutes" | "seconds";
 
 type TimeItemProps = {
-  value: number;
   fadeOut?: boolean;
-  step: number;
   raiserVariation?: number;
   descenderVariation?: number;
   onTimeChange: (step: number) => void;
-};
+  timeType: TimeType;
+} & HTMLAttributes<HTMLDivElement>;
 
-export function TimeItem({ value, fadeOut = false, step, onTimeChange, raiserVariation, descenderVariation }: TimeItemProps) {
-  const upVariation = useRef(raiserVariation || getRandomNum({ max: 2 }));
-  const downVariation = useRef(descenderVariation || getRandomNum({ max: 2 }));
-  const cmdIsPressed = useStore(store => store.cmdIsPressed);
+function getSteps(timeType: TimeType) {
+  switch (timeType) {
+    case "hours":
+      return HOUR_STEPS;
+    case "minutes":
+      return MINUTE_STEPS;
+    case "seconds":
+      return SECOND_STEPS;
+  }
+}
+
+export function TimeItem({ timeType, onTimeChange, ...props }: TimeItemProps) {
+  const timeValue = useStore(store => store[timeType === "seconds" ? "time" : timeType]);
   const playSample = useGetPlaySample({ name: "bip", shift: true });
+  const steps = getSteps(timeType);
 
   return (
-    <div className="clocks__item-wrapper">
-      <div className="clocks__item-changer-wrapper">
-        <Button
-          className={`clocks__item-changer pointer-events-auto clocks__clickable-item riser ${cmdIsPressed ? "fade-in" : ""}`}
-          onMouseDown={() => {
-            onTimeChange(step);
-            playSample();
-          }}
-        >
-          <Up variation={upVariation.current} />
-        </Button>
+    <div {...props} className="clocks__item-wrapper rounded-4xl py-2">
+      <TimeChanger
+        steps={steps}
+        onChange={stepValue => {
+          playSample();
+          onTimeChange(stepValue);
+        }}
+      />
+
+      <div className={`clocks__item  ${timeType === "seconds" ? "fade-out" : ""}`}>
+        {formatTime(timeType === "seconds" ? getSeconds(timeValue) : timeValue)}
       </div>
 
-      <div className={`clocks__item  ${fadeOut ? "fade-out" : ""}`}>{formatTime(value)}</div>
-
-      <div className="clocks__item-changer-wrapper">
-        <Button
-          className={`clocks__item-changer pointer-events-auto clocks__clickable-item descender ${cmdIsPressed ? "fade-in" : ""}`}
-          onClick={() => {
-            onTimeChange(-step);
-            playSample();
-          }}
-        >
-          <Up variation={downVariation.current} />
-        </Button>
-      </div>
+      <TimeChanger
+        steps={steps}
+        descender
+        onChange={stepValue => {
+          playSample();
+          onTimeChange(stepValue);
+        }}
+      />
     </div>
   );
 }

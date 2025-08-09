@@ -1,7 +1,7 @@
 @use "variables.scss";
 @use "sass:math";
 
-@mixin clickable {
+@mixin reset-button {
 	padding: 0;
 	border: none;
 	&:hover, &:focus, &:active {
