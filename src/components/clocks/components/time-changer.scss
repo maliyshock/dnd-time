@@ -273,6 +273,10 @@ $steps-count: 3;
 
 		&:hover {
 			border-color: var(--muted-white);
+
+			#{$c}__step-item {
+				transition: none;
+			}
 		}
 	}
 

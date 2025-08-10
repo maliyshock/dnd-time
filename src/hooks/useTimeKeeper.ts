@@ -4,6 +4,7 @@ import { formatTime } from "~/utils/time/formatTime.ts";
 import useStore from "~/store/useStore.ts";
 import { storeWorlds } from "~/utils/localStorage/setWorlds.ts";
 
+// TODO: state changes cause root component to rerender
 // store worlds and last active world in local storage
 export function useTimeKeeper() {
   const activeWorldId = useStore(store => store.activeWorldId);

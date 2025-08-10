@@ -5,7 +5,7 @@ import { CloudSlice, cloudsSlice } from "~/store/slices/cloudsSlice.ts";
 import { SoundSlice, soundSlice } from "~/store/slices/soundSlice.ts";
 import { subscribeWithSelector } from "zustand/middleware";
 
-type StoreState = TimeSlice & CmdSlice & CloudSlice & SoundSlice;
+export type StoreState = TimeSlice & CmdSlice & CloudSlice & SoundSlice;
 
 export const useStore = create<StoreState>()(
   subscribeWithSelector((...a) => ({

@@ -6,6 +6,7 @@ import { calculateTimeDiff } from "~/utils/time/calculateTimeDiff.ts";
 import { getStorageItem } from "~/utils/time/getStorageItem.ts";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 
+// TODO: state changes cause root component to rerender
 export const useTimeUpdater = () => {
   const play = useStore(store => store.play);
   const timeIsChanging = useStore(store => store.timeIsChanging);
