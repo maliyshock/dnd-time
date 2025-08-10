@@ -22,6 +22,7 @@ export function usePrepareAudio(audioFiles: AudioFile[]) {
   const loadAllAudios = useCallback(
     async (files: AudioFile[], signal?: AbortSignal) => {
       try {
+        console.log("---start loading audios");
         await Promise.all(files.map(f => loadAudio(f, signal)));
         setAudioIsReady(true);
       } catch (e) {
@@ -38,8 +39,11 @@ export function usePrepareAudio(audioFiles: AudioFile[]) {
     const abortController = new AbortController();
     const start = () => void loadAllAudios(audioFiles, abortController.signal);
 
-    if (document.readyState === "complete") start();
-    else window.addEventListener("load", start, { once: true });
+    if (document.readyState === "complete") {
+      start();
+    } else {
+      window.addEventListener("load", start, { once: true });
+    }
 
     return () => {
       abortController.abort();
