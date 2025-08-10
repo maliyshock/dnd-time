@@ -34,16 +34,19 @@ export function usePrepareAudio(audioFiles: AudioFile[]) {
   );
 
   useEffect(() => {
-    if (!audioContext) return;
+    if (!audioContext || !audioFiles?.length) return;
 
     const abortController = new AbortController();
-    const start = () => void loadAllAudios(audioFiles, abortController.signal);
 
-    if (document.readyState === "complete") {
-      start();
-    } else {
-      window.addEventListener("load", start, { once: true });
-    }
+    const start = () => {
+      const idle = (cb: () => void) => {
+        requestIdleCallback(cb, { timeout: 5000 });
+      };
+
+      idle(() => void loadAllAudios(audioFiles, abortController.signal));
+    };
+
+    window.addEventListener("load", start, { once: true });
 
     return () => {
       abortController.abort();
