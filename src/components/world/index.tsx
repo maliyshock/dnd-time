@@ -2,10 +2,10 @@ import "./world.scss";
 import { MemoCloud } from "~/components/world/components/cloud";
 import { Aura } from "~/components/aura";
 import useStore from "~/store/useStore.ts";
-import groundPath from "~/assets/small_world/ground.png";
 import { Stop } from "~/components/ui/icons/Stop.tsx";
 import { Play } from "~/components/ui/icons/Play.tsx";
 import { Button } from "~/components/ui/button";
+import { Image } from "~/components/world/components/image.tsx";
 
 export default function World() {
   const clouds = useStore(store => store.clouds);
@@ -23,7 +23,7 @@ export default function World() {
           setTogglePlay();
         }}
       >
-        <img alt="ground" draggable="false" className="world__ground spin absolute" src={groundPath} />
+        <Image alt="Small World" draggable="false" className="world__ground spin absolute" name="ground" />
 
         <span className={`opacity-30 md:opacity-20 ${cmdIsPressed ? "fade-in" : ""} `}>{play ? <Stop /> : <Play />}</span>
       </Button>

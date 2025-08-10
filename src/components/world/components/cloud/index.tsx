@@ -12,12 +12,6 @@ type CloudProps = {
   cloud: CloudType;
 };
 
-function getImageUrl(variation: number) {
-  // note that this does not include files in subdirectories
-  return new URL(`/src/assets/clouds/cloud_${variation}/default.png`, import.meta.url).href;
-}
-
-// TODO: looks like overingeneering
 export function Cloud({ cloud }: CloudProps) {
   // const currentColors = useStore(store => store.currentColors);
   const lifeTimeTimer = useTimer();
@@ -27,7 +21,7 @@ export function Cloud({ cloud }: CloudProps) {
   const startAngle = useRef<number>(getStartPoint());
   const isBefore = useRef<boolean>(!!getRandomNum({ max: 1 }));
   const rotationSpeed = useRef<number>(getRandomNum({ min: 90, max: 200 }));
-  const path = getImageUrl(cloud.cloudVariation);
+  const path = new URL(`/src/assets/clouds/cloud_${cloud.cloudVariation}/default.png`, import.meta.url).href;
   const playSample = useGetPlaySample({ name: "wetClick", shift: true });
 
   // const conuterThreshold = useRef<number>(getRandomNum({ min: 10, max: 30 }));
