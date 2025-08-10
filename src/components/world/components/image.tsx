@@ -11,7 +11,7 @@ export function Image({ name, draggable, alt, ...props }: ImageProps) {
   return (
     <picture {...props}>
       <source srcSet={webpName} type="image/webp" />
-      <img draggable={draggable} src={pngName} alt={alt} />
+      <img draggable={draggable} src={pngName} alt={alt} fetchPriority="high" decoding="async" loading="eager" />
     </picture>
   );
 }
