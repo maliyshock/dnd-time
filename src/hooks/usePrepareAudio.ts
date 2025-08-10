@@ -1,47 +1,49 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import useStore from "~/store/useStore.ts";
-import { AudioFile } from "~/types.ts";
+import type { AudioFile } from "~/types.ts";
 
 export function usePrepareAudio(audioFiles: AudioFile[]) {
-  const setAudioIsReady = useStore(store => store.setAudioIsReady);
-  const audioContext = useStore(store => store.audioContext);
-  const setAudioSource = useStore(store => store.setAudioSource);
+  const setAudioIsReady = useStore(s => s.setAudioIsReady);
+  const audioContext = useStore(s => s.audioContext);
+  const setAudioSource = useStore(s => s.setAudioSource);
 
-  useEffect(() => {
-    const abort = new AbortController();
+  const loadAudio = useCallback(
+    async (audioFile: AudioFile, signal?: AbortSignal) => {
+      if (!audioContext) return;
+      const response = await fetch(audioFile.filePath, { signal });
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-    const loadAudio = async (audioFile: AudioFile) => {
+      setAudioSource({ name: audioFile.name, audioBuffer });
+    },
+    [audioContext, setAudioSource],
+  );
+
+  const loadAllAudios = useCallback(
+    async (files: AudioFile[], signal?: AbortSignal) => {
       try {
-        const response = await fetch(audioFile.filePath, { signal: abort.signal });
-        const arrayBuffer = await response.arrayBuffer();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
-        setAudioSource({ name: audioFile.name, audioBuffer });
-      } catch (e) {
-        console.log("error", e);
-      }
-    };
-
-    const loadAllAudios = async () => {
-      try {
-        const loadPromises = audioFiles.map(file => loadAudio(file));
-
-        await Promise.all(loadPromises);
+        await Promise.all(files.map(f => loadAudio(f, signal)));
         setAudioIsReady(true);
       } catch (e) {
         console.log("error", e);
         setAudioIsReady(false);
       }
-    };
+    },
+    [loadAudio, setAudioIsReady],
+  );
 
-    const start = () => void loadAllAudios();
+  useEffect(() => {
+    if (!audioContext) return;
+
+    const abortController = new AbortController();
+    const start = () => void loadAllAudios(audioFiles, abortController.signal);
 
     if (document.readyState === "complete") start();
     else window.addEventListener("load", start, { once: true });
 
     return () => {
-      abort.abort();
+      abortController.abort();
       window.removeEventListener("load", start);
     };
-  }, [audioContext, audioFiles, setAudioIsReady, setAudioSource]);
+  }, [audioContext, audioFiles, loadAllAudios]);
 }

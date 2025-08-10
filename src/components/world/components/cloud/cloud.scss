@@ -1,5 +1,14 @@
 @use "../../../../scss/mixins";
 
+//@keyframes lightning {
+//	0%, 90%, 100% {
+//		filter: brightness(0.5) contrast(500%) saturate(75%) hue-rotate(350deg) blur(1px) ;
+//	}
+//	93%, 94% {
+//		filter: brightness(1.5) contrast(1.4) saturate(0.8) hue-rotate(210deg);
+//	}
+//}
+
 .cloud {
 	text-align: center;
 	position: relative;
@@ -25,6 +34,10 @@
 		background-position: 0 0;
 		background-repeat: no-repeat;
 		background-size: 100%;
+
+		//filter: invert(75%);
+		//filter: brightness(0.5) contrast(400%) saturate(75%) hue-rotate(350deg);
+		//animation: lightning 3s infinite;
 
 
 		transition: transform 0.2s, opacity 0.2s;
