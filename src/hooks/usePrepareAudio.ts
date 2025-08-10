@@ -8,9 +8,11 @@ export function usePrepareAudio(audioFiles: AudioFile[]) {
   const setAudioSource = useStore(store => store.setAudioSource);
 
   useEffect(() => {
+    const abort = new AbortController();
+
     const loadAudio = async (audioFile: AudioFile) => {
       try {
-        const response = await fetch(audioFile.filePath);
+        const response = await fetch(audioFile.filePath, { signal: abort.signal });
         const arrayBuffer = await response.arrayBuffer();
         const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
@@ -32,6 +34,14 @@ export function usePrepareAudio(audioFiles: AudioFile[]) {
       }
     };
 
-    loadAllAudios();
+    const start = () => void loadAllAudios();
+
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+
+    return () => {
+      abort.abort();
+      window.removeEventListener("load", start);
+    };
   }, [audioContext, audioFiles, setAudioIsReady, setAudioSource]);
 }

@@ -11,8 +11,8 @@ export default function Clocks() {
   const timer = useRef<NodeJS.Timeout | null>(null);
   const setTimeIsChanging = useStore(store => store.setTimeIsChanging);
 
-  useTimeUpdater();
-  useTimeKeeper();
+  useTimeUpdater(); // causes rerender when play changes
+  useTimeKeeper(); // causes rerender every second
 
   const handleTimeChange = useCallback(() => {
     if (timer.current !== null) {
