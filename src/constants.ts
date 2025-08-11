@@ -92,8 +92,9 @@ export const STAR_SOUNDS_MAP: Record<StarVariation, Array<StarKind["name"] | Bro
   green: ["star5"],
 };
 
+export const MUSIC_THEME = { name: "musicTheme", filePath: music };
+
 export const AUDIO_FILES: AudioFile[] = [
-  { name: "musicTheme", filePath: music },
   { name: "bip", filePath: bip },
   { name: "wetClick", filePath: wetClick },
   { name: "wetClickHigh", filePath: wetClickHigh },
@@ -103,6 +104,7 @@ export const AUDIO_FILES: AudioFile[] = [
   { name: "scream", filePath: scream },
   ...STAR_SOUNDS,
   ...BROKEN_STAR_SOUNDS,
+  MUSIC_THEME,
 ];
 
 export const STAR_MIN_SIZE = 2;
