@@ -9,6 +9,7 @@ import { Header } from "~/components/header";
 import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
 import { Stars } from "~/components/stars";
 import { Toaster } from "sonner";
+import { useSoundControl } from "~/hooks/useSoundControl.ts";
 
 // space to pause time
 // s - sound
@@ -18,6 +19,7 @@ import { Toaster } from "sonner";
 export default function App() {
   useKeyListener();
   useAnimationControl();
+  useSoundControl();
 
   return (
     <>

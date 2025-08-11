@@ -1,9 +1,6 @@
 import { Button } from "~/components/ui/button/index.tsx";
 import { Sound } from "~/components/ui/icons/Sound.tsx";
 import useStore from "~/store/useStore.ts";
-import { usePrepareAudio } from "~/hooks/usePrepareAudio.ts";
-import { AUDIO_FILES } from "~/constants.ts";
-import { useRef } from "react";
 import { useGetPlaySample } from "~/hooks/useGetPlaySample.ts";
 import "./header.scss";
 import { cn } from "~/utils/cn.ts";
@@ -14,29 +11,12 @@ export function Header({ className }: { className?: string }) {
   const activeWorldName = useStore(store => store.worlds[store.activeWorldId].name);
   const setSoundToggle = useStore(store => store.setSoundToggle);
   const soundOn = useStore(store => store.soundOn);
-  const audioIsReady = useStore(store => store.audioIsReady);
-  const isPlayingRef = useRef(false);
   const playWetClick = useGetPlaySample({ name: "wetClickHigh" });
-  const playMusic = useGetPlaySample({ name: "musicTheme", loop: true });
-
-  usePrepareAudio(AUDIO_FILES);
 
   const handleSound = () => {
-    if (!soundOn) {
-      playWetClick();
-    }
-
-    // start to play music and never stop after
-    if (isPlayingRef.current === false) {
-      playMusic();
-      isPlayingRef.current = true;
-    }
-
+    playWetClick();
     setSoundToggle();
   };
-
-  // TODO: would jump on mobiles if static
-  if (!audioIsReady) return;
 
   return (
     <header className={`header flex flex-wrap gap-4 items-center ${className}`}>
