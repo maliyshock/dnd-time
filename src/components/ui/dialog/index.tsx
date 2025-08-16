@@ -2,6 +2,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, SHDDialog } from "~/components/ui/shadcn/shd-dialog.tsx";
 import { PropsWithChildren, ReactNode } from "react";
 import { XIcon } from "lucide-react";
+import "./dialog.scss";
 
 type DialogProps = {
   triggerElement: ReactNode;
@@ -15,7 +16,7 @@ export function Dialog({ triggerElement, footer, title, children, onOpenChange }
     <SHDDialog onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{triggerElement}</DialogTrigger>
       <DialogContent className="sm:max-w-xl ">
-        <DialogHeader className="p-6 sticky top-0 bg-white border-b-1">
+        <DialogHeader className="p-6 sticky top-0 bg-white border-b-1 z-10">
           <DialogTitle>
             <div className="mt-4 text-3xl leading-none font-semibold">{title}</div>
           </DialogTitle>
@@ -28,7 +29,7 @@ export function Dialog({ triggerElement, footer, title, children, onOpenChange }
           </DialogPrimitive.Close>
         </DialogHeader>
         <section className="dialog__content bg-white">{children}</section>
-        <DialogFooter className="sticky bottom-0">{footer}</DialogFooter>
+        <DialogFooter className="dialog__footer sticky bottom-0 z-10">{footer}</DialogFooter>
       </DialogContent>
     </SHDDialog>
   );

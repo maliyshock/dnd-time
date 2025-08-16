@@ -1,9 +1,11 @@
+@use "../../../scss/mixins";
+
 .worlds-list {
 	$c: &;
 	position: relative;
 
 	&:before {
-		z-index: 0;
+		z-index: 1;
 		position: absolute;
 		content: '';
 		display: block;
@@ -29,13 +31,19 @@
 	}
 
 	&__item-actions {
-		display: none;
+
+		@include mixins.for-tablet-portrait-up {
+			display: none;
+		}
 	}
 }
 
 .marker {
 	width: 1.5rem;
 	height: 0.5rem;
+	flex-shrink: 0;
+	position: relative;
+	z-index: 2;
 
 	&:not(.active) {
 		width: 0.5rem;

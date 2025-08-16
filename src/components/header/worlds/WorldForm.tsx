@@ -8,6 +8,8 @@ import { generateWorldName } from "~/utils/worlds/generateWorldName.ts";
 import { Separator } from "~/components/ui/shadcn/separator.tsx";
 import { cn } from "~/utils/cn.ts";
 import { formatTime } from "~/utils/time/formatTime.ts";
+import { Label } from "~/components/ui/shadcn/label.tsx";
+import "./world-form.scss";
 
 export type OnSubmitArgs = {
   hours: number;
@@ -41,13 +43,43 @@ export function WorldForm({ initHours, initMinutes, initName, onSubmit, onCancel
   const [minute, setMinute] = useState<string>(getInitValue(initMinutes, MINUTES_OPTIONS));
 
   return (
-    <form className={cn(`flex w-full items-center gap-2  px-6 justify-between ${className || ""}`)}>
-      <SelectTime name="hours" value={hour} onChange={setHour} options={HOURS_OPTIONS} />
-      :
-      <SelectTime name="minutes" value={minute} onChange={setMinute} options={MINUTES_OPTIONS} />
-      <div className="flex items-center gap-2">
-        <Input type="text" placeholder="World name" name="worldName" className="w-full flex-1" value={name} onChange={e => setName(e.target.value)} />
+    <form className={cn(`world-form w-full gap-y-4 md:gap-y-0 gap-x-2 py-4 md:py-0 px-6 ${className || ""}`)}>
+      <SelectTime
+        className="world-form__item grid gap-0 col-span-2 md:col-auto w-full md:w-18"
+        label="Hours"
+        name="hours"
+        value={hour}
+        onChange={setHour}
+        options={HOURS_OPTIONS}
+      />
 
+      <div aria-hidden="true" className="world-form__item grid ">
+        <span className="self-center justify-self-center -translate-y-1 md:translate-y-0">:</span>
+      </div>
+
+      <SelectTime
+        className="world-form__item grid gap-0 col-span-2 md:col-auto w-full md:w-18"
+        label="Minutes"
+        name="minutes"
+        value={minute}
+        onChange={setMinute}
+        options={MINUTES_OPTIONS}
+      />
+
+      <div className="world-form__item grid col-span-4 md:col-auto">
+        <Label htmlFor="worldName">World Name</Label>
+        <Input
+          id="worldName"
+          type="text"
+          placeholder="World name"
+          name="worldName"
+          className="w-full flex-1 "
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+      </div>
+
+      <div className="world-form__item grid">
         <SHDButton
           type="button"
           variant="ghost"
@@ -60,9 +92,14 @@ export function WorldForm({ initHours, initMinutes, initName, onSubmit, onCancel
           <RefreshCcw />
         </SHDButton>
       </div>
-      <Separator orientation="vertical" className="min-h-8" />
-      <div className="flex gap-2">
+
+      <div className="world-form__item hidden md:grid ">
+        <Separator orientation="vertical" className="min-h-8 separator--full mr-2" />
+      </div>
+
+      <div className="world-form__item grid col-span-2 md:col-auto">
         <SHDButton
+          className="row-3 md:row-auto"
           type="button"
           aria-label="Submit edit"
           name="worldName"
@@ -77,8 +114,11 @@ export function WorldForm({ initHours, initMinutes, initName, onSubmit, onCancel
         >
           <Check />
         </SHDButton>
+      </div>
 
+      <div className="world-form__item grid col-start-4 md:col-start-auto col-span-2 md:col-auto">
         <SHDButton
+          className="row-3 md:row-auto"
           type="button"
           variant="outline"
           onClick={e => {

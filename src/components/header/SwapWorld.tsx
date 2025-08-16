@@ -28,7 +28,7 @@ export function SwapWorld() {
         </Button>
       }
       footer={
-        <section className="swap-world__footer border-t bg-transparent h-24 w-full">
+        <section className="swap-world__footer border-t bg-transparent min-h-24 md:h-24 w-full">
           <AddNewWorld />
         </section>
       }
