@@ -2,7 +2,6 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, SHDDialog } from "~/components/ui/shadcn/shd-dialog.tsx";
 import { PropsWithChildren, ReactNode } from "react";
 import { XIcon } from "lucide-react";
-import "./dialog.scss";
 
 type DialogProps = {
   triggerElement: ReactNode;
