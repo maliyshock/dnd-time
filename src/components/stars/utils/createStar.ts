@@ -7,7 +7,10 @@ import { buildProbabilityPool } from "~/components/stars/utils/buildProbabilityP
 const STARS_PROBABILITY_POOL = buildProbabilityPool(STARS_PROBABILITY);
 
 const a = 100; // side in percent
+// Pythagorean theorem
 const result = Math.sqrt(Math.pow(a, 2) + Math.pow(a, 2));
+const min = 50 - 0.5 * result;
+const max = 50 + 0.5 * result;
 
 export function createStar(): Star {
   const starVariation = STARS_PROBABILITY_POOL[getRandomNum({ min: 0, max: STARS_PROBABILITY_POOL.length - 1 })];
@@ -18,8 +21,8 @@ export function createStar(): Star {
     soundName: soundsBank[soundIndex],
     variation: starVariation,
     size: getRandomNum({ min: STAR_MIN_SIZE, max: STAR_MAX_SIZE }),
-    positionX: getRandomNum({ min: 50 - 0.5 * result, max: 50 + 0.5 * result }),
-    positionY: getRandomNum({ min: 50 - 0.5 * result, max: 50 + 0.5 * result }),
+    positionX: getRandomNum({ min, max }),
+    positionY: getRandomNum({ min, max }),
     id: uuidv4(),
   };
 }
