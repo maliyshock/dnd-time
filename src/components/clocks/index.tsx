@@ -19,7 +19,7 @@ export default function Clocks() {
         clearTimeout(timer.current);
       }
 
-      setTime(prev => prev + step);
+      setTime(prev => Math.max(prev + step, 0));
 
       timer.current = setTimeout(() => setTimeIsChanging(false), 500);
       setTimeIsChanging(true);

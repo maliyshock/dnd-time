@@ -36,7 +36,7 @@ $variations: (
 			$color: list.nth($params, 1);
 			$shadow-size: list.nth($params, 2);
 			background-color: $color;
-			box-shadow: 0 0 20px $shadow-size $color;
+			//box-shadow: 0 0 20px $shadow-size $color; - expensive
 			border-radius: 100%;
 		}
 	}
@@ -47,7 +47,7 @@ $variations: (
 	border-radius: 100%;
 	cursor: pointer;
 	pointer-events: all;
-	box-shadow: 0 0 20px 1px white;
+	//box-shadow: 0 0 20px 1px white; - expensive
 	animation-iteration-count: infinite;
 	animation-name: pulse-animation;
 	animation-play-state: var(--animation-play-state);
@@ -66,22 +66,23 @@ $variations: (
 
 		&--variation-#{$name} {
 			background-color: $color;
-			box-shadow: 0 0 20px $shadow-size $color;
+			//box-shadow: 0 0 20px $shadow-size $color; - expensive
 
 			&#{$this}--shape-spike {
 				z-index: 1;
 				background-color: $color;
 
-				clip-path: polygon(
-						50% 0%,
-						60% 40%,
-						100% 50%,
-						60% 60%,
-						50% 100%,
-						40% 60%,
-						0% 50%,
-						40% 40%
-				);
+				// expensive
+				//clip-path: polygon(
+				//		50% 0%,
+				//		60% 40%,
+				//		100% 50%,
+				//		60% 60%,
+				//		50% 100%,
+				//		40% 60%,
+				//		0% 50%,
+				//		40% 40%
+				//);
 			}
 		}
 	}
