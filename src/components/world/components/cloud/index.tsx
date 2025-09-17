@@ -20,7 +20,7 @@ export function Cloud({ cloud }: CloudProps) {
   // const [isRain, setIsRain] = useState<boolean>(false);
   const startAngle = useRef<number>(getStartPoint());
   const isBefore = useRef<boolean>(!!getRandomNum({ max: 1 }));
-  const rotationSpeed = useRef<number>(getRandomNum({ min: 90, max: 200 }));
+  const rotationSpeed = useRef<number>(getRandomNum({ min: 120, max: 320 }));
   const path = new URL(`/src/assets/clouds/cloud_${cloud.cloudVariation}/default.png`, import.meta.url).href;
   const playSample = useGetPlaySample({ name: "wetClick", shift: true });
 

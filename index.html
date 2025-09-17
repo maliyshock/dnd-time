@@ -4,9 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        connect-src 'self' data: blob: ws:;
+        img-src 'self' data: blob:;
+        style-src 'self' 'unsafe-inline';
+      ">
     <meta name="description" content="In-game clock for tabletop RPGs. Control time, pause/resume, autosave, and day–night visuals. Built for DMs/GMs in D&D, Pathfinder, and world-simulation campaigns." />
-    <meta name="keywords" content="ttrpg in-game clock, rpg timekeeping, campaign timekeeper, dungeon master tools, game master tools, d&d clock, dnd timer, rpg world time, campaign clock, fantasy day-night cycle, rpg calendar" />
+    <meta name="keywords" content="TTRPG in-game clock, rpg timekeeping, campaign timekeeper, dungeon master tools, game master tools, d&d clock, dnd timer, rpg world time, campaign clock, fantasy day-night cycle, rpg calendar" />
 
     <!-- Primary Meta Tags -->
     <title>D&D Time</title>

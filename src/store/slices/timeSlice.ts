@@ -8,7 +8,7 @@ import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
 import { getNow } from "~/utils/time/getNow.ts";
 import { getWorlds } from "~/utils/localStorage/getWorlds.ts";
 import { sortByOrder } from "~/utils/worlds/sortByOrder.ts";
-import { v4 as uuidv4 } from "uuid";
+
 import { toast } from "sonner";
 
 export type TimeSlice = {
@@ -36,7 +36,7 @@ export type TimeSlice = {
 
 // get last active world name and time based on the info from the local storage
 const currentWorldId = localStorage.getItem("lastActiveWorldId");
-const defaultId = uuidv4();
+const defaultId = globalThis.crypto.randomUUID();
 const defaultWorld = { id: defaultId, name: "Untitled World", initialTime: getNow(), order: 0 };
 const worlds = getWorlds() ?? { [defaultId]: defaultWorld };
 

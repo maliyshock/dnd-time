@@ -12,3 +12,14 @@ export type World = {
 };
 
 export type WorldStorage = Record<string, World>;
+
+/** Oscillation profile parameters */
+export type OscillationProfile = {
+  xMin: number; // Minimum range of scale
+  xMax: number; // Maximum range of scale
+  sharpnessAlpha: number; // Sharpness of acceleration (>=1). 1 is closer to linear , more is sharper.
+  epsilonMinSpeed: number; // Minimum speed increase at the top (0.01..0.1)
+  baseSpeedPerSecond: number; // Base speed (scale)
+};
+
+export type Type = "star" | "dot" | "halo" | "wrapper";

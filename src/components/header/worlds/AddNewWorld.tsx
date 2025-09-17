@@ -3,7 +3,6 @@ import { SHDButton } from "~/components/ui/shadcn/shd-button.tsx";
 import { WorldForm, OnSubmitArgs } from "~/components/header/worlds/WorldForm.tsx";
 import useStore from "~/store/useStore.ts";
 import { getTotalSeconds } from "~/utils/time/getTotalSeconds.ts";
-import { v4 as uuidv4 } from "uuid";
 import { cn } from "~/utils/cn.ts";
 
 export function AddNewWorld() {
@@ -14,7 +13,7 @@ export function AddNewWorld() {
   const handleAdd = useCallback(
     ({ name, hours, minutes }: OnSubmitArgs) => {
       const newWorld = {
-        id: uuidv4(),
+        id: globalThis.crypto.randomUUID(),
         name,
         order: Math.floor(Date.now() / 1000),
         initialTime: {
