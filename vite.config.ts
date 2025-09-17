@@ -14,5 +14,6 @@ export default defineConfig(({ mode }) => ({
       "~": path.resolve(__dirname, "./src/"),
     },
   },
+  // react scan creates some errors in console
   plugins: [react(), tailwindcss(), ...(mode === "development" ? [reactScan()] : [])],
 }));

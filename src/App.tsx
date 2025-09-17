@@ -7,9 +7,10 @@ import { Background } from "~/components/background";
 import { Overlay } from "~/components/overlay";
 import { Header } from "~/components/header";
 import { useAnimationControl } from "~/hooks/useAnimationControl.ts";
-import { Stars } from "~/components/stars";
+
 import { Toaster } from "sonner";
 import { useSoundControl } from "~/hooks/useSoundControl.ts";
+import { MemoizedStars } from "~/components/stars/StarsContainer.tsx";
 
 // space to pause time
 // s - sound
@@ -25,7 +26,7 @@ export default function App() {
     <>
       <Overlay />
       <Background />
-      <Stars />
+      <MemoizedStars />
       <Toaster />
       <main className="layout">
         <Header className="layout__header" />

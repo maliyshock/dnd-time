@@ -1,7 +1,9 @@
+import { clamp } from "~/utils/clamp.ts";
+
 type RGBColor = { r: number; g: number; b: number };
 
 export function darker(color: RGBColor, percent: number): RGBColor {
-  const clampedPercent = Math.max(0, Math.min(100, percent));
+  const clampedPercent = clamp(percent, 0, 100);
   const factor = 1 - clampedPercent / 100;
 
   const r = Math.round(color.r * factor);

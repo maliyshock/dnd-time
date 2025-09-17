@@ -107,21 +107,33 @@ export const AUDIO_FILES: AudioFile[] = [
   MUSIC_THEME,
 ];
 
-export const STAR_MIN_SIZE = 2;
-export const STAR_MAX_SIZE = 20;
+export const STAR_MIN_SIZE = 4;
+export const STAR_TRANSFORM_THRESHOLD = 18;
+export const STAR_MAX_SIZE = 36;
 
 export type StarVariation = "default" | "broken" | "blue" | "green" | "yellow" | "orange";
 
 export type StarDictionaryItem = {
   name: StarVariation;
   chance: number;
+  color: string;
 };
 
 // set chances in percents
 export const STARS_PROBABILITY: StarDictionaryItem[] = [
-  { name: "broken", chance: 5 },
-  { name: "blue", chance: 15 },
-  { name: "orange", chance: 10 },
-  { name: "yellow", chance: 10 },
-  { name: "green", chance: 15 },
+  { name: "broken", chance: 5, color: "#ff588e" },
+  { name: "blue", chance: 15, color: "#58d8ff" },
+  { name: "orange", chance: 10, color: "#ffc900" },
+  { name: "yellow", chance: 10, color: "#ff8a58" },
+  { name: "green", chance: 15, color: "#95ff58" },
 ];
+
+export const SCENE_RPM = 0.06;
+export const STAR_SCALE_MIN = 0.5;
+export const STAR_SCALE_MAX = 1;
+
+export const MAX_STARS = 1200;
+export const MIN_STARS = 120;
+
+export const HALO_ALPHA_BASE = 0.2;
+export const HALO_SCALE = 3;
