@@ -1,7 +1,7 @@
 import { COLORS, MINUTES_IN_DAY } from "~/constants.ts";
 import { interpolateColor } from "~/utils/colors/interpolateColor.ts";
 import { RGBColor } from "~/types.ts";
-import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
+import { getMinutes } from "~/utils/time/getMinutes.ts";
 
 export function generateColors(): Map<number, [RGBColor, RGBColor, number?]> {
   const colors = new Map();
@@ -11,14 +11,14 @@ export function generateColors(): Map<number, [RGBColor, RGBColor, number?]> {
   let nextPoint = COLORS[counter + 1];
 
   for (let i = 0; i < MINUTES_IN_DAY; i++) {
-    if (i >= secondsToMinutes(nextPoint.time)) {
+    if (i >= getMinutes(nextPoint.time)) {
       counter++;
       prevPoint = COLORS[counter];
       nextPoint = COLORS[counter + 1];
     }
 
-    const prevPointInMinutes = secondsToMinutes(prevPoint.time);
-    const nextPointInMinutes = secondsToMinutes(nextPoint.time);
+    const prevPointInMinutes = getMinutes(prevPoint.time);
+    const nextPointInMinutes = getMinutes(nextPoint.time);
     const range = nextPointInMinutes - prevPointInMinutes;
     const t = (i - prevPointInMinutes) / range;
     const firstColor = interpolateColor(prevPoint.color[0], nextPoint.color[0], t);

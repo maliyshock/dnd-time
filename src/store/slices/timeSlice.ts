@@ -4,12 +4,12 @@ import { getMinutes } from "~/utils/time/getMinutes.ts";
 import { getHours } from "~/utils/time/getHours.ts";
 import { generateColors } from "~/utils/colors/getColorByTime.ts";
 import { RGBColor, World, WorldStorage } from "~/types.ts";
-import { secondsToMinutes } from "~/utils/time/secondsToMinutes.ts";
 import { getNow } from "~/utils/time/getNow.ts";
 import { getWorlds } from "~/utils/localStorage/getWorlds.ts";
 import { sortByOrder } from "~/utils/worlds/sortByOrder.ts";
-import { v4 as uuidv4 } from "uuid";
+
 import { toast } from "sonner";
+import { MINUTES_IN_DAY, MINUTES_IN_HOUR } from "~/constants.ts";
 
 export type TimeSlice = {
   activeWorldId: string;
@@ -17,7 +17,7 @@ export type TimeSlice = {
   speed: number;
   time: number;
   timeIsChanging: boolean;
-  totalMinutes: number;
+  dayMinutes: number;
   minutes: number;
   hours: number;
   play: boolean;
@@ -36,13 +36,13 @@ export type TimeSlice = {
 
 // get last active world name and time based on the info from the local storage
 const currentWorldId = localStorage.getItem("lastActiveWorldId");
-const defaultId = uuidv4();
+const defaultId = globalThis.crypto.randomUUID();
 const defaultWorld = { id: defaultId, name: "Untitled World", initialTime: getNow(), order: 0 };
 const worlds = getWorlds() ?? { [defaultId]: defaultWorld };
 
 const currentWorld: World = currentWorldId ? worlds[currentWorldId] || defaultWorld : defaultWorld;
 const { totalSeconds, minutes, hours } = currentWorld.initialTime;
-const totalMinutes = secondsToMinutes(totalSeconds);
+const dayMinutes = getMinutes(totalSeconds, MINUTES_IN_DAY);
 const colors = generateColors();
 
 const initialState = {
@@ -52,11 +52,11 @@ const initialState = {
   play: true,
   time: totalSeconds,
   timeIsChanging: false,
-  totalMinutes,
+  dayMinutes,
   minutes,
   hours,
   sunAngle: calculateSunAngle(totalSeconds),
-  currentColors: colors.get(totalMinutes) || [
+  currentColors: colors.get(dayMinutes) || [
     { r: 255, g: 255, b: 255 },
     { r: 255, g: 255, b: 255 },
   ],
@@ -126,16 +126,16 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
       const newActiveWorld = store.worlds[id];
 
       const { totalSeconds, minutes, hours } = newActiveWorld.initialTime;
-      const totalMinutes = secondsToMinutes(totalSeconds);
+      const dayMinutes = getMinutes(totalSeconds, MINUTES_IN_DAY);
 
       return {
         activeWorldId: id,
         time: totalSeconds,
         minutes,
         hours: hours,
-        totalMinutes,
+        dayMinutes,
         sunAngle: calculateSunAngle(totalSeconds),
-        currentColors: colors.get(totalMinutes) || [
+        currentColors: colors.get(dayMinutes) || [
           { r: 255, g: 255, b: 255 },
           { r: 255, g: 255, b: 255 },
         ],
@@ -148,20 +148,19 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
   setTime: (valueOrFn: number | ((prev: number) => number)) =>
     set(store => {
       const time = typeof valueOrFn === "function" ? valueOrFn(store.time) : valueOrFn;
-      const minutes = getMinutes(time);
-      // we want to change color within each minute change
-      const totalMinutes = secondsToMinutes(time);
+      // TODO: whats the difference between getMinutes and secondsToMinutes
+      const dayMinutes = getMinutes(time, MINUTES_IN_DAY);
       const hours = getHours(time);
-      const shouldSunUpdate = getMinutes(store.time) !== minutes || getHours(store.time) !== hours;
-      const shouldColorUpdate = totalMinutes !== store.totalMinutes;
+      const shouldSunUpdate = getMinutes(store.time) !== dayMinutes || getHours(store.time) !== hours;
+      const shouldColorUpdate = dayMinutes !== store.dayMinutes;
 
       return {
         time,
-        minutes,
-        totalMinutes,
+        minutes: getMinutes(time, MINUTES_IN_HOUR),
+        dayMinutes,
         hours,
         sunAngle: shouldSunUpdate ? calculateSunAngle(time) : store.sunAngle,
-        currentColors: shouldColorUpdate && colors.get(totalMinutes) !== undefined ? colors.get(totalMinutes) : store.currentColors,
+        currentColors: shouldColorUpdate && colors.get(dayMinutes) !== undefined ? colors.get(dayMinutes) : store.currentColors,
       };
     }),
 });

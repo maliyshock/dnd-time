@@ -21,6 +21,7 @@ export const SECOND = 1;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
 export const DAY = 24 * HOUR;
+export const MINUTES_IN_HOUR = HOUR / MINUTE;
 export const MINUTES_IN_DAY = DAY / MINUTE;
 
 export const SECOND_STEPS = generateSteps({ steps: [1, 6, 30], multiplier: SECOND });
@@ -125,3 +126,6 @@ export const STARS_PROBABILITY: StarDictionaryItem[] = [
   { name: "yellow", chance: 10 },
   { name: "green", chance: 15 },
 ];
+
+export const MAX_STARS = 200;
+export const MIN_STARS = 120;

@@ -1,6 +1,12 @@
-import { HOUR, MINUTE } from "~/constants.ts";
+import { MINUTE } from "~/constants.ts";
 
-// returns 0 when we pass the total amount of seconds of the day
-export function getMinutes(seconds: number) {
-  return Math.floor((seconds % HOUR) / MINUTE);
+/**
+ * return minutes amount per item (for exmple per Hour or per Day)
+ */
+export function getMinutes(seconds: number, per?: number) {
+  if (per !== undefined) {
+    return Math.floor((seconds / MINUTE) % per);
+  }
+
+  return Math.floor(seconds / MINUTE);
 }

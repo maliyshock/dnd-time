@@ -38,7 +38,7 @@ export const useTimeUpdater = () => {
   const startTimeInterval = useCallback(() => {
     timeIntervalRef.current = setInterval(() => {
       if (play && !timeIsChanging) {
-        setTime((prevTime: number) => updateTime(prevTime, SECOND));
+        setTime((prevTime: number) => prevTime + SECOND);
       }
     }, TICK);
   }, [play, setTime, timeIsChanging]);

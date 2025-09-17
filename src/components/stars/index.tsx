@@ -5,6 +5,7 @@ import useStore from "~/store/useStore.ts";
 import { toRadians } from "~/utils/toRadians.ts";
 import "~/components/stars/stars.scss";
 import { createStar } from "~/components/stars/utils/createStar.ts";
+import { getStarsAmount } from "~/utils/getStarsAmount.ts";
 
 export type Star = {
   variation: StarVariation;
@@ -15,9 +16,7 @@ export type Star = {
   id: string;
 };
 
-// TODO: bug on mobile version
-const reduceFactor = 70;
-const starsAmount = Math.round((window.innerWidth / reduceFactor) * (window.innerHeight / reduceFactor));
+const starsAmount = getStarsAmount();
 
 let stars = Array.from({ length: starsAmount }, createStar);
 

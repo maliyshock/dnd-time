@@ -1,6 +1,5 @@
 import { getRandomNum } from "~/utils/getRandomNum.ts";
 import { STAR_MAX_SIZE, STAR_MIN_SIZE, STAR_SOUNDS_MAP, STARS_PROBABILITY } from "~/constants.ts";
-import { v4 as uuidv4 } from "uuid";
 import { Star } from "~/components/stars";
 import { buildProbabilityPool } from "~/components/stars/utils/buildProbabilityPool.ts";
 
@@ -23,6 +22,6 @@ export function createStar(): Star {
     size: getRandomNum({ min: STAR_MIN_SIZE, max: STAR_MAX_SIZE }),
     positionX: getRandomNum({ min, max }),
     positionY: getRandomNum({ min, max }),
-    id: uuidv4(),
+    id: globalThis.crypto.randomUUID(),
   };
 }
