@@ -1,5 +1,5 @@
 import { getRandomNum } from "~/utils/getRandomNum.ts";
-import { v4 as uuidv4 } from "uuid";
+
 import { StateCreator } from "zustand";
 import { delay } from "~/utils/delay.ts";
 import { TimeSlice } from "~/store/slices/timeSlice.ts";
@@ -27,7 +27,7 @@ function createCloud(): Cloud {
   return {
     cloudState: "default",
     cloudVariation: getRandomNum({ max: cloudVariations }),
-    id: uuidv4(),
+    id: globalThis.crypto.randomUUID(),
   };
 }
 

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from "react";
-import { updateTime } from "~/utils/time/updateTime.ts";
 import { SECOND, TICK } from "~/constants.ts";
 import useStore from "~/store/useStore.ts";
 import { calculateTimeDiff } from "~/utils/time/calculateTimeDiff.ts";
@@ -38,7 +37,7 @@ export const useTimeUpdater = () => {
   const startTimeInterval = useCallback(() => {
     timeIntervalRef.current = setInterval(() => {
       if (play && !timeIsChanging) {
-        setTime((prevTime: number) => updateTime(prevTime, SECOND));
+        setTime((prevTime: number) => prevTime + SECOND);
       }
     }, TICK);
   }, [play, setTime, timeIsChanging]);
