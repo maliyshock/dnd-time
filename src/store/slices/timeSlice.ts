@@ -10,6 +10,8 @@ import { sortByOrder } from "~/utils/worlds/sortByOrder.ts";
 
 import { toast } from "sonner";
 import { MINUTES_IN_DAY, MINUTES_IN_HOUR } from "~/constants.ts";
+import { refreshStorage } from "~/utils/worlds/refreshStorage.ts";
+import { saveCurrentWorld } from "~/utils/worlds/saveCurrentWorld.ts";
 
 export type TimeSlice = {
   activeWorldId: string;
@@ -27,7 +29,6 @@ export type TimeSlice = {
   addWorld: (world: World) => void;
   selectWorld: (payload: string) => void;
   deleteWorld: (payload: string) => void;
-  setActiveWorldId: (payload: string) => void;
   setPlay: (payload: boolean) => void;
   setTogglePlay: () => void;
   setTimeIsChanging: (payload: boolean) => void;
@@ -35,13 +36,15 @@ export type TimeSlice = {
 };
 
 // get last active world name and time based on the info from the local storage
-const currentWorldId = localStorage.getItem("lastActiveWorldId");
+const lastActiveWorld = refreshStorage();
 const defaultId = globalThis.crypto.randomUUID();
 const defaultWorld = { id: defaultId, name: "Untitled World", initialTime: getNow(), order: 0 };
 const worlds = getWorlds() ?? { [defaultId]: defaultWorld };
 
-const currentWorld: World = currentWorldId ? worlds[currentWorldId] || defaultWorld : defaultWorld;
-const { totalSeconds, minutes, hours } = currentWorld.initialTime;
+console.log("lastActiveWorld", lastActiveWorld);
+
+const currentWorld: World = lastActiveWorld || defaultWorld;
+const { totalSeconds, hours } = currentWorld.initialTime;
 const dayMinutes = getMinutes(totalSeconds, MINUTES_IN_DAY);
 const colors = generateColors();
 
@@ -53,7 +56,7 @@ const initialState = {
   time: totalSeconds,
   timeIsChanging: false,
   dayMinutes,
-  minutes,
+  minutes: getMinutes(totalSeconds, MINUTES_IN_HOUR),
   hours,
   sunAngle: calculateSunAngle(totalSeconds),
   currentColors: colors.get(dayMinutes) || [
@@ -82,6 +85,8 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
 
         return { worlds: newWorlds, activeWorldId: newActiveWorld[0] };
       }
+
+      localStorage.setItem("worldStorage", JSON.stringify(newWorlds));
 
       return { worlds: newWorlds };
     });
@@ -118,17 +123,26 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
         return store;
       }
 
-      return { worlds: { ...store.worlds, [world.id]: world } };
+      const newWorlds = { ...store.worlds, [world.id]: world };
+
+      localStorage.setItem("worldStorage", JSON.stringify(newWorlds));
+
+      return { worlds: newWorlds };
     }),
 
   selectWorld: (id: string) => {
     set(store => {
-      const newActiveWorld = store.worlds[id];
+      const { worlds, activeWorldId } = store;
+      const lastActiveWorld = worlds[activeWorldId];
+      const updatedLastActiveWorld = saveCurrentWorld({ worlds: worlds, currentWorld: lastActiveWorld, currentTime: store.time });
 
+      // time keeper will care about rest of the things
+      const newActiveWorld = store.worlds[id];
       const { totalSeconds, minutes, hours } = newActiveWorld.initialTime;
       const dayMinutes = getMinutes(totalSeconds, MINUTES_IN_DAY);
 
       return {
+        worlds: { ...worlds, [updatedLastActiveWorld.id]: updatedLastActiveWorld },
         activeWorldId: id,
         time: totalSeconds,
         minutes,
@@ -142,8 +156,6 @@ export const timeSlice: StateCreator<TimeSlice, [], [], TimeSlice> = set => ({
       };
     });
   },
-
-  setActiveWorldId: (id: string) => set({ activeWorldId: id }),
 
   setTime: (valueOrFn: number | ((prev: number) => number)) =>
     set(store => {

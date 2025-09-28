@@ -41,7 +41,7 @@ $steps-count: 3;
 	}
 }
 
-.clocks:hover, .time-changer.highlighted, .clocks__item-wrapper:focus {
+.time-changer.highlighted, .clocks__item-wrapper:focus, .clocks__item-wrapper:hover {
 	.time-changer__value {
 		@include value-visible-state;
 	}
@@ -210,7 +210,7 @@ $steps-count: 3;
 		opacity: 0;
 		display: none;
 		margin-top: calc(var(--spacing) * 2);
-		color: var(--color-white);
+		color: var(--muted-white);
 
 		transition: display var(--transitionTime), opacity var(--transitionTime);
 		transition-behavior: allow-discrete;

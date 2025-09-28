@@ -5,6 +5,7 @@
     $c: &;
     position: relative;
     z-index: 100;
+    padding: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -15,8 +16,21 @@
 
     font-family: "dyna-puff", system-ui, Avenir, Helvetica, Arial, sans-serif;
 
+    border-radius: 14px;
+
+    box-shadow: 0 0 16px rgba(35,82,152,0);
+    backdrop-filter: blur(0px);
+
+    transition: backdrop-filter 0.4s, box-shadow 0.4s;
+
     @include mixins.for-tablet-portrait-up {
         gap: 1rem;
+    }
+
+    &:hover
+    {
+        backdrop-filter: blur(8px);
+        box-shadow: 0 0 22px rgba(35,82,152,0.25);
     }
 
     &__display {
