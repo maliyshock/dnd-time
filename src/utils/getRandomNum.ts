@@ -1,5 +1,5 @@
 type GetRandomNumArgs = {
-  min: number;
+  min?: number;
   max: number;
   round?: boolean;
 };
