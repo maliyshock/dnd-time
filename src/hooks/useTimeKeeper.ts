@@ -20,7 +20,6 @@ export function useTimeKeeper() {
 
     newWorlds[activeWorldId] = { ...activeWorld, initialTime: currentTime };
 
-    // localStorage.setItem("worldStorage", JSON.stringify(newWorlds));
     localStorage.setItem("lastActiveWorldId", activeWorldId);
     localStorage.setItem("lastActiveWorldTime", String(time));
 
