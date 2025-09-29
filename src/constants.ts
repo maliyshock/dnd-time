@@ -108,24 +108,27 @@ export const AUDIO_FILES: AudioFile[] = [
   MUSIC_THEME,
 ];
 
-export const STAR_MIN_SIZE = 2;
-export const STAR_MAX_SIZE = 20;
+export const STAR_MIN_SIZE = 4;
+export const STAR_MAX_SIZE = 24;
+export const SIZE_TRESHOLD = 12; // after it we apply spike form
 
 export type StarVariation = "default" | "broken" | "blue" | "green" | "yellow" | "orange";
 
 export type StarDictionaryItem = {
   name: StarVariation;
   chance: number;
+  color: string;
 };
 
 // set chances in percents
-export const STARS_PROBABILITY: StarDictionaryItem[] = [
-  { name: "broken", chance: 5 },
-  { name: "blue", chance: 15 },
-  { name: "orange", chance: 10 },
-  { name: "yellow", chance: 10 },
-  { name: "green", chance: 15 },
+export const STARS_DICTIONARY: StarDictionaryItem[] = [
+  { name: "broken", chance: 5, color: "#ff588e" },
+  { name: "default", chance: 10, color: "#fff" },
+  { name: "blue", chance: 15, color: "#58d8ff" },
+  { name: "orange", chance: 10, color: "#ff8a58" },
+  { name: "yellow", chance: 10, color: "#ffc900" },
+  { name: "green", chance: 15, color: "#95ff58" },
 ];
 
-export const MAX_STARS = 200;
+export const MAX_STARS = 250;
 export const MIN_STARS = 120;

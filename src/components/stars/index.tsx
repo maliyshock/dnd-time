@@ -6,6 +6,7 @@ import { toRadians } from "~/utils/toRadians.ts";
 import "~/components/stars/stars.scss";
 import { createStar } from "~/components/stars/utils/createStar.ts";
 import { getStarsAmount } from "~/utils/getStarsAmount.ts";
+import { getScreenHypotenuse } from "~/utils/getHypotenuse.ts";
 
 export type Star = {
   variation: StarVariation;
@@ -25,6 +26,7 @@ export function Stars() {
   const cosRad = Math.cos(toRadians(sunAngle));
   const regenerated = useRef(false);
   const memoStars = useMemo(() => {
+    // TODO: this should be changed. It determines position of sun and time when we should show/hide stars
     if (cosRad < 0 && !regenerated.current) {
       stars = Array.from({ length: starsAmount }, createStar);
       regenerated.current = true;
@@ -45,8 +47,10 @@ export function Stars() {
   if (cosRad - 0.3 < 0.15) return;
 
   return (
-    <div className="stars" style={{ opacity: cosRad < 0.85 ? cosRad - 0.3 : 1 }}>
-      {memoStars}
+    <div className="stars-wrapper">
+      <div className="stars" style={{ opacity: cosRad < 0.85 ? cosRad - 0.3 : 1, width: getScreenHypotenuse(), height: getScreenHypotenuse() }}>
+        {memoStars}
+      </div>
     </div>
   );
 }
