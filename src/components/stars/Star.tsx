@@ -8,6 +8,7 @@ import { hexToRgb } from "~/utils/colors/hexToRgb.ts";
 
 type StarProps = Omit<StarType, "id">;
 
+// simulates box shadow effect, make it cheaper
 function getGradient(color: string) {
   const { r, g, b } = hexToRgb(color);
 

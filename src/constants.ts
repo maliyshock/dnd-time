@@ -110,7 +110,7 @@ export const AUDIO_FILES: AudioFile[] = [
 
 export const STAR_MIN_SIZE = 4;
 export const STAR_MAX_SIZE = 24;
-export const SIZE_TRESHOLD = 8; // after it we apply spike form
+export const SIZE_TRESHOLD = 12; // after it we apply spike form
 
 export type StarVariation = "default" | "broken" | "blue" | "green" | "yellow" | "orange";
 
